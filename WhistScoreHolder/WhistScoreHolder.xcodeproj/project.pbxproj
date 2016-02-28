@@ -17,7 +17,7 @@
 /* Begin PBXFileReference section */
 		D2CB75CB1C838AA000D7BB0D /* WhistScoreHolder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhistScoreHolder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSHViewController.swift; sourceTree = "<group>"; };
+		D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WSHViewController.swift; path = Controller/WSHViewController.swift; sourceTree = "<group>"; };
 		D2CB75D31C838AA000D7BB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D2CB75D51C838AA000D7BB0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D2CB75D81C838AA000D7BB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,14 +54,38 @@
 		D2CB75CD1C838AA000D7BB0D /* WhistScoreHolder */ = {
 			isa = PBXGroup;
 			children = (
-				D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */,
-				D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */,
+				D2CB75E21C83910C00D7BB0D /* Controller */,
+				D2CB75E11C83910700D7BB0D /* View */,
+				D2CB75E01C83910200D7BB0D /* Model */,
 				D2CB75D21C838AA000D7BB0D /* Main.storyboard */,
+				D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */,
 				D2CB75D51C838AA000D7BB0D /* Assets.xcassets */,
 				D2CB75D71C838AA000D7BB0D /* LaunchScreen.storyboard */,
 				D2CB75DA1C838AA000D7BB0D /* Info.plist */,
 			);
 			path = WhistScoreHolder;
+			sourceTree = "<group>";
+		};
+		D2CB75E01C83910200D7BB0D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		D2CB75E11C83910700D7BB0D /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		D2CB75E21C83910C00D7BB0D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +174,7 @@
 				D2CB75D31C838AA000D7BB0D /* Base */,
 			);
 			name = Main.storyboard;
+			path = View;
 			sourceTree = "<group>";
 		};
 		D2CB75D71C838AA000D7BB0D /* LaunchScreen.storyboard */ = {
