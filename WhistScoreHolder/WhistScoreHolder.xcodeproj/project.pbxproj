@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D2CB75CF1C838AA000D7BB0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */; };
-		D2CB75D11C838AA000D7BB0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75D01C838AA000D7BB0D /* ViewController.swift */; };
+		D2CB75D11C838AA000D7BB0D /* WSHViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */; };
 		D2CB75D41C838AA000D7BB0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2CB75D21C838AA000D7BB0D /* Main.storyboard */; };
 		D2CB75D61C838AA000D7BB0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2CB75D51C838AA000D7BB0D /* Assets.xcassets */; };
 		D2CB75D91C838AA000D7BB0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2CB75D71C838AA000D7BB0D /* LaunchScreen.storyboard */; };
@@ -17,7 +17,7 @@
 /* Begin PBXFileReference section */
 		D2CB75CB1C838AA000D7BB0D /* WhistScoreHolder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhistScoreHolder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D2CB75D01C838AA000D7BB0D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSHViewController.swift; sourceTree = "<group>"; };
 		D2CB75D31C838AA000D7BB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D2CB75D51C838AA000D7BB0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D2CB75D81C838AA000D7BB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */,
-				D2CB75D01C838AA000D7BB0D /* ViewController.swift */,
+				D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */,
 				D2CB75D21C838AA000D7BB0D /* Main.storyboard */,
 				D2CB75D51C838AA000D7BB0D /* Assets.xcassets */,
 				D2CB75D71C838AA000D7BB0D /* LaunchScreen.storyboard */,
@@ -90,6 +90,7 @@
 		D2CB75C31C838AA000D7BB0D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = WSH;
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = WSHGmbH;
@@ -135,7 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2CB75D11C838AA000D7BB0D /* ViewController.swift in Sources */,
+				D2CB75D11C838AA000D7BB0D /* WSHViewController.swift in Sources */,
 				D2CB75CF1C838AA000D7BB0D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
