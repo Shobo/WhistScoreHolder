@@ -12,6 +12,12 @@
 		D2CB75D41C838AA000D7BB0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2CB75D21C838AA000D7BB0D /* Main.storyboard */; };
 		D2CB75D61C838AA000D7BB0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2CB75D51C838AA000D7BB0D /* Assets.xcassets */; };
 		D2CB75D91C838AA000D7BB0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2CB75D71C838AA000D7BB0D /* LaunchScreen.storyboard */; };
+		D2CB75E41C83924900D7BB0D /* WSHGameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75E31C83924900D7BB0D /* WSHGameManager.swift */; };
+		D2CB75E71C83936F00D7BB0D /* WSHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75E61C83936F00D7BB0D /* WSHPlayer.swift */; };
+		D2CB75EA1C8398E700D7BB0D /* WSHGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75E91C8398E700D7BB0D /* WSHGame.swift */; };
+		D2CB75EC1C83994000D7BB0D /* WSHGameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75EB1C83994000D7BB0D /* WSHGameSettings.swift */; };
+		D2CB75EF1C839BD400D7BB0D /* WSHGameManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75EE1C839BD400D7BB0D /* WSHGameManagerDelegate.swift */; };
+		D2CB75F11C839E9300D7BB0D /* WSHGameManagerDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75F01C839E9300D7BB0D /* WSHGameManagerDatasource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +28,12 @@
 		D2CB75D51C838AA000D7BB0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D2CB75D81C838AA000D7BB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D2CB75DA1C838AA000D7BB0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2CB75E31C83924900D7BB0D /* WSHGameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGameManager.swift; path = BusinessLogic/WSHGameManager.swift; sourceTree = "<group>"; };
+		D2CB75E61C83936F00D7BB0D /* WSHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHPlayer.swift; path = Model/WSHPlayer.swift; sourceTree = "<group>"; };
+		D2CB75E91C8398E700D7BB0D /* WSHGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGame.swift; path = Model/WSHGame.swift; sourceTree = "<group>"; };
+		D2CB75EB1C83994000D7BB0D /* WSHGameSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGameSettings.swift; path = Model/WSHGameSettings.swift; sourceTree = "<group>"; };
+		D2CB75EE1C839BD400D7BB0D /* WSHGameManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGameManagerDelegate.swift; path = BusinessLogic/Protocols/WSHGameManagerDelegate.swift; sourceTree = "<group>"; };
+		D2CB75F01C839E9300D7BB0D /* WSHGameManagerDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGameManagerDatasource.swift; path = BusinessLogic/Protocols/WSHGameManagerDatasource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,9 +66,10 @@
 		D2CB75CD1C838AA000D7BB0D /* WhistScoreHolder */ = {
 			isa = PBXGroup;
 			children = (
+				D2CB75E51C83930B00D7BB0D /* BusinessLogic */,
+				D2CB75E01C83910200D7BB0D /* Model */,
 				D2CB75E21C83910C00D7BB0D /* Controller */,
 				D2CB75E11C83910700D7BB0D /* View */,
-				D2CB75E01C83910200D7BB0D /* Model */,
 				D2CB75D21C838AA000D7BB0D /* Main.storyboard */,
 				D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */,
 				D2CB75D51C838AA000D7BB0D /* Assets.xcassets */,
@@ -69,6 +82,9 @@
 		D2CB75E01C83910200D7BB0D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D2CB75E61C83936F00D7BB0D /* WSHPlayer.swift */,
+				D2CB75E91C8398E700D7BB0D /* WSHGame.swift */,
+				D2CB75EB1C83994000D7BB0D /* WSHGameSettings.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -86,6 +102,24 @@
 				D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		D2CB75E51C83930B00D7BB0D /* BusinessLogic */ = {
+			isa = PBXGroup;
+			children = (
+				D2CB75E31C83924900D7BB0D /* WSHGameManager.swift */,
+				D2CB75ED1C839A0400D7BB0D /* Protocols */,
+			);
+			name = BusinessLogic;
+			sourceTree = "<group>";
+		};
+		D2CB75ED1C839A0400D7BB0D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D2CB75EE1C839BD400D7BB0D /* WSHGameManagerDelegate.swift */,
+				D2CB75F01C839E9300D7BB0D /* WSHGameManagerDatasource.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,8 +194,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2CB75E41C83924900D7BB0D /* WSHGameManager.swift in Sources */,
+				D2CB75E71C83936F00D7BB0D /* WSHPlayer.swift in Sources */,
 				D2CB75D11C838AA000D7BB0D /* WSHViewController.swift in Sources */,
 				D2CB75CF1C838AA000D7BB0D /* AppDelegate.swift in Sources */,
+				D2CB75EF1C839BD400D7BB0D /* WSHGameManagerDelegate.swift in Sources */,
+				D2CB75F11C839E9300D7BB0D /* WSHGameManagerDatasource.swift in Sources */,
+				D2CB75EA1C8398E700D7BB0D /* WSHGame.swift in Sources */,
+				D2CB75EC1C83994000D7BB0D /* WSHGameSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
