@@ -15,7 +15,7 @@ class WSHPlayer {
     
     init(name: String, image: UIImage) {
         self.name = name
-        self.image = image;
+        self.image = image
     }
     
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WSHPlayerView" customModule="WhistScoreHolder" customModuleProvider="target">
+            <connections>
+                <outlet property="cameraView" destination="43d-6R-Oys" id="aPZ-Kh-9yA"/>
+                <outlet property="nameTextField" destination="PQZ-Ke-jMd" id="6V5-1K-1Dc"/>
+                <outlet property="scrollView" destination="vV3-JX-BNe" id="DoB-VR-ON0"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vV3-JX-BNe" customClass="UIScrollView">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43d-6R-Oys">
+                            <rect key="frame" x="44" y="32" width="512" height="458"/>
+                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PQZ-Ke-jMd">
+                            <rect key="frame" x="204" y="522" width="192" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="BKb-Ic-gjP"/>
+                                <constraint firstAttribute="width" constant="192" id="YDC-s9-Kck"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="kqe-8T-g2Y"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="PQZ-Ke-jMd" firstAttribute="top" secondItem="43d-6R-Oys" secondAttribute="bottom" constant="32" id="3Tq-RC-j3S"/>
+                        <constraint firstItem="43d-6R-Oys" firstAttribute="height" secondItem="vV3-JX-BNe" secondAttribute="height" multiplier="3:1" id="9EZ-i8-2pt"/>
+                        <constraint firstItem="43d-6R-Oys" firstAttribute="height" secondItem="vV3-JX-BNe" secondAttribute="height" multiplier="1:1.5" id="Inl-k7-hnA"/>
+                        <constraint firstItem="43d-6R-Oys" firstAttribute="width" secondItem="vV3-JX-BNe" secondAttribute="width" constant="-88" id="R9a-Z3-v8w"/>
+                        <constraint firstItem="43d-6R-Oys" firstAttribute="height" secondItem="vV3-JX-BNe" secondAttribute="height" constant="-142" id="lfM-Kk-ulP"/>
+                        <constraint firstItem="PQZ-Ke-jMd" firstAttribute="centerX" secondItem="vV3-JX-BNe" secondAttribute="centerX" id="vD9-hF-Gvq"/>
+                        <constraint firstItem="43d-6R-Oys" firstAttribute="centerX" secondItem="vV3-JX-BNe" secondAttribute="centerX" id="vOb-zn-wYW"/>
+                        <constraint firstItem="43d-6R-Oys" firstAttribute="top" secondItem="vV3-JX-BNe" secondAttribute="top" constant="32" id="yGe-bx-KSl"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="9EZ-i8-2pt"/>
+                            <exclude reference="Inl-k7-hnA"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="NKK-pc-eax"/>
+                    </connections>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="vV3-JX-BNe" secondAttribute="trailing" id="BXi-kj-ie3"/>
+                <constraint firstItem="vV3-JX-BNe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OQq-xA-Abu"/>
+                <constraint firstItem="vV3-JX-BNe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ylf-nc-2hz"/>
+                <constraint firstAttribute="bottom" secondItem="vV3-JX-BNe" secondAttribute="bottom" id="qk7-58-GUZ"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>
