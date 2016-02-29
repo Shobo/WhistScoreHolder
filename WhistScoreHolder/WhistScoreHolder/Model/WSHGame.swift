@@ -5,6 +5,7 @@
 //  Created by Mihai Costiug on 28/02/16.
 //  Copyright © 2016 WSHGmbH. All rights reserved.
 //
+import UIKit
 
 enum WSHGameBetChoice { //move this somewhere else?
     case One
@@ -42,8 +43,22 @@ class WSHGame {
     
     private(set) var players:[WSHPlayer]
     
-    init(withSettings settings: WSHGameSettings) {
-        self.players = settings.players
+    var totalNumberOfRounds: Int {
+        get {
+            return self.players.count * 3 + 6   //6 intermediary rounds + 2 sets of rounds of one and one of 8
+        }
+    }
+    
+//    private(set) var rounds: [[WSHPlayer : (numberBet: WSHGameBetChoice, numberTaken: WSHGameBetChoice)]] = []
+    private(set) var rounds: [WSHRound] = []
+    
+    init(players: [WSHPlayer]) {
+        self.players = players
+        
+//        rounds.append(WSHPlayer() : (WSHGameBetChoice.One, WSHGameBetChoice.Two))
+//        let player = WSHPlayer(name: "hello")
+//        let dictionary = [player : (numberBet: WSHGameBetChoice.One, numberTaken: WSHGameBetChoice.Three)]
+//        rounds.append(dictionary)
     }
     
 }

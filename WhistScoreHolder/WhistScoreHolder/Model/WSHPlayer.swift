@@ -8,13 +8,20 @@
 
 import UIKit
 
-class WSHPlayer {
+class WSHPlayer: NSObject {
     
     var name: String
-    var image: UIImage
+    var image: UIImage?
     
-    init(name: String, image: UIImage) {
+    init(name: String) {
         self.name = name
+        
+        super.init()
+    }
+    
+    convenience init(name: String, image: UIImage) {
+        self.init(name: name)
+        
         self.image = image
     }
     

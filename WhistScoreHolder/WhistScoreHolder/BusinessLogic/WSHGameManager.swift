@@ -11,9 +11,7 @@ class WSHGameManager {
     static let sharedInstance = WSHGameManager()
     
     private(set) var currentGame: WSHGame?
-    
-    private(set) var currentRound: Int = 0  //send message to delegate in didSet method
-    private(set) var totalNumberOfRounds: Int = 0
+    private(set) var currentRound: WSHRound?
     
     private(set) var gameStarted: Bool = false
     
@@ -30,5 +28,11 @@ class WSHGameManager {
         
     }
     
+    func player(player: WSHPlayer, didBet bet: WSHGameBetChoice) {
+        
+    }
     
+    func player(player: WSHPlayer, didTake taken: WSHGameBetChoice) {
+        
+    }
 }
