@@ -12,25 +12,30 @@ import UIKit
 class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var cameraView: UIView!
+    @IBOutlet weak var cameraView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     
     var name: String {
-        get {
-            return nameTextField.text ?? "Player"
+        set(newName) {
+            nameTextField.text = newName
         }
-    }
-    var colour: UIColor = UIColor.blueColor() {
-        didSet {
-            cameraView.backgroundColor = colour
+        get {
+            return nameTextField.text ?? ""
         }
     }
     
     var image: UIImage {
+        set(newImage) {
+            cameraView.image = newImage
+        }
         get {
-            return getImageWithColor(colour, size: CGSizeMake(44.0, 44.0))
+            return cameraView.image ?? UIImage.randomColorImage(withSize: CGSizeMake(100.0, 100.0))
         }
     }
+    
+    
+    // MARK: - Lifecycle
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,7 +55,9 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    
     // MARK: - Public functions
+    
     
     func keyBoardHeightChanged(newHeight: CGFloat) {
         scrollView.contentSize = CGSizeMake(self.frame.width, self.frame.size.height + newHeight)
@@ -59,7 +66,7 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     
     func resetToDefault() {
         nameTextField.text = nil
-        colour = UIColor.blueColor()
+        image = UIImage.randomColorImage(withSize: CGSizeMake(100.0, 100.0))
     }
     
     func resignKeyboardIfNeeded() {
@@ -68,9 +75,15 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
         }
     }
     
+    func focusName() {
+        nameTextField.becomeFirstResponder()
+    }
+    
+    
     // MARK: - Private
     
-    func xibSetup() {
+    
+    private func xibSetup() {
         let bundle = NSBundle(forClass: self.dynamicType)
         let nib = UINib(nibName: "WSHPlayerView", bundle: bundle)
         let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
@@ -79,27 +92,14 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
         self.addSubview(view);
     }
     
-    func setupView() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidShow:"), name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+    private func setupView() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillChangeFrame:"), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        image = UIImage.imageWithColor(UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0), size: CGSizeMake(100.0, 100.0))
     }
     
-    func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
-        let rect = CGRectMake(0, 0, size.width, size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        color.setFill()
-        UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return image
-    }
     
     // MARK: - UITextFieldDelegate funcs
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        scrollView.setContentOffset(CGPoint.zero, animated: true)
-    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -107,29 +107,37 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
         return true
     }
     
+    
     // MARK: - UIScrollViewDelegate funcs
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    
+    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         resignKeyboardIfNeeded()
     }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        resignKeyboardIfNeeded()
+    }
+    
     
     // MARK: - Notifications
     
-    func keyboardDidShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            self.keyBoardHeightChanged(keyboardSize.height)
+    
+    func keyboardWillChangeFrame(notification: NSNotification) {
+        if let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
+            self.keyBoardHeightChanged(UIScreen.mainScreen().bounds.height - keyboardRect.origin.y)
+        } else {
+            self.keyBoardHeightChanged(0)
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        self.keyBoardHeightChanged(0)
-    }
     
     // MARK: - Actions
     
+    
     @IBAction func cameraTapped(sender: AnyObject) {
         resignKeyboardIfNeeded()
-        colour = UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)
+        image = UIImage.randomColorImage(withSize: CGSizeMake(100.0, 100.0))
     }
     
 }
