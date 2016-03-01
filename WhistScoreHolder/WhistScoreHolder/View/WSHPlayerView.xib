@@ -24,14 +24,18 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43d-6R-Oys">
                             <rect key="frame" x="44" y="32" width="512" height="458"/>
                             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="aor-Nc-y9c" appends="YES" id="SqZ-K3-IeN"/>
+                            </connections>
                         </view>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PQZ-Ke-jMd">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Player name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PQZ-Ke-jMd">
                             <rect key="frame" x="204" y="522" width="192" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="BKb-Ic-gjP"/>
                                 <constraint firstAttribute="width" constant="192" id="YDC-s9-Kck"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="kqe-8T-g2Y"/>
@@ -70,5 +74,10 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
+        <tapGestureRecognizer id="aor-Nc-y9c">
+            <connections>
+                <action selector="cameraTapped:" destination="-1" id="agH-Hg-3dz"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

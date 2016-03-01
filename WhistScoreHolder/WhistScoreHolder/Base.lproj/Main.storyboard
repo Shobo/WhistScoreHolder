@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Setup Game View Controller-->
@@ -17,6 +18,34 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="7" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IOZ-m2-Baa">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PlayerCell" textLabel="SUv-Lb-Xr9" style="IBUITableViewCellStyleDefault" id="TkK-LA-0wG">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TkK-LA-0wG" id="xkL-A1-e3V">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SUv-Lb-Xr9">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="tij-l3-FRJ" id="fVe-hz-Iqg"/>
+                                    <outlet property="delegate" destination="tij-l3-FRJ" id="WQD-wE-cD4"/>
+                                </connections>
+                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTE-Cr-GsV" customClass="WSHPlayerView" customModule="WhistScoreHolder" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -25,17 +54,28 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eTE-Cr-GsV" firstAttribute="leading" secondItem="Ehh-Zu-cKP" secondAttribute="leading" id="3Jr-5B-cxe"/>
+                            <constraint firstItem="IOZ-m2-Baa" firstAttribute="leading" secondItem="Ehh-Zu-cKP" secondAttribute="leading" id="JCX-Ky-QIq"/>
                             <constraint firstAttribute="trailing" secondItem="eTE-Cr-GsV" secondAttribute="trailing" id="K7D-VF-2NV"/>
                             <constraint firstItem="eTE-Cr-GsV" firstAttribute="top" secondItem="uUB-xN-pcj" secondAttribute="bottom" id="PQs-oO-5D4"/>
+                            <constraint firstAttribute="trailing" secondItem="IOZ-m2-Baa" secondAttribute="trailing" id="UOC-Mo-YNr"/>
+                            <constraint firstItem="CLD-a9-Bxu" firstAttribute="top" secondItem="IOZ-m2-Baa" secondAttribute="bottom" id="Wtq-JU-1eE"/>
                             <constraint firstItem="CLD-a9-Bxu" firstAttribute="top" secondItem="eTE-Cr-GsV" secondAttribute="bottom" id="mCe-7Q-68v"/>
+                            <constraint firstItem="IOZ-m2-Baa" firstAttribute="top" secondItem="uUB-xN-pcj" secondAttribute="bottom" id="yuG-ei-gVq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Old-TN-qTk">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="ndB-9Q-OrM">
-                            <connections>
-                                <action selector="addButtonTapped:" destination="tij-l3-FRJ" id="pVB-nx-Neh"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="add" id="ndB-9Q-OrM">
+                                <connections>
+                                    <action selector="addButtonTapped:" destination="tij-l3-FRJ" id="pVB-nx-Neh"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="done" id="OXj-so-XC8">
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="tij-l3-FRJ" id="djn-W6-6Kv"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" systemItem="play" id="0GF-kk-fwS">
                             <connections>
                                 <action selector="playButtonTapped:" destination="tij-l3-FRJ" id="6DA-I0-AjH"/>
@@ -43,12 +83,16 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addBarButtonItem" destination="ndB-9Q-OrM" id="RrA-2T-DLT"/>
+                        <outlet property="doneBarButtonItem" destination="OXj-so-XC8" id="BXc-h6-wu4"/>
+                        <outlet property="playBarButtonItem" destination="0GF-kk-fwS" id="3Oe-l3-ce6"/>
                         <outlet property="playerView" destination="eTE-Cr-GsV" id="5pD-Tf-lvD"/>
+                        <outlet property="tableView" destination="IOZ-m2-Baa" id="KQb-dH-5qk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KnT-Tt-V6O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="832" y="528"/>
+            <point key="canvasLocation" x="-148" y="-760"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VA0-fN-hI3">
@@ -66,7 +110,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ffp-FC-ngY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="102" y="528"/>
+            <point key="canvasLocation" x="-862" y="-760"/>
         </scene>
     </scenes>
 </document>

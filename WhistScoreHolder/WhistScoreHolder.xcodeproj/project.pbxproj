@@ -10,8 +10,8 @@
 		594BEA201C83B813007D296D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 594BEA1E1C83B813007D296D /* Main.storyboard */; };
 		5961A9CC1C83C02200FD186F /* WSHPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5961A9CB1C83C02200FD186F /* WSHPlayerView.swift */; };
 		5961A9CE1C83C03100FD186F /* WSHPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5961A9CD1C83C03000FD186F /* WSHPlayerView.xib */; };
-		5961A9D11C83CB9400FD186F /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5961A9D01C83CB9400FD186F /* UIView+Additions.swift */; };
 		59C063FA1C83ADFA00691D8B /* WSHSetupGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C063F91C83ADFA00691D8B /* WSHSetupGameViewController.swift */; };
+		59E867421C8508FF007C6257 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867411C8508FF007C6257 /* UIView+Additions.swift */; };
 		D2CB75CF1C838AA000D7BB0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */; };
 		D2CB75D11C838AA000D7BB0D /* WSHViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */; };
 		D2CB75D61C838AA000D7BB0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2CB75D51C838AA000D7BB0D /* Assets.xcassets */; };
@@ -29,8 +29,8 @@
 		594BEA1F1C83B813007D296D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5961A9CB1C83C02200FD186F /* WSHPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHPlayerView.swift; path = View/WSHPlayerView.swift; sourceTree = "<group>"; };
 		5961A9CD1C83C03000FD186F /* WSHPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WSHPlayerView.xib; path = View/WSHPlayerView.xib; sourceTree = "<group>"; };
-		5961A9D01C83CB9400FD186F /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Additions.swift"; path = "../../Additions/UIView+Additions.swift"; sourceTree = "<group>"; };
 		59C063F91C83ADFA00691D8B /* WSHSetupGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHSetupGameViewController.swift; path = Controller/WSHSetupGameViewController.swift; sourceTree = "<group>"; };
+		59E867411C8508FF007C6257 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Additions.swift"; path = "WhistScoreHolder/Additions/UIView+Additions.swift"; sourceTree = SOURCE_ROOT; };
 		D2CB75CB1C838AA000D7BB0D /* WhistScoreHolder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhistScoreHolder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WSHViewController.swift; path = Controller/WSHViewController.swift; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 		5961A9CF1C83CB7900FD186F /* Additions */ = {
 			isa = PBXGroup;
 			children = (
-				5961A9D01C83CB9400FD186F /* UIView+Additions.swift */,
+				59E867411C8508FF007C6257 /* UIView+Additions.swift */,
 			);
 			name = Additions;
 			path = BusinessLogic/Additions;
@@ -223,13 +223,13 @@
 				D2CB75E71C83936F00D7BB0D /* WSHPlayer.swift in Sources */,
 				D2CB75D11C838AA000D7BB0D /* WSHViewController.swift in Sources */,
 				D2CB75CF1C838AA000D7BB0D /* AppDelegate.swift in Sources */,
-				5961A9D11C83CB9400FD186F /* UIView+Additions.swift in Sources */,
 				5961A9CC1C83C02200FD186F /* WSHPlayerView.swift in Sources */,
 				59C063FA1C83ADFA00691D8B /* WSHSetupGameViewController.swift in Sources */,
 				D2CB75EF1C839BD400D7BB0D /* WSHGameManagerDelegate.swift in Sources */,
 				D2CB75F11C839E9300D7BB0D /* WSHGameManagerDatasource.swift in Sources */,
 				D2CB75EA1C8398E700D7BB0D /* WSHGame.swift in Sources */,
 				D2CB75EC1C83994000D7BB0D /* WSHGameSettings.swift in Sources */,
+				59E867421C8508FF007C6257 /* UIView+Additions.swift in Sources */,
 				D2CB75F31C83AA0F00D7BB0D /* WSHRound.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
