@@ -21,7 +21,7 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var playBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var doneBarButtonItem: UIBarButtonItem!
     
-    var gameSettings: WSHGameSettings?
+    var players: [WSHPlayer] = []
     var currentPlayer: WSHPlayer?
     
     var rowHeight : CGFloat = 0.0
@@ -59,7 +59,6 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gameSettings = WSHGameSettings(players: [])
         tableView.editing = true
         state = .ViewPlayers
     }
@@ -107,22 +106,22 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gameSettings?.players.count ?? 0
+        return self.players.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PlayerCell", forIndexPath: indexPath)
         
-        let player = gameSettings?.players[indexPath.row]
-        cell.textLabel?.text = player!.name
-        cell.imageView?.image = player!.image?.scale(toSize: CGSizeMake(rowHeight - 8.0, rowHeight - 8.0))
+        let player = self.players[indexPath.row]
+        cell.textLabel?.text = player.name
+        cell.imageView?.image = player.image?.scale(toSize: CGSizeMake(rowHeight - 8.0, rowHeight - 8.0))
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // edit player
-        currentPlayer = gameSettings?.players[indexPath.row]
+        currentPlayer = self.players[indexPath.row]
         
         playerView.name = (currentPlayer?.name)!
         playerView.image = (currentPlayer?.image)!
@@ -141,7 +140,7 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         switch editingStyle {
         case .Delete:
-            gameSettings?.players.removeAtIndex(indexPath.row)
+            self.players.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             break
         default:
@@ -154,9 +153,9 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let itemToMove = gameSettings!.players[sourceIndexPath.row]
-        gameSettings?.players.removeAtIndex(sourceIndexPath.row)
-        gameSettings?.players.insert(itemToMove , atIndex: destinationIndexPath.row)
+        let itemToMove = self.players[sourceIndexPath.row]
+        self.players.removeAtIndex(sourceIndexPath.row)
+        self.players.insert(itemToMove , atIndex: destinationIndexPath.row)
     }
     
     
@@ -166,7 +165,7 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     @IBAction func playButtonTapped(sender: AnyObject) {
         let alertController: UIAlertController
         
-        if gameSettings?.players.count > 2 {
+        if self.players.count > 2 {
             alertController = UIAlertController(title: "Get ready", message:
                 "Game will start", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
@@ -207,18 +206,18 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     @IBAction func addButtonTapped(sender: AnyObject) {
         switch state {
         case .ViewPlayers:
-            if gameSettings?.players.count == 6 {
+            if self.players.count == 6 {
                 presentTooManyPlayersAlertView()
             } else {
                 state = .AddPlayer
             }
             break
         case .AddPlayer:
-            if gameSettings?.players.count < 6 {
+            if self.players.count < 6 {
                 if playerView.name.isEmpty {
                     presentAddNameAlertView()
                 } else {
-                    gameSettings?.players.append(WSHPlayer(name: playerView.name, image: playerView.image))
+                    self.players.append(WSHPlayer(name: playerView.name, image: playerView.image))
                     playerView.resetToDefault()
                 }
             } else {

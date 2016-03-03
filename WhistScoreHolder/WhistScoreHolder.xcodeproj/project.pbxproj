@@ -20,9 +20,7 @@
 		D2CB75E41C83924900D7BB0D /* WSHGameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75E31C83924900D7BB0D /* WSHGameManager.swift */; };
 		D2CB75E71C83936F00D7BB0D /* WSHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75E61C83936F00D7BB0D /* WSHPlayer.swift */; };
 		D2CB75EA1C8398E700D7BB0D /* WSHGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75E91C8398E700D7BB0D /* WSHGame.swift */; };
-		D2CB75EC1C83994000D7BB0D /* WSHGameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75EB1C83994000D7BB0D /* WSHGameSettings.swift */; };
 		D2CB75EF1C839BD400D7BB0D /* WSHGameManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75EE1C839BD400D7BB0D /* WSHGameManagerDelegate.swift */; };
-		D2CB75F11C839E9300D7BB0D /* WSHGameManagerDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75F01C839E9300D7BB0D /* WSHGameManagerDatasource.swift */; };
 		D2CB75F31C83AA0F00D7BB0D /* WSHRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75F21C83AA0F00D7BB0D /* WSHRound.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,9 +40,7 @@
 		D2CB75E31C83924900D7BB0D /* WSHGameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGameManager.swift; path = BusinessLogic/WSHGameManager.swift; sourceTree = "<group>"; };
 		D2CB75E61C83936F00D7BB0D /* WSHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHPlayer.swift; path = Model/WSHPlayer.swift; sourceTree = "<group>"; };
 		D2CB75E91C8398E700D7BB0D /* WSHGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGame.swift; path = Model/WSHGame.swift; sourceTree = "<group>"; };
-		D2CB75EB1C83994000D7BB0D /* WSHGameSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGameSettings.swift; path = Model/WSHGameSettings.swift; sourceTree = "<group>"; };
 		D2CB75EE1C839BD400D7BB0D /* WSHGameManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGameManagerDelegate.swift; path = BusinessLogic/Protocols/WSHGameManagerDelegate.swift; sourceTree = "<group>"; };
-		D2CB75F01C839E9300D7BB0D /* WSHGameManagerDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHGameManagerDatasource.swift; path = BusinessLogic/Protocols/WSHGameManagerDatasource.swift; sourceTree = "<group>"; };
 		D2CB75F21C83AA0F00D7BB0D /* WSHRound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHRound.swift; path = Model/WSHRound.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,10 +86,6 @@
 			children = (
 				D2CB75E51C83930B00D7BB0D /* BusinessLogic */,
 				D2CB75E01C83910200D7BB0D /* Model */,
-				D2CB75E61C83936F00D7BB0D /* WSHPlayer.swift */,
-				D2CB75E91C8398E700D7BB0D /* WSHGame.swift */,
-				D2CB75EB1C83994000D7BB0D /* WSHGameSettings.swift */,
-				D2CB75F21C83AA0F00D7BB0D /* WSHRound.swift */,
 				D2CB75E21C83910C00D7BB0D /* Controller */,
 				D2CB75E11C83910700D7BB0D /* View */,
 				5961A9CF1C83CB7900FD186F /* Additions */,
@@ -109,6 +101,9 @@
 		D2CB75E01C83910200D7BB0D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D2CB75E61C83936F00D7BB0D /* WSHPlayer.swift */,
+				D2CB75E91C8398E700D7BB0D /* WSHGame.swift */,
+				D2CB75F21C83AA0F00D7BB0D /* WSHRound.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -144,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				D2CB75EE1C839BD400D7BB0D /* WSHGameManagerDelegate.swift */,
-				D2CB75F01C839E9300D7BB0D /* WSHGameManagerDatasource.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -230,9 +224,7 @@
 				5961A9CC1C83C02200FD186F /* WSHPlayerView.swift in Sources */,
 				59C063FA1C83ADFA00691D8B /* WSHSetupGameViewController.swift in Sources */,
 				D2CB75EF1C839BD400D7BB0D /* WSHGameManagerDelegate.swift in Sources */,
-				D2CB75F11C839E9300D7BB0D /* WSHGameManagerDatasource.swift in Sources */,
 				D2CB75EA1C8398E700D7BB0D /* WSHGame.swift in Sources */,
-				D2CB75EC1C83994000D7BB0D /* WSHGameSettings.swift in Sources */,
 				59E867421C8508FF007C6257 /* UIView+Additions.swift in Sources */,
 				D2CB75F31C83AA0F00D7BB0D /* WSHRound.swift in Sources */,
 			);
