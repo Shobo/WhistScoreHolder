@@ -10,5 +10,8 @@ protocol WSHGameManagerDelegate {
     func gameManager(gameManager: WSHGameManager, didStartGame game: WSHGame)
     func gameManager(gameManager: WSHGameManager, didEndGame game: WSHGame)
     
-    func currentGame(game: WSHGame, didChangeCurrentRoundNumber routeNumber: Int, ofType: WSHGameBetChoice)
+    func willBeginRoundOfType(type: WSHGameBetChoice, startingPlayer player: WSHPlayer)
+    func playerTurnToBet(player: WSHPlayer, forRoundType roundType: WSHGameBetChoice, excluding choice: WSHGameBetChoice?)
+    func didFinishBettingInRound(round: WSHRound)
+    func didFinishRound(round: WSHRound)
 }

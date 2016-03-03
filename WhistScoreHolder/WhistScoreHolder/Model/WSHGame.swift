@@ -42,23 +42,47 @@ enum WSHGameBetChoice { //move this somewhere else?
 class WSHGame {
     
     private(set) var players:[WSHPlayer]
+    private(set) var rounds: [WSHRound] = []
     
     var totalNumberOfRounds: Int {
         get {
-            return self.players.count * 3 + 6   //6 intermediary rounds + 2 sets of rounds of one and one of 8
+            return self.players.count * 3 + 6   //6 intermediary rounds + two sets of rounds of 1 and one of 8
         }
     }
-    
-//    private(set) var rounds: [[WSHPlayer : (numberBet: WSHGameBetChoice, numberTaken: WSHGameBetChoice)]] = []
-    private(set) var rounds: [WSHRound] = []
     
     init(players: [WSHPlayer]) {
         self.players = players
         
-//        rounds.append(WSHPlayer() : (WSHGameBetChoice.One, WSHGameBetChoice.Two))
-//        let player = WSHPlayer(name: "hello")
-//        let dictionary = [player : (numberBet: WSHGameBetChoice.One, numberTaken: WSHGameBetChoice.Three)]
-//        rounds.append(dictionary)
+        self.createRounds()
     }
     
+    private func createRounds() {
+        //create round objects based on number of players
+        self.rounds.appendContentsOf(self.createRounds(self.players.count, ofType: .One))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Two))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Three))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Four))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Five))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Six))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Seven))
+        self.rounds.appendContentsOf(self.createRounds(self.players.count, ofType: .Eight))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Seven))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Six))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Five))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Four))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Three))
+        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Two))
+        self.rounds.appendContentsOf(self.createRounds(self.players.count, ofType: .One))
+    }
+    
+    private func createRounds(numberOfRounds: Int, ofType type: WSHGameBetChoice) -> [WSHRound] {
+        var rounds: [WSHRound] = []
+        
+        for _ in 0..<numberOfRounds {
+            let round = WSHRound(roundType: type)
+            rounds.append(round)
+        }
+        
+        return rounds
+    }
 }

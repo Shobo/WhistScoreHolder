@@ -13,8 +13,7 @@ class WSHGameManager {
     private(set) var currentGame: WSHGame?
     private(set) var currentRound: WSHRound?
     
-    private(set) var gameStarted: Bool = false
-    
+    private(set) var gameInProgress: Bool = false
     
     
     init() {
@@ -22,17 +21,30 @@ class WSHGameManager {
     }
     
     func startGame(game: WSHGame) {
-        self.gameStarted = true
+        self.gameInProgress = true
         
-        self.currentGame = game
-        
+        self.currentGame = game        
     }
     
-    func player(player: WSHPlayer, didBet bet: WSHGameBetChoice) {
-        
+    func saveCurrentGameState() {
+        // save current game state on disk; should be called if app is closing and game is not over
     }
     
-    func player(player: WSHPlayer, didTake taken: WSHGameBetChoice) {
-        
+    func loadSavedGame() {
+        // load game saved on disk; should be called when starting the app if a game has been saved
+    }
+    
+    func startBetting() {
+        //start sending delegate messages in order to receive betting information; playerTurnToBet:forRoundType:excluding:
+    }
+    
+    //TODO: create custom ErrorType; to be used if a player adds a bet/hand when already containing that information within that round
+    
+    func player(player: WSHPlayer, didBet bet: WSHGameBetChoice) throws {
+        //after saving the bet inside the current round, send another playerTurnToBet:forRoundType:excluding: to the delegate, unless it was the last one, in which case the didFinishBettingInRound: delegate method should be called
+    }
+    
+    func player(player: WSHPlayer, didTake taken: WSHGameBetChoice) throws {
+        //after saving the taken hand inside the current round, check if the rounds is completed. if it is, send the didFinishRound: delegate call + the willBeginRoundOfType:startingPlayer: method
     }
 }
