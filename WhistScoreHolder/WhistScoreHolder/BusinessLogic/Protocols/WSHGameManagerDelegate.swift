@@ -6,7 +6,7 @@
 //  Copyright © 2016 WSHGmbH. All rights reserved.
 //
 
-protocol WSHGameManagerDelegate {
+protocol WSHGameManagerDelegate: class {
     func gameManager(gameManager: WSHGameManager, didStartGame game: WSHGame)
     func gameManager(gameManager: WSHGameManager, didEndGame game: WSHGame)
     

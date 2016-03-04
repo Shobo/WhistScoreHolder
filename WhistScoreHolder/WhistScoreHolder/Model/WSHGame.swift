@@ -46,7 +46,7 @@ class WSHGame {
     
     var totalNumberOfRounds: Int {
         get {
-            return self.players.count * 3 + 6   //6 intermediary rounds + two sets of rounds of 1 and one of 8
+            return self.players.count * 3 + 6 * 2   //6 intermediary rounds * 2 + two sets of rounds of 1 and one of 8
         }
     }
     

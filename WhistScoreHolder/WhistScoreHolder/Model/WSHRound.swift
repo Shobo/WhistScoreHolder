@@ -15,5 +15,4 @@ class WSHRound {
         self.roundType = roundType
     }
     
-    
 }
