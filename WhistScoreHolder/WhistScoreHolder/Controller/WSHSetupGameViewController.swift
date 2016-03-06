@@ -8,89 +8,58 @@
 
 import UIKit
 
-enum WSHSetupState {
-    case AddPlayer
-    case EditPlayer
-    case ViewPlayers
-}
-
-class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet weak var playerView: WSHPlayerView!
+class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, WSHPlayerViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var playBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var doneBarButtonItem: UIBarButtonItem!
     
     var players: [WSHPlayer] = []
     var currentPlayer: WSHPlayer?
     
     var rowHeight : CGFloat = 0.0
     
-    var state: WSHSetupState = .ViewPlayers {
-        willSet(newSetupState) {
-            switch newSetupState {
-            case .AddPlayer:
-                addBarButtonItem.enabled = true
-                playBarButtonItem.enabled = false
-                doneBarButtonItem.enabled = true
-                playerView.hidden = false
-                break
-                
-            case .EditPlayer:
-                addBarButtonItem.enabled = false
-                playBarButtonItem.enabled = false
-                doneBarButtonItem.enabled = true
-                playerView.hidden = false
-                break
-                
-            case .ViewPlayers:
-                addBarButtonItem.enabled = true
-                playBarButtonItem.enabled = true
-                doneBarButtonItem.enabled = false
-                playerView.hidden = true
-                playerView.resignKeyboardIfNeeded()
-                reloadTableView()
-                
-                break
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        playBarButtonItem.enabled = false
         tableView.editing = true
-        state = .ViewPlayers
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        rowHeight = max(tableView.frame.height / 6.0, 80.0)
+        currentPlayer = nil
+        rowHeight = min(tableView.frame.height / 6.0, 80.0)
+        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
     }
     
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        rowHeight = min(size.height / 6.0, 80.0)
+        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+    }
     
     // MARK: - Private functions
     
     
+    private func refreshButtons() {
+        if players.count < kMIN_NUMBER_OF_PLAYERS {
+            playBarButtonItem.enabled = false
+        } else {
+            playBarButtonItem.enabled = true
+        }
+        if players.count >= kMAX_NUMBER_OF_PLAYERS {
+            addBarButtonItem.enabled = false
+        } else {
+            addBarButtonItem.enabled = true
+        }
+    }
+    
     private func reloadTableView() {
+        refreshButtons()
+        
         tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
-    }
-    
-    private func presentAddNameAlertView() {
-        let alertController = UIAlertController(title: "Add a name", message:
-            "Each player should have a name", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
-            self.playerView.focusName()
-        }))
-        self.presentViewController(alertController, animated: true, completion: nil)
-    }
-    
-    private func presentTooManyPlayersAlertView() {
-        let alertController = UIAlertController(title: "Too many players", message:
-            "Maximum number of players: 6", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:nil))
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     
@@ -112,21 +81,11 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PlayerCell", forIndexPath: indexPath)
         
-        let player = self.players[indexPath.row]
+        let player = players[indexPath.row]
         cell.textLabel?.text = player.name
         cell.imageView?.image = player.image?.scale(toSize: CGSizeMake(rowHeight - 8.0, rowHeight - 8.0))
         
         return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // edit player
-        currentPlayer = self.players[indexPath.row]
-        
-        playerView.name = (currentPlayer?.name)!
-        playerView.image = (currentPlayer?.image)!
-        
-        state = .EditPlayer
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -140,7 +99,8 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         switch editingStyle {
         case .Delete:
-            self.players.removeAtIndex(indexPath.row)
+            players.removeAtIndex(indexPath.row)
+            refreshButtons()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             break
         default:
@@ -154,8 +114,26 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         let itemToMove = self.players[sourceIndexPath.row]
-        self.players.removeAtIndex(sourceIndexPath.row)
-        self.players.insert(itemToMove , atIndex: destinationIndexPath.row)
+        players.removeAtIndex(sourceIndexPath.row)
+        players.insert(itemToMove , atIndex: destinationIndexPath.row)
+    }
+    
+    
+    // MARK: - WSHPlayerViewControllerDelegate functions
+    
+    
+    func didAddPlayer(sender: WSHPlayerViewController, player: WSHPlayer) -> Int {
+        players.append(player)
+        reloadTableView()
+        
+        return players.count ?? 0
+    }
+    
+    func didEditPlayer(sender: WSHPlayerViewController, player: WSHPlayer) {
+        currentPlayer?.name = player.name
+        currentPlayer?.image = player.image
+        
+        reloadTableView()
     }
     
     
@@ -165,69 +143,25 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     @IBAction func playButtonTapped(sender: AnyObject) {
         let alertController: UIAlertController
         
-        if self.players.count > 2 {
-            alertController = UIAlertController(title: "Get ready", message:
-                "Game will start", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
-                // TODO: (foc) Start the game already
-                // TODO: (foc) Dismiss alert after time has passed
-            }))
-            
-        } else {
-            alertController = UIAlertController(title: "Not enough players", message:
-                "Bring more friends", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
-                self.state = .AddPlayer
-            }))
-        }
+        alertController = UIAlertController(title: "Get ready", message:
+            "Game will start", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+            // TODO: (foc) Start the game already
+            // TODO: (foc) Dismiss alert after time has passed
+        }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: nil))
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func doneButtonTapped(sender: AnyObject) {
-        if state == .EditPlayer {
-            if playerView.name.isEmpty {
-                presentAddNameAlertView()
-                
-            } else {
-                currentPlayer?.name = playerView.name
-                currentPlayer?.image = playerView.image
-                
-                state = .ViewPlayers
-                
-                playerView.resetToDefault()
-            }
-        } else {
-            state = .ViewPlayers
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "cellTapped" {
+            currentPlayer = players[(tableView.indexPathForCell(sender as! UITableViewCell)?.row)!]
         }
-    }
-    
-    @IBAction func addButtonTapped(sender: AnyObject) {
-        switch state {
-        case .ViewPlayers:
-            if self.players.count == 6 {
-                presentTooManyPlayersAlertView()
-            } else {
-                state = .AddPlayer
-            }
-            break
-        case .AddPlayer:
-            if self.players.count < 6 {
-                if playerView.name.isEmpty {
-                    presentAddNameAlertView()
-                } else {
-                    self.players.append(WSHPlayer(name: playerView.name, image: playerView.image))
-                    playerView.resetToDefault()
-                }
-            } else {
-                playerView.resignKeyboardIfNeeded()
-                presentTooManyPlayersAlertView()
-                self.state = .ViewPlayers
-            }
-            break
-        default:
-            break
-        }
+        let navigationController: UINavigationController = segue.destinationViewController as! UINavigationController
+        let playerViewController: WSHPlayerViewController = navigationController.viewControllers.first as! WSHPlayerViewController
+        
+        playerViewController.delegate = self
+        playerViewController.editPlayer = currentPlayer
     }
 }

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
@@ -38,6 +39,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="URF-qz-yur" kind="presentation" identifier="cellTapped" id="NCZ-9T-dvb"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
@@ -46,36 +50,21 @@
                                     <outlet property="delegate" destination="tij-l3-FRJ" id="WQD-wE-cD4"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTE-Cr-GsV" customClass="WSHPlayerView" customModule="WhistScoreHolder" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="eTE-Cr-GsV" firstAttribute="leading" secondItem="Ehh-Zu-cKP" secondAttribute="leading" id="3Jr-5B-cxe"/>
                             <constraint firstItem="IOZ-m2-Baa" firstAttribute="leading" secondItem="Ehh-Zu-cKP" secondAttribute="leading" id="JCX-Ky-QIq"/>
-                            <constraint firstAttribute="trailing" secondItem="eTE-Cr-GsV" secondAttribute="trailing" id="K7D-VF-2NV"/>
-                            <constraint firstItem="eTE-Cr-GsV" firstAttribute="top" secondItem="uUB-xN-pcj" secondAttribute="bottom" id="PQs-oO-5D4"/>
                             <constraint firstAttribute="trailing" secondItem="IOZ-m2-Baa" secondAttribute="trailing" id="UOC-Mo-YNr"/>
                             <constraint firstItem="CLD-a9-Bxu" firstAttribute="top" secondItem="IOZ-m2-Baa" secondAttribute="bottom" id="Wtq-JU-1eE"/>
-                            <constraint firstItem="CLD-a9-Bxu" firstAttribute="top" secondItem="eTE-Cr-GsV" secondAttribute="bottom" id="mCe-7Q-68v"/>
                             <constraint firstItem="IOZ-m2-Baa" firstAttribute="top" secondItem="uUB-xN-pcj" secondAttribute="bottom" id="yuG-ei-gVq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Old-TN-qTk">
-                        <leftBarButtonItems>
-                            <barButtonItem systemItem="add" id="ndB-9Q-OrM">
-                                <connections>
-                                    <action selector="addButtonTapped:" destination="tij-l3-FRJ" id="pVB-nx-Neh"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="done" id="OXj-so-XC8">
-                                <connections>
-                                    <action selector="doneButtonTapped:" destination="tij-l3-FRJ" id="djn-W6-6Kv"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="ndB-9Q-OrM">
+                            <connections>
+                                <segue destination="URF-qz-yur" kind="presentation" identifier="addPlayer" id="ZaL-4F-bhK"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="play" id="0GF-kk-fwS">
                             <connections>
                                 <action selector="playButtonTapped:" destination="tij-l3-FRJ" id="6DA-I0-AjH"/>
@@ -86,13 +75,74 @@
                         <outlet property="addBarButtonItem" destination="ndB-9Q-OrM" id="RrA-2T-DLT"/>
                         <outlet property="doneBarButtonItem" destination="OXj-so-XC8" id="BXc-h6-wu4"/>
                         <outlet property="playBarButtonItem" destination="0GF-kk-fwS" id="3Oe-l3-ce6"/>
-                        <outlet property="playerView" destination="eTE-Cr-GsV" id="5pD-Tf-lvD"/>
                         <outlet property="tableView" destination="IOZ-m2-Baa" id="KQb-dH-5qk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KnT-Tt-V6O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-148" y="-760"/>
+            <point key="canvasLocation" x="-1136" y="-2100"/>
+        </scene>
+        <!--Player View Controller-->
+        <scene sceneID="8xi-eM-8cp">
+            <objects>
+                <viewController storyboardIdentifier="Player View Controller" id="Uaj-pE-gpD" customClass="WSHPlayerViewController" customModule="WhistScoreHolder" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Ma-99-WdP"/>
+                        <viewControllerLayoutGuide type="bottom" id="ovI-pK-uvI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="x7S-HJ-O0y">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTE-Cr-GsV" customClass="WSHPlayerView" customModule="WhistScoreHolder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="eTE-Cr-GsV" secondAttribute="trailing" constant="-20" id="0n4-CX-Bec"/>
+                            <constraint firstItem="eTE-Cr-GsV" firstAttribute="height" secondItem="x7S-HJ-O0y" secondAttribute="height" id="BDm-M2-dPb"/>
+                            <constraint firstItem="eTE-Cr-GsV" firstAttribute="centerY" secondItem="x7S-HJ-O0y" secondAttribute="centerY" id="J9G-tv-m8f"/>
+                            <constraint firstItem="eTE-Cr-GsV" firstAttribute="leading" secondItem="x7S-HJ-O0y" secondAttribute="leadingMargin" constant="-20" id="dkB-qV-mfK"/>
+                            <constraint firstItem="eTE-Cr-GsV" firstAttribute="width" secondItem="x7S-HJ-O0y" secondAttribute="width" id="hOL-SQ-bsj"/>
+                            <constraint firstItem="eTE-Cr-GsV" firstAttribute="centerX" secondItem="x7S-HJ-O0y" secondAttribute="centerX" id="o2v-gb-2ey"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="0n4-CX-Bec"/>
+                                <exclude reference="dkB-qV-mfK"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="ib7-Se-Wxk">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="7Vp-jY-PkM">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="Uaj-pE-gpD" id="6Ca-HE-Mt5"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="OXj-so-XC8">
+                                <connections>
+                                    <action selector="addButtonTapped:" destination="Uaj-pE-gpD" id="mpb-Vn-Nac"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="done" id="7sa-BQ-rhn">
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="Uaj-pE-gpD" id="8zb-KU-per"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addButtonItem" destination="OXj-so-XC8" id="GkL-25-hxN"/>
+                        <outlet property="doneButtonItem" destination="7sa-BQ-rhn" id="obt-3H-eOS"/>
+                        <outlet property="playerView" destination="eTE-Cr-GsV" id="IBa-8l-dsA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2LH-5X-JXf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1136" y="-1342"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VA0-fN-hI3">
@@ -110,7 +160,28 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ffp-FC-ngY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-862" y="-760"/>
+            <point key="canvasLocation" x="-1992" y="-2100"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YnT-jr-hQ0">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="URF-qz-yur" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="o5R-K9-c38">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Uaj-pE-gpD" kind="relationship" relationship="rootViewController" id="6Wp-oW-aQh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qdd-Vo-cqp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1992" y="-1342"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="NCZ-9T-dvb"/>
+    </inferredMetricsTieBreakers>
 </document>

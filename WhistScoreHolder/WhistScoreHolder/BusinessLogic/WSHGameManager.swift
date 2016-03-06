@@ -6,6 +6,9 @@
 //  Copyright © 2016 WSHGmbH. All rights reserved.
 //
 
+let kMIN_NUMBER_OF_PLAYERS = 3
+let kMAX_NUMBER_OF_PLAYERS = 6
+
 enum WSHGameManagerState {
     case Idle
     case Shuffling
