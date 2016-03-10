@@ -7,42 +7,14 @@
 //
 import UIKit
 
-enum WSHGameBetChoice { //move this somewhere else?
-    case One
-    case Two
-    case Three
-    case Four
-    case Five
-    case Six
-    case Seven
-    case Eight
-    
-    var intValue: Int {
-        switch self {
-        case .One:
-            return 1
-        case .Two:
-            return 2
-        case .Three:
-            return 3
-        case .Four:
-            return 4
-        case .Five:
-            return 5
-        case .Six:
-            return 6
-        case .Seven:
-            return 7
-        case .Eight:
-            return 8
-        }
-    }
-}
-
 class WSHGame {
     
     private(set) var players:[WSHPlayer]
     private(set) var rounds: [WSHRound] = []
+    
+    private(set) var currentRound: WSHRound?
+    
+    private(set) var playerScores: [WSHPlayer: Int] = [:]
     
     var totalNumberOfRounds: Int {
         get {
@@ -54,7 +26,19 @@ class WSHGame {
         self.players = players
         
         self.createRounds()
+        self.initScores()
     }
+    
+    func advanceToNextRound() {
+        if self.currentRound == nil {
+            self.currentRound = self.rounds.first
+        } else {
+            let indexOfCurrentRound = self.rounds.indexOf(self.currentRound!)!
+            self.currentRound = self.rounds[indexOfCurrentRound + 1]
+        }
+    }
+    
+    //MARK:- Private
     
     private func createRounds() {
         //create round objects based on number of players
@@ -75,7 +59,7 @@ class WSHGame {
         self.rounds.appendContentsOf(self.createRounds(self.players.count, ofType: .One))
     }
     
-    private func createRounds(numberOfRounds: Int, ofType type: WSHGameBetChoice) -> [WSHRound] {
+    private func createRounds(numberOfRounds: Int, ofType type: WSHRoundType) -> [WSHRound] {
         var rounds: [WSHRound] = []
         
         for _ in 0..<numberOfRounds {
@@ -84,5 +68,11 @@ class WSHGame {
         }
         
         return rounds
+    }
+    
+    private func initScores() {
+        for player in self.players {
+            self.playerScores[player] = 0
+        }
     }
 }

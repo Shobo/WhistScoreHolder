@@ -6,13 +6,127 @@
 //  Copyright © 2016 WSHGmbH. All rights reserved.
 //
 
-class WSHRound {
+import Foundation
+
+class WSHRound: NSObject {
     
-    private(set) var roundType: WSHGameBetChoice
-    var roundInformation: [WSHPlayer: (bets: WSHGameBetChoice, hands: WSHGameBetChoice)] = [:]
+    private(set) var roundType: WSHRoundType
+    var roundInformation: [WSHPlayer: (bet: WSHGameBetChoice, hands: WSHGameBetChoice)] = [:]
+    var players: [WSHPlayer] = [] {   //array of players in current round, arranged in order
+        didSet {
+            self.currentBettingPlayer = self.players.first  //when initializing the players array, the first player is the current betting one
+        }
+    }
+    var currentBettingPlayer: WSHPlayer?
     
-    init(roundType: WSHGameBetChoice) {
+    var bettedHands: Int {
+        get {
+            var numberOfHands = 0
+            
+            for (_, (bet: bet, hands: _)) in self.roundInformation {
+                numberOfHands += bet.intValue
+            }
+            
+            return numberOfHands
+        }
+    }
+    
+    var takenHands: Int {
+        get {
+            var numberOfHands = 0
+            
+            for (_, (bet: _, hands: hands)) in self.roundInformation {
+                numberOfHands += hands.intValue
+            }
+            
+            return numberOfHands
+        }
+    }
+    
+    var isRoundComplete: Bool {
+        get {
+            if self.players.count == 0 || !self.areAllBetsPlaced {
+                return false
+            }
+            
+            var handsCounter = 0
+            
+            for player in self.players {
+                handsCounter += self.roundInformation[player]!.hands.intValue
+            }
+            
+            return handsCounter == self.roundType.intValue  //round is complete if all hands are declared
+        }
+    }
+    
+    var areAllBetsPlaced: Bool {
+        get {
+            if self.players.count == 0 {
+                return false
+            }
+            
+            for player in self.players {
+                if self.roundInformation[player] == nil {
+                    return false
+                }
+            }
+            
+            return true
+        }
+    }
+    
+    init(roundType: WSHRoundType) {
         self.roundType = roundType
     }
     
+    func addBet(bet: WSHGameBetChoice, forPlayer player: WSHPlayer) {
+        //check if bet is added for currentBettingPlayer and switch to next betting player
+        if player == self.currentBettingPlayer {
+            self.roundInformation[player] = (bet: bet, hands: WSHGameBetChoice.Zero)
+            self.currentBettingPlayer = self.players[self.players.indexOf(player)! + 1]
+        }
+    }
+    
+    func addHandForPlayer(player: WSHPlayer) {
+        //increment "hands" for current player
+        if self.roundInformation[player] != nil {
+            let currentHands = self.roundInformation[player]!.hands.intValue
+            self.roundInformation[player]?.bet = WSHGameBetChoice(rawValue: currentHands + 1)!
+        }
+    }
+    
+    func excludedGameChoiceForPlayer(player: WSHPlayer) -> WSHGameBetChoice? {
+        if !self.isPlayerLastInCurrentRound(player) {
+            return nil
+        }
+        let notAllowedChoice = abs(self.currentTotalOfBetsAndHands().betsNumber - self.roundType.intValue)
+        
+        if 0..<self.roundType.intValue + 1 ~= notAllowedChoice {    //if notAllowedChoice is in range of 0..roundType then return the excluded choice
+            return WSHGameBetChoice(rawValue: notAllowedChoice)
+        }
+        
+        return nil
+    }
+    
+    func didPlayerAlreadyBetInCurrentRound(player: WSHPlayer) -> Bool { //rename and maybe move this?
+        return self.roundInformation[player]?.bet != nil
+    }
+    
+    // MARK:- Private
+    
+    private func currentTotalOfBetsAndHands() -> (betsNumber: Int, handsNumber: Int) {
+        var totalBets = 0
+        var totalHands = 0
+        
+        for (_, (bet: bet, hands: hands)) in self.roundInformation {
+            totalBets += bet.intValue
+            totalHands += hands.intValue
+        }
+        
+        return (totalBets, totalHands)
+    }
+    
+    private func isPlayerLastInCurrentRound(player: WSHPlayer) -> Bool {
+        return self.players.last == player
+    }
 }
