@@ -160,7 +160,7 @@ class WSHGameManager {
     
     //MARK:- Utils
     
-    private func reorderList<T: Equatable>(list: [T], index: Int) -> [T] {  //returns the ordered list starting from given index
+    private func reorderList<T>(list: [T], index: Int) -> [T] {  //returns the ordered list starting from given index
         var i = 0
         let separated = list.split(2, allowEmptySlices: true) { (_) -> Bool in
             return i++ == index

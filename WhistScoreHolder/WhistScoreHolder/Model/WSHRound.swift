@@ -11,13 +11,15 @@ import Foundation
 class WSHRound: NSObject {
     
     private(set) var roundType: WSHRoundType
-    var roundInformation: [WSHPlayer: (bet: WSHGameBetChoice, hands: WSHGameBetChoice)] = [:]
+    private(set) var roundInformation: [WSHPlayer: (bet: WSHGameBetChoice, hands: WSHGameBetChoice)] = [:]
+    private(set) var playerScores: [WSHPlayer: Int] = [:]
     var players: [WSHPlayer] = [] {   //array of players in current round, arranged in order
         didSet {
             self.currentBettingPlayer = self.players.first  //when initializing the players array, the first player is the current betting one
+            self.initializePlayerScores()
         }
     }
-    var currentBettingPlayer: WSHPlayer?
+    private(set) var currentBettingPlayer: WSHPlayer?
     
     var bettedHands: Int {
         get {
@@ -93,6 +95,10 @@ class WSHRound: NSObject {
             let currentHands = self.roundInformation[player]!.hands.intValue
             self.roundInformation[player]?.bet = WSHGameBetChoice(rawValue: currentHands + 1)!
         }
+        
+        if self.isRoundComplete {
+            self.calculateScores()
+        }
     }
     
     func excludedGameChoiceForPlayer(player: WSHPlayer) -> WSHGameBetChoice? {
@@ -128,5 +134,40 @@ class WSHRound: NSObject {
     
     private func isPlayerLastInCurrentRound(player: WSHPlayer) -> Bool {
         return self.players.last == player
+    }
+    
+    private func calculateScores() {
+        for player in self.players {
+            self.playerScores[player] = self.pointsForPlayer(player)
+        }
+    }
+    
+    private func pointsForPlayer(player: WSHPlayer) -> Int {
+        var points = 0
+        
+        if self.playerDidGuessCorrectly(player) {
+            points += kCORRECT_GUESS_POINTS
+            points += self.roundInformation[player]!.bet.intValue
+        } else {
+            points -= abs(self.roundInformation[player]!.bet.intValue - self.roundInformation[player]!.hands.intValue)
+        }
+        
+        return points
+    }
+    
+    private func playerDidGuessCorrectly(player: WSHPlayer) -> Bool {
+        let playerInformation = self.roundInformation[player]
+        
+        if playerInformation == nil {
+            return false
+        } else {
+            return playerInformation!.bet.intValue == playerInformation!.hands.intValue
+        }
+    }
+    
+    private func initializePlayerScores() {
+        for player in self.players {
+            self.playerScores[player] = 0
+        }
     }
 }

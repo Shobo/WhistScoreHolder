@@ -9,6 +9,9 @@
 let kMIN_NUMBER_OF_PLAYERS = 3
 let kMAX_NUMBER_OF_PLAYERS = 6
 
+let kCORRECT_GUESS_POINTS = 5
+let KBONUS_VALUE = 10
+
 enum WSHGameManagerErrorType: ErrorType, CustomStringConvertible {
     case InvalidPlayers
     case WrongActionForCurrentGameState(gameState: WSHGameManagerState)

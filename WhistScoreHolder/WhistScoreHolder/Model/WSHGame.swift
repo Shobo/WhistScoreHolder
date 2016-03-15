@@ -11,10 +11,8 @@ class WSHGame {
     
     private(set) var players:[WSHPlayer]
     private(set) var rounds: [WSHRound] = []
-    
     private(set) var currentRound: WSHRound?
-    
-    private(set) var playerScores: [WSHPlayer: Int] = [:]
+    private(set) var totalPlayerScores: [WSHPlayer: Int] = [:]
     
     var totalNumberOfRounds: Int {
         get {
@@ -26,13 +24,14 @@ class WSHGame {
         self.players = players
         
         self.createRounds()
-        self.initScores()
+        self.initializePlayerScores()
     }
     
     func advanceToNextRound() {
         if self.currentRound == nil {
             self.currentRound = self.rounds.first
         } else {
+            self.addScoresFromRound(self.currentRound!)
             let indexOfCurrentRound = self.rounds.indexOf(self.currentRound!)!
             self.currentRound = self.rounds[indexOfCurrentRound + 1]
         }
@@ -70,9 +69,16 @@ class WSHGame {
         return rounds
     }
     
-    private func initScores() {
+    private func initializePlayerScores() {
         for player in self.players {
-            self.playerScores[player] = 0
+            self.totalPlayerScores[player] = 0
         }
+    }
+    
+    private func addScoresFromRound(round: WSHRound) {
+        for player in self.players {
+            self.totalPlayerScores[player]! += round.playerScores[player]!
+        }
+        //check for BONUS points
     }
 }
