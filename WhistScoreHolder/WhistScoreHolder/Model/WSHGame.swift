@@ -13,6 +13,7 @@ class WSHGame {
     private(set) var rounds: [WSHRound] = []
     private(set) var currentRound: WSHRound?
     private(set) var totalPlayerScores: [WSHPlayer: Int] = [:]
+    private var counterForPlayerRightGuesses: [WSHPlayer: Int] = [:]
     
     var totalNumberOfRounds: Int {
         get {
@@ -25,6 +26,7 @@ class WSHGame {
         
         self.createRounds()
         self.initializePlayerScores()
+        self.resetCounterForPlayerRightGuesses()
     }
     
     func advanceToNextRound() {
@@ -75,10 +77,45 @@ class WSHGame {
         }
     }
     
+    private func resetCounterForPlayerRightGuesses() {
+        for player in self.players {
+            self.counterForPlayerRightGuesses[player] = 0
+        }
+    }
+    
     private func addScoresFromRound(round: WSHRound) {
         for player in self.players {
             self.totalPlayerScores[player]! += round.playerScores[player]!
         }
+        
         //check for BONUS points
+        if round.roundType == .One {
+            self.resetCounterForPlayerRightGuesses()
+        } else {
+            for player in self.players {
+                if round.playerScores[player]! > 0 {    //player did guess correctly
+                    if self.counterForPlayerRightGuesses[player]! >= 0 {
+                        self.counterForPlayerRightGuesses[player]!++
+                    } else {
+                        self.counterForPlayerRightGuesses[player] = 1
+                    }
+                    
+                } else {    //player did not guess correctly
+                    if self.counterForPlayerRightGuesses[player]! <= 0 {
+                        self.counterForPlayerRightGuesses[player]!--
+                    } else {
+                        self.counterForPlayerRightGuesses[player] = -1
+                    }
+                }
+                
+                if self.counterForPlayerRightGuesses[player]! == 5 {
+                    self.counterForPlayerRightGuesses[player] = 0
+                    self.totalPlayerScores[player]! += kBONUS_VALUE
+                } else if self.counterForPlayerRightGuesses[player]! == -5 {
+                    self.counterForPlayerRightGuesses[player] = 0
+                    self.totalPlayerScores[player]! -= kBONUS_VALUE
+                }
+            }
+        }
     }
 }
