@@ -15,6 +15,7 @@
 		59E867941C861ED6007C6257 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867931C861ED6007C6257 /* UIImage+Additions.swift */; };
 		59E867C51C88DB6E007C6257 /* WSHPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867C41C88DB6E007C6257 /* WSHPlayerViewController.swift */; };
 		59E867C91C88EA41007C6257 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867C81C88EA41007C6257 /* UIAlertController+Additions.swift */; };
+		D28910271C9B414E00C50932 /* WhistScoreHolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28910261C9B414E00C50932 /* WhistScoreHolderTests.swift */; };
 		D2BBD86F1C91FCFE00A7D7F2 /* WSHDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BBD86E1C91FCFE00A7D7F2 /* WSHDefinitions.swift */; };
 		D2CB75CF1C838AA000D7BB0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */; };
 		D2CB75D11C838AA000D7BB0D /* WSHViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75D01C838AA000D7BB0D /* WSHViewController.swift */; };
@@ -27,6 +28,16 @@
 		D2CB75F31C83AA0F00D7BB0D /* WSHRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75F21C83AA0F00D7BB0D /* WSHRound.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D28910291C9B414E00C50932 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2CB75C31C838AA000D7BB0D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2CB75CA1C838AA000D7BB0D;
+			remoteInfo = WhistScoreHolder;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		594BEA1F1C83B813007D296D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5961A9CB1C83C02200FD186F /* WSHPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHPlayerView.swift; path = View/WSHPlayerView.swift; sourceTree = "<group>"; };
@@ -36,6 +47,9 @@
 		59E867931C861ED6007C6257 /* UIImage+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Additions.swift"; path = "WhistScoreHolder/Additions/UIImage+Additions.swift"; sourceTree = SOURCE_ROOT; };
 		59E867C41C88DB6E007C6257 /* WSHPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHPlayerViewController.swift; path = Controller/WSHPlayerViewController.swift; sourceTree = "<group>"; };
 		59E867C81C88EA41007C6257 /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIAlertController+Additions.swift"; path = "WhistScoreHolder/Additions/UIAlertController+Additions.swift"; sourceTree = SOURCE_ROOT; };
+		D28910241C9B414E00C50932 /* WhistScoreHolderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhistScoreHolderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D28910261C9B414E00C50932 /* WhistScoreHolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhistScoreHolderTests.swift; sourceTree = "<group>"; };
+		D28910281C9B414E00C50932 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2BBD86E1C91FCFE00A7D7F2 /* WSHDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHDefinitions.swift; path = WhistScoreHolder/Additions/WSHDefinitions.swift; sourceTree = SOURCE_ROOT; };
 		D2CB75CB1C838AA000D7BB0D /* WhistScoreHolder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhistScoreHolder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +65,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D28910211C9B414E00C50932 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2CB75C81C838AA000D7BB0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -73,10 +94,20 @@
 			path = BusinessLogic/Additions;
 			sourceTree = "<group>";
 		};
+		D28910251C9B414E00C50932 /* WhistScoreHolderTests */ = {
+			isa = PBXGroup;
+			children = (
+				D28910261C9B414E00C50932 /* WhistScoreHolderTests.swift */,
+				D28910281C9B414E00C50932 /* Info.plist */,
+			);
+			path = WhistScoreHolderTests;
+			sourceTree = "<group>";
+		};
 		D2CB75C21C838AA000D7BB0D = {
 			isa = PBXGroup;
 			children = (
 				D2CB75CD1C838AA000D7BB0D /* WhistScoreHolder */,
+				D28910251C9B414E00C50932 /* WhistScoreHolderTests */,
 				D2CB75CC1C838AA000D7BB0D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CB75CB1C838AA000D7BB0D /* WhistScoreHolder.app */,
+				D28910241C9B414E00C50932 /* WhistScoreHolderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +187,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D28910231C9B414E00C50932 /* WhistScoreHolderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D289102B1C9B414E00C50932 /* Build configuration list for PBXNativeTarget "WhistScoreHolderTests" */;
+			buildPhases = (
+				D28910201C9B414E00C50932 /* Sources */,
+				D28910211C9B414E00C50932 /* Frameworks */,
+				D28910221C9B414E00C50932 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D289102A1C9B414E00C50932 /* PBXTargetDependency */,
+			);
+			name = WhistScoreHolderTests;
+			productName = WhistScoreHolderTests;
+			productReference = D28910241C9B414E00C50932 /* WhistScoreHolderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D2CB75CA1C838AA000D7BB0D /* WhistScoreHolder */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D2CB75DD1C838AA000D7BB0D /* Build configuration list for PBXNativeTarget "WhistScoreHolder" */;
@@ -183,6 +233,10 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = WSHGmbH;
 				TargetAttributes = {
+					D28910231C9B414E00C50932 = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = D2CB75CA1C838AA000D7BB0D;
+					};
 					D2CB75CA1C838AA000D7BB0D = {
 						CreatedOnToolsVersion = 7.2.1;
 					};
@@ -202,11 +256,19 @@
 			projectRoot = "";
 			targets = (
 				D2CB75CA1C838AA000D7BB0D /* WhistScoreHolder */,
+				D28910231C9B414E00C50932 /* WhistScoreHolderTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D28910221C9B414E00C50932 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2CB75C91C838AA000D7BB0D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -221,6 +283,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D28910201C9B414E00C50932 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D28910271C9B414E00C50932 /* WhistScoreHolderTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2CB75C71C838AA000D7BB0D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -244,6 +314,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D289102A1C9B414E00C50932 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2CB75CA1C838AA000D7BB0D /* WhistScoreHolder */;
+			targetProxy = D28910291C9B414E00C50932 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		594BEA1E1C83B813007D296D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -264,6 +342,32 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D289102C1C9B414E00C50932 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = NO;
+				INFOPLIST_FILE = WhistScoreHolderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = wshgmbh.WhistScoreHolderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhistScoreHolder.app/WhistScoreHolder";
+			};
+			name = Debug;
+		};
+		D289102D1C9B414E00C50932 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = NO;
+				INFOPLIST_FILE = WhistScoreHolderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = wshgmbh.WhistScoreHolderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhistScoreHolder.app/WhistScoreHolder";
+			};
+			name = Release;
+		};
 		D2CB75DB1C838AA000D7BB0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -351,6 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = WhistScoreHolder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wshgmbh.WhistScoreHolder;
@@ -362,6 +467,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = WhistScoreHolder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wshgmbh.WhistScoreHolder;
@@ -372,6 +478,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D289102B1C9B414E00C50932 /* Build configuration list for PBXNativeTarget "WhistScoreHolderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D289102C1C9B414E00C50932 /* Debug */,
+				D289102D1C9B414E00C50932 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D2CB75C61C838AA000D7BB0D /* Build configuration list for PBXProject "WhistScoreHolder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

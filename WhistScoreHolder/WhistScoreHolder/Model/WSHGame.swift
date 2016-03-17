@@ -34,8 +34,13 @@ class WSHGame {
             self.currentRound = self.rounds.first
         } else {
             self.addScoresFromRound(self.currentRound!)
-            let indexOfCurrentRound = self.rounds.indexOf(self.currentRound!)!
-            self.currentRound = self.rounds[indexOfCurrentRound + 1]
+            
+            if self.currentRound != self.rounds.last {
+                let indexOfCurrentRound = self.rounds.indexOf(self.currentRound!)!
+                self.currentRound = self.rounds[indexOfCurrentRound + 1]
+            } else {
+                self.currentRound = nil
+            }
         }
     }
     

@@ -13,5 +13,4 @@ protocol WSHGameManagerDelegate: class {
     func willBeginRoundOfType(type: WSHRoundType, startingPlayer player: WSHPlayer)
     func playerTurnToBet(player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?)
     func didFinishBettingInRound(round: WSHRound)
-    func didFinishRound(round: WSHRound)
 }

@@ -85,7 +85,12 @@ class WSHRound: NSObject {
         //check if bet is added for currentBettingPlayer and switch to next betting player
         if player == self.currentBettingPlayer {
             self.roundInformation[player] = (bet: bet, hands: WSHGameBetChoice.Zero)
-            self.currentBettingPlayer = self.players[self.players.indexOf(player)! + 1]
+            
+            if player != self.players.last {
+                self.currentBettingPlayer = self.players[self.players.indexOf(player)! + 1]
+            } else {
+                self.currentBettingPlayer = nil
+            }
         }
     }
     
@@ -93,7 +98,7 @@ class WSHRound: NSObject {
         //increment "hands" for current player
         if self.roundInformation[player] != nil {
             let currentHands = self.roundInformation[player]!.hands.intValue
-            self.roundInformation[player]?.bet = WSHGameBetChoice(rawValue: currentHands + 1)!
+            self.roundInformation[player]?.hands = WSHGameBetChoice(rawValue: currentHands + 1)!
         }
         
         if self.isRoundComplete {

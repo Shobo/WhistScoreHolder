@@ -23,6 +23,9 @@ class WSHGameManager {
     // MARK:- Starting and resetting
     
     func startGameWithPlayers(players: [WSHPlayer]) {
+        if self.gameState != .Idle {
+            return  //cannot start game when game in progress
+        }
         if !(kMIN_NUMBER_OF_PLAYERS..<kMAX_NUMBER_OF_PLAYERS + 1).contains(players.count) {
             return  //throw error if number of players is not between 3 and 6
         }
@@ -73,16 +76,14 @@ class WSHGameManager {
         }
     }
     
-    func player(player: WSHPlayer, didTake taken: WSHGameBetChoice) throws {
-        //after saving the taken hand inside the current round, check if the rounds is completed. if it is, send the didFinishRound: delegate call + the willBeginRoundOfType:startingPlayer: method
+    func playerDidTakeHand(player: WSHPlayer) throws {
+        //after saving the taken hand inside the current round, check if the rounds is completed. if it is, send the willBeginRoundOfType:startingPlayer: delegate method
         do {
-            try self.validateHand(taken, forPlayer: player)
+            try self.validateHandForPlayer(player)
             
             self.currentGame!.currentRound!.addHandForPlayer(player)
             
-            //check if round is complete; implemenet check method for if below
             if self.currentGame!.currentRound!.isRoundComplete {
-                self.delegate?.didFinishRound(self.currentGame!.currentRound!)
                 self.advanceToNextRound()
             }
         } catch let error {
@@ -109,6 +110,8 @@ class WSHGameManager {
             self.delegate?.willBeginRoundOfType(self.currentGame!.currentRound!.roundType, startingPlayer: self.currentGame!.currentRound!.players.first!)
         } else {
             //game is over
+            self.delegate?.gameManager(self, didEndGame: self.currentGame!)
+            self.resetAllData()
         }
     }
     
@@ -144,12 +147,12 @@ class WSHGameManager {
         }
     }
     
-    private func validateHand(hand: WSHGameBetChoice, forPlayer player: WSHPlayer) throws {
+    private func validateHandForPlayer(player: WSHPlayer) throws {
         if self.gameState != .Taking {
             //throw error; user cannot take unlease in taking mode
         }
         //throw error if taken count exceeds current round type
-        if self.currentGame!.currentRound!.takenHands + hand.intValue >= self.currentGame!.currentRound!.roundType.intValue {
+        if self.currentGame!.currentRound!.takenHands + 1 >= self.currentGame!.currentRound!.roundType.intValue {
             
         }
         //throw error if player is not in game
