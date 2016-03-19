@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         UIApplication.sharedApplication().idleTimerDisabled = true
+        srand48(Int(NSDate().timeIntervalSinceReferenceDate))
         
         return true
     }
