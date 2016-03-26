@@ -16,6 +16,9 @@ protocol WSHPlayerViewControllerDelegate: class {
 class WSHPlayerViewController: UIViewController {
     @IBOutlet private weak var doneButtonItem: UIBarButtonItem!
     @IBOutlet private weak var addButtonItem: UIBarButtonItem!
+    @IBOutlet private weak var leftDoneButtonItem: UIBarButtonItem!
+    @IBOutlet private weak var cancelButtonItem: UIBarButtonItem!
+    
     @IBOutlet weak var playerView: WSHPlayerView!
     
     weak var delegate: WSHPlayerViewControllerDelegate?
@@ -32,16 +35,19 @@ class WSHPlayerViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationItem.rightBarButtonItems = []
+        navigationItem.leftBarButtonItems = []
+        
         if editPlayer != nil {
-            navigationItem.rightBarButtonItems = []
             navigationItem.rightBarButtonItem = doneButtonItem
+            navigationItem.leftBarButtonItem = cancelButtonItem
             
             playerView.name = editPlayer?.name ?? ""
             playerView.image = editPlayer?.image ?? UIImage.randomColorImage(withSize: CGSizeZero)
             
         } else {
-            navigationItem.rightBarButtonItems = []
             navigationItem.rightBarButtonItem = addButtonItem
+            navigationItem.leftBarButtonItem = leftDoneButtonItem
         }
     }
     

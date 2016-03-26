@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3ID-D8-J5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3ID-D8-J5Q">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -34,7 +34,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -76,11 +76,107 @@
                         <outlet property="doneBarButtonItem" destination="OXj-so-XC8" id="BXc-h6-wu4"/>
                         <outlet property="playBarButtonItem" destination="0GF-kk-fwS" id="3Oe-l3-ce6"/>
                         <outlet property="tableView" destination="IOZ-m2-Baa" id="KQb-dH-5qk"/>
+                        <segue destination="JMw-5V-dHk" kind="show" identifier="presentGame" id="pU6-rr-QZq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KnT-Tt-V6O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1136" y="-2100"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="pOS-OG-Si7">
+            <objects>
+                <viewController id="JMw-5V-dHk" customClass="WSHGameViewController" customModule="WhistScoreHolder" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qFJ-h1-RdE"/>
+                        <viewControllerLayoutGuide type="bottom" id="Zr6-1y-nyd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XPW-K7-aMU">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Nfn-AZ-u3e">
+                                <rect key="frame" x="164" y="0.0" width="436" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="436" id="vjo-Fv-gIa"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aaf-KN-CjU">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="JMw-5V-dHk" id="b3N-Q8-Zx3"/>
+                                    <outlet property="delegate" destination="JMw-5V-dHk" id="zFD-rh-rwP"/>
+                                </connections>
+                            </collectionView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rcd-bZ-ZCW">
+                                <rect key="frame" x="0.0" y="0.0" width="164" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="164" id="qtB-Ki-ITw"/>
+                                </constraints>
+                                <color key="sectionIndexBackgroundColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PlayerCell" id="agg-4d-PkX">
+                                        <rect key="frame" x="0.0" y="28" width="164" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="agg-4d-PkX" id="zGf-lb-5KY">
+                                            <rect key="frame" x="0.0" y="0.0" width="164" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="JMw-5V-dHk" id="NhQ-Ti-1bT"/>
+                                    <outlet property="delegate" destination="JMw-5V-dHk" id="yZV-bM-d0s"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="rcd-bZ-ZCW" firstAttribute="left" secondItem="XPW-K7-aMU" secondAttribute="left" placeholder="YES" id="1El-lP-8qR"/>
+                            <constraint firstItem="Zr6-1y-nyd" firstAttribute="top" secondItem="Nfn-AZ-u3e" secondAttribute="bottom" id="3qJ-eh-Fv4"/>
+                            <constraint firstItem="Nfn-AZ-u3e" firstAttribute="top" secondItem="qFJ-h1-RdE" secondAttribute="bottom" id="FgI-2Z-lvH"/>
+                            <constraint firstItem="Zr6-1y-nyd" firstAttribute="top" secondItem="rcd-bZ-ZCW" secondAttribute="bottom" id="GoZ-tc-Q3M"/>
+                            <constraint firstItem="Nfn-AZ-u3e" firstAttribute="leading" secondItem="rcd-bZ-ZCW" secondAttribute="trailing" id="Nfd-vn-v27"/>
+                            <constraint firstItem="rcd-bZ-ZCW" firstAttribute="top" secondItem="qFJ-h1-RdE" secondAttribute="bottom" id="lvk-pk-uRd"/>
+                            <constraint firstAttribute="trailing" secondItem="Nfn-AZ-u3e" secondAttribute="trailing" id="pXB-g3-cOF"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="aNW-Ga-RbY">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="2Nc-ba-Gzc">
+                            <connections>
+                                <action selector="closeButtonTapped:" destination="JMw-5V-dHk" id="eHw-cf-XVC"/>
+                            </connections>
+                        </barButtonItem>
+                        <view key="titleView" contentMode="scaleToFill" id="04F-ov-inP">
+                            <rect key="frame" x="180" y="5.5" width="240" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="compose" id="IQ0-Oy-NUb"/>
+                            <barButtonItem systemItem="action" id="YfI-ZY-tFB"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="actionButton" destination="YfI-ZY-tFB" id="TEY-30-qDN"/>
+                        <outlet property="collectionViewObject" destination="Nfn-AZ-u3e" id="krd-lG-d6Q"/>
+                        <outlet property="collectionViewWidth" destination="vjo-Fv-gIa" id="HeS-fY-YBD"/>
+                        <outlet property="scoreButton" destination="IQ0-Oy-NUb" id="1qo-e0-JQR"/>
+                        <outlet property="tableViewObject" destination="rcd-bZ-ZCW" id="hej-Sc-G8z"/>
+                        <outlet property="tableViewWidth" destination="qtB-Ki-ITw" id="cpk-LE-kTA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cKa-jU-E9I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-448" y="-2100"/>
         </scene>
         <!--Player View Controller-->
         <scene sceneID="8xi-eM-8cp">
@@ -116,11 +212,18 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="ib7-Se-Wxk">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="7Vp-jY-PkM">
-                            <connections>
-                                <action selector="cancelButtonTapped:" destination="Uaj-pE-gpD" id="6Ca-HE-Mt5"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="cancel" id="7Vp-jY-PkM">
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="Uaj-pE-gpD" id="6Ca-HE-Mt5"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="done" id="uoh-v1-HOP">
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="Uaj-pE-gpD" id="tHc-Lm-YhQ"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="OXj-so-XC8">
                                 <connections>
@@ -136,7 +239,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addButtonItem" destination="OXj-so-XC8" id="GkL-25-hxN"/>
+                        <outlet property="cancelButtonItem" destination="7Vp-jY-PkM" id="JmI-sN-tru"/>
                         <outlet property="doneButtonItem" destination="7sa-BQ-rhn" id="obt-3H-eOS"/>
+                        <outlet property="leftDoneButtonItem" destination="uoh-v1-HOP" id="Zee-85-9aD"/>
                         <outlet property="playerView" destination="eTE-Cr-GsV" id="IBa-8l-dsA"/>
                     </connections>
                 </viewController>

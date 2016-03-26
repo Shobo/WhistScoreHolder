@@ -29,16 +29,17 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
         super.viewWillAppear(animated)
         
         currentPlayer = nil
-        rowHeight = min(tableView.frame.height / 6.0, 80.0)
+        rowHeight = min(tableView.frame.height / 6.0, kMinRowHeight)
         tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
-        rowHeight = min(size.height / 6.0, 80.0)
+        rowHeight = min(tableView.frame.height / 6.0, kMinRowHeight)
         tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
     }
+    
     
     // MARK: - Private functions
     
@@ -62,6 +63,13 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
         tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
     }
     
+    private func setupPlayerViewController(from navigationController: UINavigationController) {
+        let playerViewController: WSHPlayerViewController = navigationController.viewControllers.first as! WSHPlayerViewController
+        
+        playerViewController.delegate = self
+        playerViewController.editPlayer = currentPlayer
+    }
+    
     
     // MARK: - UITableView DataSource & Delegate
     
@@ -83,7 +91,7 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
         
         let player = players[indexPath.row]
         cell.textLabel?.text = player.name
-        cell.imageView?.image = player.image?.scale(toSize: CGSizeMake(rowHeight - 8.0, rowHeight - 8.0))
+        cell.imageView?.image = player.image?.scale(toSize: CGSizeMake(rowHeight - kMargin, rowHeight - kMargin))
         
         return cell
     }
@@ -143,11 +151,13 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     @IBAction func playButtonTapped(sender: AnyObject) {
         let alertController: UIAlertController
         
+        WSHGameManager.sharedInstance.startGameWithPlayers(players)
+        
         alertController = UIAlertController(title: "Get ready", message:
             "Game will start", preferredStyle: UIAlertControllerStyle.Alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
-            // TODO: (foc) Start the game already
             // TODO: (foc) Dismiss alert after time has passed
+            self.performSegueWithIdentifier("presentGame", sender: sender)
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: nil))
         
@@ -155,13 +165,23 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "cellTapped" {
-            currentPlayer = players[(tableView.indexPathForCell(sender as! UITableViewCell)?.row)!]
-        }
-        let navigationController: UINavigationController = segue.destinationViewController as! UINavigationController
-        let playerViewController: WSHPlayerViewController = navigationController.viewControllers.first as! WSHPlayerViewController
+        let identifier = segue.identifier ?? ""
         
-        playerViewController.delegate = self
-        playerViewController.editPlayer = currentPlayer
+        switch identifier {
+        case "addPlayer":
+            setupPlayerViewController(from: (segue.destinationViewController as! UINavigationController))
+            break
+            
+        case "cellTapped":
+            currentPlayer = players[(tableView.indexPathForCell(sender as! UITableViewCell)?.row)!]
+            setupPlayerViewController(from: (segue.destinationViewController as! UINavigationController))
+            break
+            
+        case "presentGame":
+            break
+            
+        default:
+            break
+        }
     }
 }
