@@ -166,7 +166,9 @@ class WSHGameManager {
     private func reorderList<T>(list: [T], index: Int) -> [T] {  //returns the ordered list starting from given index
         var i = 0
         let separated = list.split(2, allowEmptySlices: true) { (_) -> Bool in
-            return i++ == index
+            let result = i == index
+            i += 1
+            return result
         }
         
         return [list[index]] + separated[1] + separated[0]

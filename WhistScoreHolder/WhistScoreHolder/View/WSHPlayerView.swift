@@ -93,7 +93,7 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     }
     
     private func setupView() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillChangeFrame:"), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WSHPlayerView.keyboardWillChangeFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         image = UIImage.imageWithColor(UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0), size: CGSizeMake(100.0, 100.0))
     }
     

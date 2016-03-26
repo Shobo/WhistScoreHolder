@@ -100,14 +100,14 @@ class WSHGame {
             for player in self.players {
                 if round.playerScores[player]! > 0 {    //player did guess correctly
                     if self.counterForPlayerRightGuesses[player]! >= 0 {
-                        self.counterForPlayerRightGuesses[player]!++
+                        self.counterForPlayerRightGuesses[player]! += 1
                     } else {
                         self.counterForPlayerRightGuesses[player] = 1
                     }
                     
                 } else {    //player did not guess correctly
                     if self.counterForPlayerRightGuesses[player]! <= 0 {
-                        self.counterForPlayerRightGuesses[player]!--
+                        self.counterForPlayerRightGuesses[player]! -= 1
                     } else {
                         self.counterForPlayerRightGuesses[player] = -1
                     }
