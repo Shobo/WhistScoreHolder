@@ -8,6 +8,9 @@
 
 import UIKit
 
+let kMargin: CGFloat = 6.0
+let kMinRowHeight: CGFloat = 80.0
+
 extension UIView {
     class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView! {
         return UINib(

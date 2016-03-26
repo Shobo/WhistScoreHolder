@@ -136,7 +136,6 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     
     
     @IBAction func cameraTapped(sender: AnyObject) {
-        resignKeyboardIfNeeded()
         image = UIImage.randomColorImage(withSize: CGSizeMake(100.0, 100.0))
     }
     
