@@ -42,31 +42,36 @@ class WSHGameViewController: UIViewController,
         collectionViewObject.registerNib(userDetailsNIB, forCellWithReuseIdentifier: "HeaderCell")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
         setupScoreViewsWidths(forSize: view.bounds.size);
-        rowHeight = min((view.frame.height - kHeaderHeight) / 6.0, kMinRowHeight)
+        rowHeight = floor((view.frame.height - kHeaderHeight) / 6.0)
         tableViewObject.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
         
-        var collectionViewOffsetX = 0.0;
+        collectionViewObject.contentSize = CGSizeMake(kScoreCellWidth * CGFloat(currentGame.rounds.count), view.frame.height)
+        
+        var collectionViewOffsetX: CGFloat = 0.0;
         
         if let round = currentGame.currentRound {
-            let x: Double = Double(kScoreCellWidth) * Double(currentGame.rounds.indexOf(round)!) - Double(collectionViewObject.frame.width - kScoreCellWidth)
-            let y: Double = Double(tableViewObject.contentOffset.y);
+            var x: CGFloat = 0.0
+            let y: CGFloat = tableViewObject.contentOffset.y;
             
+            if round == currentGame.rounds.first {
+                x = 0.0
+                
+            } else if round == currentGame.rounds[1] { // second
+                x = kScoreCellWidth
+                
+            } else {
+                x = kScoreCellWidth * CGFloat(currentGame.rounds.indexOf(round)!) - collectionViewObject.frame.width - kScoreCellWidth
+            }
             collectionViewOffsetX = min(x, y)
         }
-        collectionViewObject.setContentOffset(CGPointMake(CGFloat(collectionViewOffsetX), collectionViewObject.contentOffset.y), animated: true)
-    }
-    
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        collectionViewObject.setContentOffset(CGPointMake(collectionViewOffsetX, collectionViewObject.contentOffset.y), animated: true)
         
-        setupScoreViewsWidths(forSize: size)
-        rowHeight = min((size.height - kHeaderHeight) / 6.0, kMinRowHeight)
-        tableViewObject.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
         collectionViewObject.reloadData()
+        collectionViewObject.collectionViewLayout.invalidateLayout()
     }
     
     
@@ -182,9 +187,10 @@ class WSHGameViewController: UIViewController,
         
         let currentPlayer: WSHPlayer = currentGame.players[indexPath.row]
         
-        cell?.textLabel?.lineBreakMode = .ByClipping
-        cell?.textLabel?.text = currentPlayer.name
-        cell?.imageView?.image = currentPlayer.image?.scale(toSize: CGSizeMake(rowHeight - kMargin, rowHeight - kMargin))
+        cell?.textLabel?.adjustsFontSizeToFitWidth = true
+        cell?.textLabel?.text = currentPlayer.name.substringToIndex(currentPlayer.name.startIndex.advancedBy(min(currentPlayer.name.characters.count, 4)))
+        cell?.detailTextLabel?.text = "\(currentGame.totalPlayerScores[currentPlayer]!)"
+        cell?.imageView?.image = currentPlayer.image?.scale(toSize: CGSizeMake(rowHeight * 3.0/4.0 , rowHeight  * 3.0/4.0))
         cell?.backgroundColor = UIColor.clearColor()
         
         return cell!
@@ -283,6 +289,14 @@ class WSHGameViewController: UIViewController,
     
     
     @IBAction func closeButtonTapped(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        let alertController = UIAlertController(title: "Game will end", message:
+            "Game will be aborted", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+            WSHGameManager.sharedInstance.resetAllData()
+            self.navigationController?.popViewControllerAnimated(true)
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: nil))
+        
+        presentViewController(alertController, animated: true, completion: nil)
     }
 }

@@ -149,11 +149,9 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     
     
     @IBAction func playButtonTapped(sender: AnyObject) {
-        let alertController: UIAlertController
-        
         WSHGameManager.sharedInstance.startGameWithPlayers(players)
         
-        alertController = UIAlertController(title: "Get ready", message:
+        let alertController = UIAlertController(title: "Get ready", message:
             "Game will start", preferredStyle: UIAlertControllerStyle.Alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
             // TODO: (foc) Dismiss alert after time has passed
