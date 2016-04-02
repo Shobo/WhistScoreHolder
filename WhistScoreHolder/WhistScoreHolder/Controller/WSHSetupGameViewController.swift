@@ -23,12 +23,13 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
         
         playBarButtonItem.enabled = false
         tableView.editing = true
+        tableView.tableFooterView = UIView()
+        currentPlayer = nil
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        currentPlayer = nil
         rowHeight = min(tableView.frame.height / 6.0, kMinRowHeight)
         tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
     }
@@ -36,8 +37,9 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
-        rowHeight = min(tableView.frame.height / 6.0, kMinRowHeight)
+        rowHeight = min(size.height / 6.0, kMinRowHeight)
         tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+        tableView.separatorStyle = .None
     }
     
     
@@ -87,8 +89,8 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PlayerCell", forIndexPath: indexPath)
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("PlayerCell")! as UITableViewCell
+            
         let player = players[indexPath.row]
         cell.textLabel?.text = player.name
         cell.imageView?.image = player.image?.scale(toSize: CGSizeMake(rowHeight - kMargin, rowHeight - kMargin))
@@ -121,6 +123,9 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        if sourceIndexPath.isEqual(destinationIndexPath) {
+            return
+        }
         let itemToMove = self.players[sourceIndexPath.row]
         players.removeAtIndex(sourceIndexPath.row)
         players.insert(itemToMove , atIndex: destinationIndexPath.row)

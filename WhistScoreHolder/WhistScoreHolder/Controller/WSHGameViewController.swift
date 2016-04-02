@@ -29,17 +29,29 @@ class WSHGameViewController: UIViewController,
     }
     private var rowHeight: CGFloat = 0.0
     private var collectionViewOffsetXBeforeScroll: CGFloat = 0.0
-    
+    private var actionViewController: WSHActionViewController? {
+        didSet {
+            if actionViewController == nil {
+                actionButton.enabled = false
+            } else {
+                actionButton.enabled = true
+            }
+        }
+    }
     
     //MARK: - View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableViewObject.tableFooterView = UIView()
+        
         var userDetailsNIB = UINib(nibName: "WSHScoreCell", bundle: nil)
         collectionViewObject.registerNib(userDetailsNIB, forCellWithReuseIdentifier: "ScoreCell")
         userDetailsNIB = UINib(nibName: "WSHHeaderCell", bundle: nil)
         collectionViewObject.registerNib(userDetailsNIB, forCellWithReuseIdentifier: "HeaderCell")
+        // TODO: (foc) don't call this here
+        setupActionViewController()
     }
     
     override func viewWillLayoutSubviews() {
@@ -113,6 +125,13 @@ class WSHGameViewController: UIViewController,
         }
     }
     
+    private func setupActionViewController() {
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        actionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHActionViewController") as! WSHActionViewController
+        
+//        actionViewController.wareva
+    }
     
     //MARK: - Scroll view delegates
     
@@ -299,4 +318,11 @@ class WSHGameViewController: UIViewController,
         
         presentViewController(alertController, animated: true, completion: nil)
     }
+    
+    @IBAction func actionButtonTapped(sender: AnyObject) {
+        let nav = UINavigationController(rootViewController: actionViewController!)
+        
+        presentViewController(nav, animated: true, completion: nil)
+    }
+    
 }
