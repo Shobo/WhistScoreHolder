@@ -77,7 +77,7 @@ class WSHGameManager {
     }
     
     func playerDidTakeHand(player: WSHPlayer) throws {
-        //after saving the taken hand inside the current round, check if the rounds is completed. if it is, send the willBeginRoundOfType:startingPlayer: delegate method
+        //after saving the taken hand inside the current round, check if the round is completed. if it is, send the willBeginRoundOfType:startingPlayer: delegate method
         do {
             try self.validateHandForPlayer(player)
             

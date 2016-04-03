@@ -15,6 +15,7 @@
 		59A4F8AB1C9B46040077B5EC /* WSHScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F8AA1C9B46040077B5EC /* WSHScoreCell.swift */; };
 		59A4F8AF1C9B47350077B5EC /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F8AE1C9B47350077B5EC /* UIColor+Additions.swift */; };
 		59A4F8B11C9B538D0077B5EC /* WSHScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F8B01C9B538D0077B5EC /* WSHScoreCell.xib */; };
+		59BBAA361CB1521800C8F267 /* WSHBeginRoundActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BBAA351CB1521800C8F267 /* WSHBeginRoundActionViewController.swift */; };
 		59C063FA1C83ADFA00691D8B /* WSHSetupGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C063F91C83ADFA00691D8B /* WSHSetupGameViewController.swift */; };
 		59C9608E1C9DBC9C007FDBD6 /* WSHHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59C9608D1C9DBC9C007FDBD6 /* WSHHeaderCell.xib */; };
 		59CC74411CAFE65D00E755B8 /* WSHActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CC74401CAFE65D00E755B8 /* WSHActionViewController.swift */; };
@@ -54,6 +55,7 @@
 		59A4F8AA1C9B46040077B5EC /* WSHScoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHScoreCell.swift; path = View/WSHScoreCell.swift; sourceTree = "<group>"; };
 		59A4F8AE1C9B47350077B5EC /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Additions.swift"; path = "WhistScoreHolder/Additions/UIColor+Additions.swift"; sourceTree = SOURCE_ROOT; };
 		59A4F8B01C9B538D0077B5EC /* WSHScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WSHScoreCell.xib; path = View/WSHScoreCell.xib; sourceTree = "<group>"; };
+		59BBAA351CB1521800C8F267 /* WSHBeginRoundActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHBeginRoundActionViewController.swift; path = Controller/WSHBeginRoundActionViewController.swift; sourceTree = "<group>"; };
 		59C063F91C83ADFA00691D8B /* WSHSetupGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHSetupGameViewController.swift; path = Controller/WSHSetupGameViewController.swift; sourceTree = "<group>"; };
 		59C9608D1C9DBC9C007FDBD6 /* WSHHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHHeaderCell.xib; sourceTree = "<group>"; };
 		59CC74401CAFE65D00E755B8 /* WSHActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WSHActionViewController.swift; path = Controller/WSHActionViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				59E867C41C88DB6E007C6257 /* WSHPlayerViewController.swift */,
 				5939A1C31C9881FD00FF622C /* WSHGameViewController.swift */,
 				59CC74401CAFE65D00E755B8 /* WSHActionViewController.swift */,
+				59BBAA351CB1521800C8F267 /* WSHBeginRoundActionViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				5939A1C41C9881FD00FF622C /* WSHGameViewController.swift in Sources */,
 				59C063FA1C83ADFA00691D8B /* WSHSetupGameViewController.swift in Sources */,
 				59A4F8AB1C9B46040077B5EC /* WSHScoreCell.swift in Sources */,
+				59BBAA361CB1521800C8F267 /* WSHBeginRoundActionViewController.swift in Sources */,
 				D2CB75EF1C839BD400D7BB0D /* WSHGameManagerDelegate.swift in Sources */,
 				D2CB75EA1C8398E700D7BB0D /* WSHGame.swift in Sources */,
 				59E867421C8508FF007C6257 /* UIView+Additions.swift in Sources */,

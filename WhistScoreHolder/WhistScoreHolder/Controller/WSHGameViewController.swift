@@ -13,7 +13,8 @@ let kHeaderHeight: CGFloat = 26.0
 
 class WSHGameViewController: UIViewController,
                             UITableViewDataSource, UITableViewDelegate,
-                            UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+                            UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,
+                            WSHGameManagerDelegate {
     @IBOutlet weak var actionButton: UIBarButtonItem!
     @IBOutlet weak var scoreButton: UIBarButtonItem!
     @IBOutlet weak var tableViewObject: UITableView!
@@ -50,8 +51,6 @@ class WSHGameViewController: UIViewController,
         collectionViewObject.registerNib(userDetailsNIB, forCellWithReuseIdentifier: "ScoreCell")
         userDetailsNIB = UINib(nibName: "WSHHeaderCell", bundle: nil)
         collectionViewObject.registerNib(userDetailsNIB, forCellWithReuseIdentifier: "HeaderCell")
-        // TODO: (foc) don't call this here
-        setupActionViewController()
     }
     
     override func viewWillLayoutSubviews() {
@@ -125,13 +124,48 @@ class WSHGameViewController: UIViewController,
         }
     }
     
-    private func setupActionViewController() {
+    private func presentActionViewController() {
+        let nav = UINavigationController(rootViewController: actionViewController!)
+        
+        presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    private func setupBeginRoundActionViewController(round roundType: WSHRoundType, fromPlayer player: WSHPlayer, score: Int) {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
-        actionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHActionViewController") as! WSHActionViewController
+        let beginRoundVC = mainStoryboard.instantiateViewControllerWithIdentifier("WSHBeginRoundActionViewController") as! WSHBeginRoundActionViewController
+        beginRoundVC.player = player
+        beginRoundVC.round = roundType
+        beginRoundVC.playerScore = score
         
-//        actionViewController.wareva
+        actionViewController = beginRoundVC
     }
+    
+    
+    //MARK: - WSHGameManagerDelegate functions
+    
+    
+    func gameManager(gameManager: WSHGameManager, didStartGame game: WSHGame) {
+        
+    }
+  
+    func willBeginRoundOfType(type: WSHRoundType, startingPlayer player: WSHPlayer) {
+        setupBeginRoundActionViewController(round: type, fromPlayer: player, score: currentGame.totalPlayerScores[player] ?? 0)
+        presentActionViewController()
+    }
+    
+    func playerTurnToBet(player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?) {
+        
+    }
+    
+    func didFinishBettingInRound(round: WSHRound) {
+        
+    }
+
+    func gameManager(gameManager: WSHGameManager, didEndGame game: WSHGame) {
+
+    }
+    
     
     //MARK: - Scroll view delegates
     
@@ -320,9 +354,7 @@ class WSHGameViewController: UIViewController,
     }
     
     @IBAction func actionButtonTapped(sender: AnyObject) {
-        let nav = UINavigationController(rootViewController: actionViewController!)
-        
-        presentViewController(nav, animated: true, completion: nil)
+        presentActionViewController()
     }
     
 }

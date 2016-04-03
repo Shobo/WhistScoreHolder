@@ -154,13 +154,12 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     
     
     @IBAction func playButtonTapped(sender: AnyObject) {
-        WSHGameManager.sharedInstance.startGameWithPlayers(players)
-        
         let alertController = UIAlertController(title: "Get ready", message:
             "Game will start", preferredStyle: UIAlertControllerStyle.Alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
             // TODO: (foc) Dismiss alert after time has passed
             self.performSegueWithIdentifier("presentGame", sender: sender)
+            WSHGameManager.sharedInstance.startGameWithPlayers(self.players)
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: nil))
         
@@ -181,6 +180,8 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
             break
             
         case "presentGame":
+            let gameVC = segue.destinationViewController as! WSHGameViewController
+            WSHGameManager.sharedInstance.delegate = gameVC
             break
             
         default:
