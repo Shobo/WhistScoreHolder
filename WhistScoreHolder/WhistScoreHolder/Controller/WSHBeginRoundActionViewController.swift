@@ -17,6 +17,8 @@ class WSHBeginRoundActionViewController: WSHActionViewController {
     @IBOutlet private weak var playerScoreLabel: UILabel!
     @IBOutlet private weak var playerImageView: UIImageView!
     
+    weak var delegate: WSHBeginRoundActionDelegate?
+    
     var player: WSHPlayer? {
         didSet {
             nameOfPlayerLabel?.text = player?.name ?? ""
@@ -25,7 +27,9 @@ class WSHBeginRoundActionViewController: WSHActionViewController {
     }
     var round: WSHRoundType? {
         didSet {
-            roundOfLabel?.text = "\(kRoundOfString)\(round?.intValue)"
+            if let roundIf = round {
+                roundOfLabel?.text = "\(kRoundOfString)\(roundIf.intValue)"
+            }
         }
     }
     var playerScore: Int = 0 {
@@ -34,10 +38,32 @@ class WSHBeginRoundActionViewController: WSHActionViewController {
         }
     }
     
+    
+    //MARK:- View lifecycle
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        nameOfPlayerLabel?.text = player?.name ?? ""
+        playerImageView?.image = player?.image ?? nil
+        
+        if let roundIf = round {
+            roundOfLabel?.text = "\(kRoundOfString)\(roundIf.intValue)"
+        }
+        playerScoreLabel?.text = "\(kScoreString)\(playerScore)"
     }
+    
+    
+    //MARK:- Actions
+    
+    
+    @IBAction func didTap(sender: AnyObject) {
+        delegate?.beginRoundFromActionController(self)
+    }
+}
 
+protocol WSHBeginRoundActionDelegate: class {
+    func beginRoundFromActionController(actionViewController: WSHBeginRoundActionViewController)
 }

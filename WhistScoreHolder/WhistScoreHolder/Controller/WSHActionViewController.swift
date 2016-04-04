@@ -14,14 +14,25 @@ class WSHActionViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupNavigationBarButtonItems()
     }
-
-    
-    // MARK: - Actions
     
     
-    @IBAction func closeButtonTapped(sender: AnyObject) {
+    //MARK: - Actions
+    
+    
+    func closeButtonTapped(sender: AnyObject) {
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    //MARK: - Private UI methods
+    
+    
+    private func setupNavigationBarButtonItems() {
+        let score = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: Selector("closeButtonTapped:"))
+        
+        self.navigationItem.rightBarButtonItem = score
     }
     
 }

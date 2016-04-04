@@ -14,7 +14,8 @@ let kHeaderHeight: CGFloat = 26.0
 class WSHGameViewController: UIViewController,
                             UITableViewDataSource, UITableViewDelegate,
                             UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,
-                            WSHGameManagerDelegate {
+                            WSHGameManagerDelegate,
+                            WSHBeginRoundActionDelegate {
     @IBOutlet weak var actionButton: UIBarButtonItem!
     @IBOutlet weak var scoreButton: UIBarButtonItem!
     @IBOutlet weak var tableViewObject: UITableView!
@@ -129,6 +130,11 @@ class WSHGameViewController: UIViewController,
         
         presentViewController(nav, animated: true, completion: nil)
     }
+
+    private func resignActionViewController() {
+        actionViewController?.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        actionViewController = nil
+    }
     
     private func setupBeginRoundActionViewController(round roundType: WSHRoundType, fromPlayer player: WSHPlayer, score: Int) {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -137,6 +143,7 @@ class WSHGameViewController: UIViewController,
         beginRoundVC.player = player
         beginRoundVC.round = roundType
         beginRoundVC.playerScore = score
+        beginRoundVC.delegate = self
         
         actionViewController = beginRoundVC
     }
@@ -168,6 +175,15 @@ class WSHGameViewController: UIViewController,
 
     func gameManager(gameManager: WSHGameManager, didEndGame game: WSHGame) {
 
+    }
+    
+    
+    //MARK: - WSHBeginRoundActionDelegate functions
+    
+    
+    func beginRoundFromActionController(actionViewController: WSHBeginRoundActionViewController) {
+        resignActionViewController()
+        WSHGameManager.sharedInstance.startBetting()
     }
     
     
