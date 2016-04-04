@@ -38,13 +38,12 @@ class WSHPlayerViewController: UIViewController {
         navigationItem.rightBarButtonItems = []
         navigationItem.leftBarButtonItems = []
         
-        if editPlayer != nil {
+        if let player = editPlayer {
             navigationItem.rightBarButtonItem = doneButtonItem
             navigationItem.leftBarButtonItem = cancelButtonItem
             
-            playerView.name = editPlayer?.name ?? ""
-            playerView.image = editPlayer?.image ?? UIImage.randomColorImage(withSize: CGSizeZero)
-            
+            playerView.name = player.name ?? ""
+            playerView.image = player.image ?? UIImage.randomColorImage(withSize: CGSizeZero)
         } else {
             navigationItem.rightBarButtonItem = addButtonItem
             navigationItem.leftBarButtonItem = leftDoneButtonItem

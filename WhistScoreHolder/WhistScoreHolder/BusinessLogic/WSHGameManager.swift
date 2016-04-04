@@ -106,15 +106,15 @@ class WSHGameManager {
         let lastRound = self.currentGame!.currentRound
         self.currentGame?.advanceToNextRound()
         
-        if self.currentGame!.currentRound != nil {
+        if let round = self.currentGame!.currentRound {
             if lastRound == nil {
                 //first round
-                self.currentGame!.currentRound!.players = self.currentGame!.players
+                round.players = self.currentGame!.players
             } else {
-                self.currentGame!.currentRound!.players = self.reorderList(lastRound!.players, index: 1)
+                round.players = self.reorderList(lastRound!.players, index: 1)
             }
             
-            self.delegate?.willBeginRoundOfType(self.currentGame!.currentRound!.roundType, startingPlayer: self.currentGame!.currentRound!.players.first!)
+            self.delegate?.willBeginRoundOfType(round.roundType, startingPlayer: round.players.first!)
         } else {
             //game is over
             self.delegate?.gameManager(self, didEndGame: self.currentGame!)
@@ -124,14 +124,17 @@ class WSHGameManager {
     
     private func advanceToNextBet() {
         //check if all players have placed bets
-        if self.currentGame!.currentRound!.areAllBetsPlaced {
-            self.delegate?.didFinishBettingInRound(self.currentGame!.currentRound!)
+        guard let round = self.currentGame?.currentRound else {
+            return
+        }
+        
+        if round.areAllBetsPlaced {
+            self.delegate?.didFinishBettingInRound(round)
             self.gameState = .Taking
-        } else {
-            let currentPlayer = self.currentGame!.currentRound!.currentBettingPlayer!
+        } else if let currentPlayer = round.currentBettingPlayer {
             self.delegate?.playerTurnToBet(currentPlayer,
-                forRoundType: self.currentGame!.currentRound!.roundType,
-                excluding: self.currentGame!.currentRound!.excludedGameChoiceForPlayer(currentPlayer))   //calculate exluding possibilities
+                                           forRoundType: self.currentGame!.currentRound!.roundType,
+                                           excluding: self.currentGame!.currentRound!.excludedGameChoiceForPlayer(currentPlayer))   //calculate exluding possibilities
         }
     }
     

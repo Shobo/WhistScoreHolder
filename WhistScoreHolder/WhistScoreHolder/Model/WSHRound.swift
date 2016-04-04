@@ -96,8 +96,8 @@ class WSHRound: NSObject {
     
     func addHandForPlayer(player: WSHPlayer) {
         //increment "hands" for current player
-        if self.roundInformation[player] != nil {
-            let currentHands = self.roundInformation[player]!.hands.intValue
+        if let info = self.roundInformation[player] {
+            let currentHands = info.hands.intValue
             self.roundInformation[player]?.hands = WSHGameBetChoice(rawValue: currentHands + 1)!
         }
         

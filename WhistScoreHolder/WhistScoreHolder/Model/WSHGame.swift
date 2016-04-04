@@ -31,17 +31,18 @@ class WSHGame {
     }
     
     func advanceToNextRound() {
-        if self.currentRound == nil {
+        guard let round = self.currentRound else {
             self.currentRound = self.rounds.first
+            return
+        }
+        
+        self.addScoresFromRound(round)
+        
+        if round != self.rounds.last {
+            let indexOfCurrentRound = self.rounds.indexOf(round)!
+            self.currentRound = self.rounds[indexOfCurrentRound + 1]
         } else {
-            self.addScoresFromRound(self.currentRound!)
-            
-            if self.currentRound != self.rounds.last {
-                let indexOfCurrentRound = self.rounds.indexOf(self.currentRound!)!
-                self.currentRound = self.rounds[indexOfCurrentRound + 1]
-            } else {
-                self.currentRound = nil
-            }
+            self.currentRound = nil
         }
     }
     
