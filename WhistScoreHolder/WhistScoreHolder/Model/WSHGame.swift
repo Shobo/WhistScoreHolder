@@ -13,6 +13,7 @@ class WSHGame {
     private(set) var rounds: [WSHRound] = []
     private(set) var currentRound: WSHRound?
     private(set) var totalPlayerScores: [WSHPlayer: Int] = [:]
+    private(set) var playerBonusesForLastRound: [WSHPlayer: Int]?
     private var counterForPlayerRightGuesses: [WSHPlayer: Int] = [:]
     
     var totalNumberOfRounds: Int {
@@ -88,6 +89,10 @@ class WSHGame {
         }
     }
     
+    private func resetPlayerBonusesForLastRound() {
+        self.playerBonusesForLastRound = nil
+    }
+    
     private func addScoresFromRound(round: WSHRound) {
         for player in self.players {
             self.totalPlayerScores[player]! += round.playerScores[player]!
@@ -97,6 +102,8 @@ class WSHGame {
         if round.roundType == .One {
             self.resetCounterForPlayerRightGuesses()
         } else {
+            var bonuses: [WSHPlayer: Int] = [:]
+            
             for player in self.players {
                 if round.playerScores[player]! > 0 {    //player did guess correctly
                     if self.counterForPlayerRightGuesses[player]! >= 0 {
@@ -113,13 +120,21 @@ class WSHGame {
                     }
                 }
                 
-                if self.counterForPlayerRightGuesses[player]! == 5 {
+                if self.counterForPlayerRightGuesses[player]! == 5 {    // 5 correct: +10
                     self.counterForPlayerRightGuesses[player] = 0
                     self.totalPlayerScores[player]! += kBONUS_VALUE
-                } else if self.counterForPlayerRightGuesses[player]! == -5 {
+                    bonuses[player] = kBONUS_VALUE
+                } else if self.counterForPlayerRightGuesses[player]! == -5 {    //5 wrong: -10
                     self.counterForPlayerRightGuesses[player] = 0
                     self.totalPlayerScores[player]! -= kBONUS_VALUE
+                    bonuses[player] = -kBONUS_VALUE
                 }
+            }
+            
+            if bonuses.count > 0 {
+                self.playerBonusesForLastRound = bonuses
+            } else {
+                self.resetPlayerBonusesForLastRound()
             }
         }
     }

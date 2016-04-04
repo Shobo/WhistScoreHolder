@@ -161,6 +161,10 @@ class WSHGameViewController: UIViewController,
     func didFinishBettingInRound(round: WSHRound) {
         
     }
+    
+    func roundDidFinish(round: WSHRound, withBonuses: [WSHPlayer : Int]) {
+        
+    }
 
     func gameManager(gameManager: WSHGameManager, didEndGame game: WSHGame) {
 

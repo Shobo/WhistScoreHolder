@@ -63,6 +63,10 @@ class WSHGameManager {
         
         self.advanceToNextBet()
     }
+    
+    func startNextRound() {
+        self.advanceToNextRound()
+    }
         
     func player(player: WSHPlayer, didBet bet: WSHGameBetChoice) throws {
         //after saving the bet inside the current round, send another playerTurnToBet:forRoundType:excluding: to the delegate, unless it was the last one, in which case the didFinishBettingInRound: delegate method should be called
@@ -81,10 +85,13 @@ class WSHGameManager {
         do {
             try self.validateHandForPlayer(player)
             
-            self.currentGame!.currentRound!.addHandForPlayer(player)
+            guard let round = self.currentGame!.currentRound else {
+                return
+            }
+            round.addHandForPlayer(player)
             
-            if self.currentGame!.currentRound!.isRoundComplete {
-                self.advanceToNextRound()
+            if round.isRoundComplete {
+                self.delegate?.roundDidFinish(round, withBonuses: self.currentGame?.playerBonusesForLastRound ?? [:])
             }
         } catch let error {
             throw error
