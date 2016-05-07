@@ -130,7 +130,7 @@ class WSHGameViewController: UIViewController,
         
         presentViewController(nav, animated: true, completion: nil)
     }
-
+    
     private func resignActionViewController() {
         actionViewController?.navigationController?.dismissViewControllerAnimated(true, completion: nil)
         actionViewController = nil
@@ -162,7 +162,10 @@ class WSHGameViewController: UIViewController,
     }
     
     func playerTurnToBet(player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?) {
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
+        self.actionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHBettingActionViewController") as! WSHBettingActionViewController
+        self.presentActionViewController()
     }
     
     func didFinishBettingInRound(round: WSHRound) {
