@@ -463,7 +463,7 @@ class WSHGameViewController: UIViewController,
         let button = UIButton(type: .System)
         button.layer.cornerRadius = 10
         button.backgroundColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
-        button.titleLabel?.font = UIFont.systemFontOfSize(200)
+        button.titleLabel?.font = UIFont.systemFontOfSize(100)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
