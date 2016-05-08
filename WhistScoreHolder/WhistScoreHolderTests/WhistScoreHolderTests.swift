@@ -96,7 +96,7 @@ class WhistScoreHolderTests: XCTestCase, WSHGameManagerDelegate {
         try! WSHGameManager.sharedInstance.playerDidTakeHand(self.players[0])
     }
     
-    func roundDidFinish(round: WSHRound, withBonuses: [WSHPlayer: Int]) {
+    func roundDidFinish(round: WSHRound, withBonuses bonuses: [WSHPlayer: Int]) {
         WSHGameManager.sharedInstance.startNextRound()
     }
 }

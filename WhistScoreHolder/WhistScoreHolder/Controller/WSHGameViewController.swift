@@ -164,16 +164,29 @@ class WSHGameViewController: UIViewController,
     func playerTurnToBet(player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?) {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
-        self.actionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHBettingActionViewController") as! WSHBettingActionViewController
+        let bettingActionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHBettingActionViewController") as! WSHBettingActionViewController
+        bettingActionViewController.playerImage = player.image
+        bettingActionViewController.playerName = player.name
+        bettingActionViewController.playerOptions = self.bettingChoiceButtonsForRoundType(roundType, excludingChoice: choice)
+        
+        self.actionViewController = bettingActionViewController
         self.presentActionViewController()
     }
     
     func didFinishBettingInRound(round: WSHRound) {
-        
+        // go to taking action VC
+        // start taking
     }
     
-    func roundDidFinish(round: WSHRound, withBonuses: [WSHPlayer : Int]) {
+    func roundDidFinish(round: WSHRound, withBonuses bonuses: [WSHPlayer : Int]) {
+        self.resignActionViewController()
         
+        if bonuses.count > 0 {
+            // show alert for bonuses
+        }
+        
+        //after bonuses are shown
+        WSHGameManager.sharedInstance.startNextRound()
     }
 
     func gameManager(gameManager: WSHGameManager, didEndGame game: WSHGame) {
@@ -377,7 +390,83 @@ class WSHGameViewController: UIViewController,
     }
     
     @IBAction func actionButtonTapped(sender: AnyObject) {
-        presentActionViewController()
+        self.presentActionViewController()
     }
     
+    func betChoiceButtonPressed(button: UIButton) {
+        self.resignActionViewController()
+        
+        if let player = WSHGameManager.sharedInstance.currentGame?.currentRound?.currentBettingPlayer {
+            do {
+                try WSHGameManager.sharedInstance.player(player, didBet: WSHGameBetChoice(rawValue: button.tag)!)
+            } catch let error {
+                print("Error found \(error)")
+            }
+        }
+    }
+    
+    func takeHandButtonPressed(button: UIButton) {
+        for player in WSHGameManager.sharedInstance.currentGame!.players {
+            if let title = button.currentTitle {
+                if player.name == title {
+                    do {
+                        try WSHGameManager.sharedInstance.playerDidTakeHand(player)
+                        return
+                    } catch let error {
+                        print(error)
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Buttons factory
+    
+    
+    private func bettingChoiceButtonsForRoundType(roundType: WSHRoundType, excludingChoice choice: WSHGameBetChoice?) -> [UIButton] {
+        var buttons: [UIButton] = []
+        
+        for betChoice in 0...roundType.intValue {
+            let button = self.configuredStandardChoiceButton()
+            button.setTitle("\(betChoice)", forState: .Normal)
+            button.tag = betChoice
+            button.addTarget(self, action: #selector(WSHGameViewController.betChoiceButtonPressed(_:)), forControlEvents: .TouchUpInside)
+            
+            if let excluded = choice {
+                if betChoice == excluded.intValue {
+                    button.enabled = false
+                    button.alpha = 0.5
+                }
+            }
+            
+            buttons.append(button)
+        }
+        
+        return buttons
+    }
+    
+    private func playerTakingButtonsForPlayers(players: [WSHPlayer]) -> [UIButton] {
+        var buttons: [UIButton] = []
+        
+        for player in players {
+            let button = self.configuredStandardChoiceButton()
+            button.setTitle(player.name, forState: .Normal)
+            button.addTarget(self, action: #selector(WSHGameViewController.takeHandButtonPressed(_:)), forControlEvents: .TouchUpInside)
+            
+            buttons.append(button)
+        }
+        
+        return buttons
+    }
+    
+    private func configuredStandardChoiceButton() -> UIButton {
+        let button = UIButton(type: .System)
+        button.layer.cornerRadius = 10
+        button.backgroundColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
+        button.titleLabel?.font = UIFont.systemFontOfSize(200)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        
+        return button
+    }
 }
