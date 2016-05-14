@@ -110,7 +110,7 @@ class WSHRound: NSObject {
         if !self.isPlayerLastInCurrentRound(player) {
             return nil
         }
-        let notAllowedChoice = abs(self.currentTotalOfBetsAndHands().betsNumber - self.roundType.intValue)
+        let notAllowedChoice = self.roundType.intValue - self.currentTotalOfBetsAndHands().betsNumber
         
         if 0..<self.roundType.intValue + 1 ~= notAllowedChoice {    //if notAllowedChoice is in range of 0..roundType then return the excluded choice
             return WSHGameBetChoice(rawValue: notAllowedChoice)

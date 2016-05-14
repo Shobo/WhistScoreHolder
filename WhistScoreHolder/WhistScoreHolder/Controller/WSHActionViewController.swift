@@ -30,7 +30,7 @@ class WSHActionViewController: UIViewController {
     
     
     private func setupNavigationBarButtonItems() {
-        let score = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: Selector("closeButtonTapped:"))
+        let score = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: #selector(WSHActionViewController.closeButtonTapped(_:)))
         
         self.navigationItem.rightBarButtonItem = score
     }
