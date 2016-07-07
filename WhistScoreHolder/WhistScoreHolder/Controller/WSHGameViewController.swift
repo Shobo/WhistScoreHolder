@@ -420,6 +420,7 @@ class WSHGameViewController: UIViewController,
         }
     }
     
+    
     // MARK: - Buttons factory
     
     
@@ -462,10 +463,11 @@ class WSHGameViewController: UIViewController,
     private func configuredStandardChoiceButton() -> UIButton {
         let button = UIButton(type: .System)
         button.layer.cornerRadius = 10
-        button.backgroundColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
+        button.backgroundColor = UIColor(red: 127.5 / 255, green: 127.5 / 255, blue: 127.5 / 255, alpha: 0.5)
         button.titleLabel?.font = UIFont.systemFontOfSize(100)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        button.titleLabel?.minimumScaleFactor = 0.5
+        button.setTitleColor(UIColor.blackColor().colorWithAlphaComponent(0.85), forState: .Normal)
         
         return button
     }

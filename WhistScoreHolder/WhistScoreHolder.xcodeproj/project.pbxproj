@@ -19,6 +19,9 @@
 		59C063FA1C83ADFA00691D8B /* WSHSetupGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C063F91C83ADFA00691D8B /* WSHSetupGameViewController.swift */; };
 		59C9608E1C9DBC9C007FDBD6 /* WSHHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59C9608D1C9DBC9C007FDBD6 /* WSHHeaderCell.xib */; };
 		59CC74411CAFE65D00E755B8 /* WSHActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CC74401CAFE65D00E755B8 /* WSHActionViewController.swift */; };
+		59E7712D1D2C228C0001923B /* WSHPlayerOneLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7712C1D2C228C0001923B /* WSHPlayerOneLineView.swift */; };
+		59E7712F1D2C22B00001923B /* WSHPlayerOneLineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E7712E1D2C22B00001923B /* WSHPlayerOneLineView.xib */; };
+		59E771611D2EDA680001923B /* WSHGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E771601D2EDA680001923B /* WSHGridView.swift */; };
 		59E867421C8508FF007C6257 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867411C8508FF007C6257 /* UIView+Additions.swift */; };
 		59E867941C861ED6007C6257 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867931C861ED6007C6257 /* UIImage+Additions.swift */; };
 		59E867C51C88DB6E007C6257 /* WSHPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867C41C88DB6E007C6257 /* WSHPlayerViewController.swift */; };
@@ -61,6 +64,9 @@
 		59C063F91C83ADFA00691D8B /* WSHSetupGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHSetupGameViewController.swift; sourceTree = "<group>"; };
 		59C9608D1C9DBC9C007FDBD6 /* WSHHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHHeaderCell.xib; sourceTree = "<group>"; };
 		59CC74401CAFE65D00E755B8 /* WSHActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHActionViewController.swift; sourceTree = "<group>"; };
+		59E7712C1D2C228C0001923B /* WSHPlayerOneLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHPlayerOneLineView.swift; sourceTree = "<group>"; };
+		59E7712E1D2C22B00001923B /* WSHPlayerOneLineView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHPlayerOneLineView.xib; sourceTree = "<group>"; };
+		59E771601D2EDA680001923B /* WSHGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHGridView.swift; sourceTree = "<group>"; };
 		59E867411C8508FF007C6257 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Additions.swift"; path = "WhistScoreHolder/Additions/UIView+Additions.swift"; sourceTree = SOURCE_ROOT; };
 		59E867931C861ED6007C6257 /* UIImage+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Additions.swift"; path = "WhistScoreHolder/Additions/UIImage+Additions.swift"; sourceTree = SOURCE_ROOT; };
 		59E867C41C88DB6E007C6257 /* WSHPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHPlayerViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +185,9 @@
 				59A4F8B01C9B538D0077B5EC /* WSHScoreCell.xib */,
 				592554771C9DBB0C000C3642 /* WSHHeaderCell.swift */,
 				59C9608D1C9DBC9C007FDBD6 /* WSHHeaderCell.xib */,
+				59E7712C1D2C228C0001923B /* WSHPlayerOneLineView.swift */,
+				59E7712E1D2C22B00001923B /* WSHPlayerOneLineView.xib */,
+				59E771601D2EDA680001923B /* WSHGridView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -309,6 +318,7 @@
 				59A4F8B11C9B538D0077B5EC /* WSHScoreCell.xib in Resources */,
 				594BEA201C83B813007D296D /* Main.storyboard in Resources */,
 				59C9608E1C9DBC9C007FDBD6 /* WSHHeaderCell.xib in Resources */,
+				59E7712F1D2C22B00001923B /* WSHPlayerOneLineView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +341,7 @@
 				D2CB75E71C83936F00D7BB0D /* WSHPlayer.swift in Sources */,
 				59CC74411CAFE65D00E755B8 /* WSHActionViewController.swift in Sources */,
 				59E867C51C88DB6E007C6257 /* WSHPlayerViewController.swift in Sources */,
+				59E7712D1D2C228C0001923B /* WSHPlayerOneLineView.swift in Sources */,
 				D2CB75D11C838AA000D7BB0D /* WSHViewController.swift in Sources */,
 				D2CB75CF1C838AA000D7BB0D /* AppDelegate.swift in Sources */,
 				592554781C9DBB0C000C3642 /* WSHHeaderCell.swift in Sources */,
@@ -349,6 +360,7 @@
 				59E867421C8508FF007C6257 /* UIView+Additions.swift in Sources */,
 				D2CB75F31C83AA0F00D7BB0D /* WSHRound.swift in Sources */,
 				59A4F8AF1C9B47350077B5EC /* UIColor+Additions.swift in Sources */,
+				59E771611D2EDA680001923B /* WSHGridView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,5 +11,4 @@ import UIKit
 class WSHHeaderCell: UICollectionViewCell {
     
     @IBOutlet weak var mainLabel: UILabel!
-    //TODO: (foc) add background colour adaption
 }
