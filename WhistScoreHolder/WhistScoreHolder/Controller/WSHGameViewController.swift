@@ -61,29 +61,20 @@ class WSHGameViewController: UIViewController,
         rowHeight = floor((view.frame.height - kHeaderHeight) / 6.0)
         tableViewObject.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
         
+        let offsetPoint = collectionViewObject.contentOffset
+        
         collectionViewObject.contentSize = CGSizeMake(kScoreCellWidth * CGFloat(currentGame.rounds.count), view.frame.height)
-        
-        var collectionViewOffsetX: CGFloat = 0.0;
-        
-        if let round = currentGame.currentRound {
-            var x: CGFloat = 0.0
-            let y: CGFloat = tableViewObject.contentOffset.y;
-            
-            if round == currentGame.rounds.first {
-                x = 0.0
-                
-            } else if round == currentGame.rounds[1] { // second
-                x = kScoreCellWidth
-                
-            } else {
-                x = kScoreCellWidth * CGFloat(currentGame.rounds.indexOf(round)!) - collectionViewObject.frame.width - kScoreCellWidth
-            }
-            collectionViewOffsetX = min(x, y)
-        }
-        collectionViewObject.setContentOffset(CGPointMake(collectionViewOffsetX, collectionViewObject.contentOffset.y), animated: true)
+        collectionViewObject.contentOffset = offsetPoint
         
         collectionViewObject.reloadData()
         collectionViewObject.collectionViewLayout.invalidateLayout()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        tableViewObject.reloadData()
+        collectionViewObject.reloadData()
     }
     
     
@@ -146,6 +137,20 @@ class WSHGameViewController: UIViewController,
         beginRoundVC.delegate = self
         
         actionViewController = beginRoundVC
+    }
+    
+    private func scrollToCurrentRound() {
+        var collectionViewOffsetX: CGFloat = 0.0;
+        
+        if let round = currentGame.currentRound {
+            let noScoreCellsAtOnce = Int(collectionViewObject.frame.width / kScoreCellWidth);
+            let indexOfCurrentRound = currentGame.rounds.indexOf(round)!
+            
+            let x = CGFloat(indexOfCurrentRound - (noScoreCellsAtOnce - 1/*the current round*/)) * kScoreCellWidth
+            
+            collectionViewOffsetX = min(max(x, 0), collectionViewObject.contentSize.width - collectionViewObject.frame.width);
+        }
+        collectionViewObject.setContentOffset(CGPointMake(collectionViewOffsetX, collectionViewObject.contentOffset.y), animated: true)
     }
     
     
@@ -418,6 +423,10 @@ class WSHGameViewController: UIViewController,
                 }
             }
         }
+    }
+    
+    @IBAction func focusButtonPressed(sender: UIButton) {
+        self.scrollToCurrentRound()
     }
     
     

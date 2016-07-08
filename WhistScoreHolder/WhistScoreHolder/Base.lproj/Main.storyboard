@@ -173,9 +173,26 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="04F-ov-inP">
-                            <rect key="frame" x="180" y="5.5" width="240" height="33"/>
+                            <rect key="frame" x="180" y="5" width="240" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PBN-tt-sTe">
+                                    <rect key="frame" x="88" y="0.0" width="64" height="34"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="64" id="AYl-RI-ZUx"/>
+                                    </constraints>
+                                    <state key="normal" title="Focus"/>
+                                    <connections>
+                                        <action selector="focusButtonPressed:" destination="JMw-5V-dHk" eventType="touchUpInside" id="q4u-Ad-ech"/>
+                                    </connections>
+                                </button>
+                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="PBN-tt-sTe" firstAttribute="centerY" secondItem="04F-ov-inP" secondAttribute="centerY" id="8IB-Bb-hVM"/>
+                                <constraint firstItem="PBN-tt-sTe" firstAttribute="height" secondItem="04F-ov-inP" secondAttribute="height" id="Fjx-KN-AQS"/>
+                                <constraint firstItem="PBN-tt-sTe" firstAttribute="centerX" secondItem="04F-ov-inP" secondAttribute="centerX" id="pUt-GB-Ppk"/>
+                            </constraints>
                         </view>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="YfI-ZY-tFB">
                             <connections>
