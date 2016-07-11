@@ -338,7 +338,7 @@ class WSHGameViewController: UIViewController,
                         betString = "\(bet.intValue)"
                         handString = "\(hand.intValue)"
                     } else {
-                        betString = "\(indexRound.roundType.intValue)"
+                        betString = "?"
                     }
                 }
             }

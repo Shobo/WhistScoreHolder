@@ -32,63 +32,89 @@ class WSHGridView: UIView {
     
     
     //Only works for portrait style views
-    func populateWithEqualSizedViews(viewZ: [UIView]) { //views should be already styled, having labels and targets
+    private func populateWithEqualSizedViews(viewZ: [UIView]) { //views should be already styled, having labels and targets
         
-        var numberOfViewsOnRow: Int
-        let numberOfMissingViews:Int
+        var numberOfCollumns: Int
         var numberOfRows: Int
         let numberOfViewsOnLastRow:Int
         
         let insideViewSize: CGFloat
         
-        let frameH : CGFloat
-        let frameW : CGFloat
+        (numberOfRows, numberOfCollumns, numberOfViewsOnLastRow, insideViewSize) = self.positioningGenerator(self.bounds.size, numberOfElements: viewZ.count)
         
-        numberOfViewsOnRow = smallestSquareRootWithSquareLargerThan(viewZ.count)
-        numberOfMissingViews = (numberOfViewsOnRow ^^ 2) - viewZ.count
-        numberOfRows = numberOfViewsOnRow - numberOfMissingViews / numberOfViewsOnRow
-        numberOfViewsOnLastRow = numberOfViewsOnRow - (numberOfMissingViews % numberOfViewsOnRow)
+        let isVerticallyOriented = numberOfRows >= numberOfCollumns
+        let frameH = self.frame.height
+        let frameW = self.frame.width
         
-        let isVerticallyOriented = self.frame.height >= self.frame.width
+        let xMargin: CGFloat = (frameW - CGFloat(numberOfCollumns - 1) * kInsideViewsMargin - CGFloat(numberOfCollumns) * insideViewSize) / 2
+        let yMargin: CGFloat = (frameH - CGFloat(numberOfRows - 1) * kInsideViewsMargin - CGFloat(numberOfRows) * insideViewSize) / 2
         
-        if self.frame.height >= self.frame.width {
-            frameH = self.frame.height
-            frameW = self.frame.width
-            
-        } else {
-            frameW = self.frame.height
-            frameH = self.frame.width
-            
-            swap(&numberOfRows, &numberOfViewsOnRow)
-        }
+        var currentX: CGFloat = xMargin
+        var currentY: CGFloat = yMargin
         
-        insideViewSize = min((frameW - CGFloat(numberOfViewsOnRow + 1) * kInsideViewsMargin) / CGFloat(numberOfViewsOnRow), (frameH - CGFloat(numberOfRows + 1) * kInsideViewsMargin) / CGFloat(numberOfRows))
-        
-        var currentX: CGFloat = (frameW - CGFloat(numberOfViewsOnRow - 1) * kInsideViewsMargin - CGFloat(numberOfViewsOnRow) * insideViewSize) / 2
-        var currentY: CGFloat = (frameH - CGFloat(numberOfRows - 1) * kInsideViewsMargin - CGFloat(numberOfRows) * insideViewSize) / 2
-        
-        var itemsOnCurrentRow = 0
-        var currentRow = 1
+        var itemsOnCurrentLine = 0
+        var currentLineIndex = 1
+        let numberOfItemsOnRow = numberOfCollumns - ((numberOfViewsOnLastRow != 0 && numberOfViewsOnLastRow != min(numberOfRows, numberOfCollumns)) ? Int(!isVerticallyOriented) : 0)
         
         for view in viewZ {
-            view.frame = CGRectMake(isVerticallyOriented ? currentX : currentY, isVerticallyOriented ? currentY : currentX, insideViewSize, insideViewSize)
+            view.frame = CGRectMake(currentX, currentY, insideViewSize, insideViewSize)
             
-            itemsOnCurrentRow += 1
+            itemsOnCurrentLine += 1
             
-            if itemsOnCurrentRow != numberOfViewsOnRow {   //same row
-                currentX = (isVerticallyOriented ? view.frame.maxX : view.frame.maxY) + kInsideViewsMargin
+            if itemsOnCurrentLine != numberOfItemsOnRow {   //same row
+                currentX = view.frame.maxX + kInsideViewsMargin
             } else {    //switch to next row
-                currentRow += 1
-                itemsOnCurrentRow = 0
+                currentLineIndex += 1
+                itemsOnCurrentLine = 0
                 
-                if currentRow == numberOfRows {    //if last row
-                    currentX = (frameW - CGFloat(min(numberOfViewsOnLastRow, numberOfViewsOnRow)) * insideViewSize - CGFloat(min(numberOfViewsOnLastRow, numberOfViewsOnRow) - 1) * kInsideViewsMargin) / 2
+                if currentLineIndex == numberOfRows && isVerticallyOriented {    //if last row
+                    currentX = (frameW - CGFloat(numberOfViewsOnLastRow) * insideViewSize - (CGFloat(numberOfViewsOnLastRow) - 1) * kInsideViewsMargin) / 2
                 } else {
-                    currentX = kInsideViewsMargin
+                    currentX = xMargin
                 }
                 
-                currentY = (isVerticallyOriented ? view.frame.maxY : view.frame.maxX) + kInsideViewsMargin
+                if !isVerticallyOriented && (numberOfViewsOnLastRow != 0 && viewZ.count - ((currentLineIndex - 1) * numberOfItemsOnRow) == numberOfViewsOnLastRow) {
+                    currentX = view.frame.maxX + kInsideViewsMargin
+                    currentY = (frameH - CGFloat(numberOfViewsOnLastRow) * insideViewSize - (CGFloat(numberOfViewsOnLastRow) - 1) * kInsideViewsMargin) / 2
+                } else {
+                    currentY = view.frame.maxY + kInsideViewsMargin
+                }
             }
         }
     }
+    
+    private func positioningGenerator(rectSize: CGSize, numberOfElements: Int) -> (rows: Int, collumns: Int, onLast: Int, size: CGFloat) {
+        let squarePositioning = smallestSquareRootWithSquareLargerThan(numberOfElements)
+        
+        var rez: (rows: Int, collumns: Int, onLast: Int, size: CGFloat) = (0, 0, 0, 0)
+        var insideViewSize: CGFloat
+        
+        for i in 1...squarePositioning {
+            let j = Int(ceil(CGFloat(numberOfElements) / CGFloat(i)))
+            
+            insideViewSize = self.sizeForPositioning((i, j), onSize: rectSize)
+
+            if insideViewSize > rez.size || (insideViewSize == rez.size && abs(rez.rows - rez.collumns) > abs(j - i)) {
+                rez.rows = j
+                rez.collumns = i
+                rez.size = insideViewSize
+            }
+            
+            insideViewSize = self.sizeForPositioning((j, i), onSize: rectSize)
+            
+            if (insideViewSize > rez.size) || (insideViewSize == rez.size && abs(rez.rows - rez.collumns) > abs(i - j)) {
+                rez.rows = i
+                rez.collumns = j
+                rez.size = insideViewSize
+            }
+        }
+        
+        return (rez.rows, rez.collumns, min(rez.rows, rez.collumns) - (rez.rows * rez.collumns - numberOfElements), rez.size)
+    }
+    
+    private func sizeForPositioning(positioning: (collumns: Int, rows: Int), onSize: CGSize) -> CGFloat {
+        return min((onSize.width - CGFloat(positioning.collumns + 1) * kInsideViewsMargin) / CGFloat(positioning.collumns),
+                   (onSize.height - CGFloat(positioning.rows + 1) * kInsideViewsMargin) / CGFloat(positioning.rows))
+    }
+    
 }
