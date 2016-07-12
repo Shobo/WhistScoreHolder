@@ -364,7 +364,7 @@
         <!--Player View Controller-->
         <scene sceneID="8xi-eM-8cp">
             <objects>
-                <viewController storyboardIdentifier="Player View Controller" id="Uaj-pE-gpD" customClass="WSHPlayerViewController" customModule="WhistScoreHolder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Player View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Uaj-pE-gpD" customClass="WSHPlayerViewController" customModule="WhistScoreHolder" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6Ma-99-WdP"/>
                         <viewControllerLayoutGuide type="bottom" id="ovI-pK-uvI"/>
@@ -432,6 +432,39 @@
             </objects>
             <point key="canvasLocation" x="-1136" y="-1342"/>
         </scene>
+        <!--Hands Action View Controller-->
+        <scene sceneID="B32-e1-4cq">
+            <objects>
+                <viewController storyboardIdentifier="WSHHandsActionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fj1-82-x9n" customClass="WSHHandsActionViewController" customModule="WhistScoreHolder" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FYr-7z-JED"/>
+                        <viewControllerLayoutGuide type="bottom" id="ca3-Fe-Cea"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yuH-ag-pbQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qT4-UF-dnW" customClass="WSHGridView" customModule="WhistScoreHolder" customModuleProvider="target">
+                                <rect key="frame" x="8" y="28" width="584" height="564"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qT4-UF-dnW" firstAttribute="top" secondItem="FYr-7z-JED" secondAttribute="bottom" constant="8" id="Df6-Zh-PuZ"/>
+                            <constraint firstAttribute="trailing" secondItem="qT4-UF-dnW" secondAttribute="trailing" constant="8" id="Vvo-SP-bfq"/>
+                            <constraint firstItem="ca3-Fe-Cea" firstAttribute="top" secondItem="qT4-UF-dnW" secondAttribute="bottom" constant="8" id="kjV-6c-Ow2"/>
+                            <constraint firstItem="qT4-UF-dnW" firstAttribute="leading" secondItem="yuH-ag-pbQ" secondAttribute="leading" constant="8" id="oTw-Zp-ixY"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="gridPlayersView" destination="qT4-UF-dnW" id="Skm-Lz-67Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oj0-RP-pxv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-448" y="-1342"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="VA0-fN-hI3">
             <objects>
@@ -471,7 +504,7 @@
         <!--Betting Action View Controller-->
         <scene sceneID="fdH-FV-cdU">
             <objects>
-                <viewController storyboardIdentifier="WSHBettingActionViewController" id="Oee-he-Xq2" customClass="WSHBettingActionViewController" customModule="WhistScoreHolder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WSHBettingActionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Oee-he-Xq2" customClass="WSHBettingActionViewController" customModule="WhistScoreHolder" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="c84-02-SOO"/>
                         <viewControllerLayoutGuide type="bottom" id="v9B-99-VyF"/>

@@ -15,7 +15,7 @@ class WSHGameViewController: UIViewController,
                             UITableViewDataSource, UITableViewDelegate,
                             UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,
                             WSHGameManagerDelegate,
-                            WSHBeginRoundActionDelegate {
+                            WSHBeginRoundActionDelegate, WSHHandsActionViewControllerDelegate {
     @IBOutlet weak var actionButton: UIBarButtonItem!
     @IBOutlet weak var scoreButton: UIBarButtonItem!
     @IBOutlet weak var tableViewObject: UITableView!
@@ -41,7 +41,9 @@ class WSHGameViewController: UIViewController,
         }
     }
     
+    
     //MARK: - View lifecycle
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +75,7 @@ class WSHGameViewController: UIViewController,
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        tableViewObject.reloadData()
+        tableViewObject.reloadData()
         collectionViewObject.reloadData()
     }
     
@@ -164,6 +166,10 @@ class WSHGameViewController: UIViewController,
     func willBeginRoundOfType(type: WSHRoundType, startingPlayer player: WSHPlayer) {
         setupBeginRoundActionViewController(round: type, fromPlayer: player, score: currentGame.totalPlayerScores[player] ?? 0)
         presentActionViewController()
+        
+        if let _ = self.collectionViewObject {
+            self.scrollToCurrentRound()
+        }
     }
     
     func playerTurnToBet(player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?) {
@@ -179,8 +185,14 @@ class WSHGameViewController: UIViewController,
     }
     
     func didFinishBettingInRound(round: WSHRound) {
-        // go to taking action VC
-        // start taking
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let handsActionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHHandsActionViewController") as! WSHHandsActionViewController
+        handsActionViewController.players = self.currentGame.players
+        handsActionViewController.delegate = self
+        
+        self.actionViewController = handsActionViewController
+        self.presentActionViewController()
     }
     
     func roundDidFinish(round: WSHRound, withBonuses bonuses: [WSHPlayer : Int]) {
@@ -330,7 +342,7 @@ class WSHGameViewController: UIViewController,
                 let indexOfIndexRound = currentGame.rounds.indexOf(indexRound)
                 
                 if indexOfCurrentRound > indexOfIndexRound || (indexRound == currentGame.currentRound && indexRound.isRoundComplete) {
-                    scoreString = "\(indexRound.playerScores[currentPlayer])"
+                    scoreString = "\(indexRound.playerScores[currentPlayer]!)"
                 }
                 
                 if indexOfCurrentRound >= indexOfIndexRound {
@@ -379,6 +391,18 @@ class WSHGameViewController: UIViewController,
     }
     
     
+    //MARK: - WSHHandsActionViewControllerDelegate functions
+    
+    
+    func handsActionControllerPlayerDidTakeHand(controller: WSHHandsActionViewController, player: WSHPlayer) {
+        do {
+            try WSHGameManager.sharedInstance.playerDidTakeHand(player)
+        } catch let error {
+            presentError(error, fromController: self.navigationController!)
+        }
+    }
+    
+    
     // MARK: - Actions
     
     
@@ -410,21 +434,6 @@ class WSHGameViewController: UIViewController,
         }
     }
     
-    func takeHandButtonPressed(button: UIButton) {
-        for player in WSHGameManager.sharedInstance.currentGame!.players {
-            if let title = button.currentTitle {
-                if player.name == title {
-                    do {
-                        try WSHGameManager.sharedInstance.playerDidTakeHand(player)
-                        return
-                    } catch let error {
-                        print(error)
-                    }
-                }
-            }
-        }
-    }
-    
     @IBAction func focusButtonPressed(sender: UIButton) {
         self.scrollToCurrentRound()
     }
@@ -448,20 +457,6 @@ class WSHGameViewController: UIViewController,
                     button.alpha = 0.5
                 }
             }
-            
-            buttons.append(button)
-        }
-        
-        return buttons
-    }
-    
-    private func playerTakingButtonsForPlayers(players: [WSHPlayer]) -> [UIButton] {
-        var buttons: [UIButton] = []
-        
-        for player in players {
-            let button = self.configuredStandardChoiceButton()
-            button.setTitle(player.name, forState: .Normal)
-            button.addTarget(self, action: #selector(WSHGameViewController.takeHandButtonPressed(_:)), forControlEvents: .TouchUpInside)
             
             buttons.append(button)
         }
