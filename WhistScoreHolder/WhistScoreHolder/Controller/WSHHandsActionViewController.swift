@@ -39,14 +39,18 @@ class WSHHandsActionViewController: WSHActionViewController {
     }
     
     private func configuredStandardChoiceButton(forPlayer: WSHPlayer) -> UIButton {
-        let button = UIButton()
+        let button = UIButton(type: .Custom)
         button.layer.cornerRadius = 5
-        button.backgroundColor = UIColor(red: 127.5 / 255, green: 127.5 / 255, blue: 127.5 / 255, alpha: 0.5)
-        button.imageView?.image = forPlayer.image
-        button.titleLabel?.text = forPlayer.name
+        button.clipsToBounds = true
+//        button.backgroundColor = UIColor(red: 127.5 / 255, green: 127.5 / 255, blue: 127.5 / 255, alpha: 0.5)
+        button.setBackgroundImage(forPlayer.image, forState: .Normal)
+//        button.setImage(forPlayer.image, forState: .Normal)
+        button.imageView?.contentMode = .ScaleAspectFit
+        button.setTitle(forPlayer.name, forState: .Normal)
         button.titleLabel?.font = UIFont.systemFontOfSize(100)
+        button.titleLabel?.textAlignment = .Center
         button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.titleLabel?.minimumScaleFactor = 0.5
+        button.titleLabel?.minimumScaleFactor = 0.05
         button.setTitleColor(UIColor.blackColor().colorWithAlphaComponent(0.85), forState: .Normal)
         
         button.addTarget(self, action: #selector(self.takeHandButtonPressed(_:)), forControlEvents: .TouchUpInside)
