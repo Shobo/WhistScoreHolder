@@ -12,6 +12,7 @@
 		594BEA201C83B813007D296D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 594BEA1E1C83B813007D296D /* Main.storyboard */; };
 		5961A9CC1C83C02200FD186F /* WSHPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5961A9CB1C83C02200FD186F /* WSHPlayerView.swift */; };
 		5961A9CE1C83C03100FD186F /* WSHPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5961A9CD1C83C03000FD186F /* WSHPlayerView.xib */; };
+		59625EBA1D48FC0F00646F4F /* WSHPlayerCellSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59625EB91D48FC0F00646F4F /* WSHPlayerCellSummary.swift */; };
 		59A4F8AB1C9B46040077B5EC /* WSHScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F8AA1C9B46040077B5EC /* WSHScoreCell.swift */; };
 		59A4F8AF1C9B47350077B5EC /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F8AE1C9B47350077B5EC /* UIColor+Additions.swift */; };
 		59A4F8B11C9B538D0077B5EC /* WSHScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F8B01C9B538D0077B5EC /* WSHScoreCell.xib */; };
@@ -56,6 +57,7 @@
 		594BEA1F1C83B813007D296D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5961A9CB1C83C02200FD186F /* WSHPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHPlayerView.swift; sourceTree = "<group>"; };
 		5961A9CD1C83C03000FD186F /* WSHPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHPlayerView.xib; sourceTree = "<group>"; };
+		59625EB91D48FC0F00646F4F /* WSHPlayerCellSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHPlayerCellSummary.swift; sourceTree = "<group>"; };
 		59A4F8AA1C9B46040077B5EC /* WSHScoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHScoreCell.swift; sourceTree = "<group>"; };
 		59A4F8AE1C9B47350077B5EC /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Additions.swift"; path = "WhistScoreHolder/Additions/UIColor+Additions.swift"; sourceTree = SOURCE_ROOT; };
 		59A4F8B01C9B538D0077B5EC /* WSHScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHScoreCell.xib; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				592554771C9DBB0C000C3642 /* WSHHeaderCell.swift */,
 				59C9608D1C9DBC9C007FDBD6 /* WSHHeaderCell.xib */,
 				59E771601D2EDA680001923B /* WSHGridView.swift */,
+				59625EB91D48FC0F00646F4F /* WSHPlayerCellSummary.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				59BBAA361CB1521800C8F267 /* WSHBeginRoundActionViewController.swift in Sources */,
 				D2CB75EF1C839BD400D7BB0D /* WSHGameManagerDelegate.swift in Sources */,
 				D2D086E91CDE7C6B00210DAF /* WSHMathAdditions.swift in Sources */,
+				59625EBA1D48FC0F00646F4F /* WSHPlayerCellSummary.swift in Sources */,
 				D2CB75EA1C8398E700D7BB0D /* WSHGame.swift in Sources */,
 				59E771721D3427220001923B /* WSHUtils.swift in Sources */,
 				D2B9DB691CC160A100E35B67 /* WSHBettingActionViewController.swift in Sources */,

@@ -10,6 +10,7 @@ import UIKit
 
 let kScoreCellWidth: CGFloat = 56.0
 let kHeaderHeight: CGFloat = 26.0
+let kTableViewMinWidth: CGFloat = 164.0
 
 class WSHGameViewController: UIViewController,
                             UITableViewDataSource, UITableViewDelegate,
@@ -17,11 +18,9 @@ class WSHGameViewController: UIViewController,
                             WSHGameManagerDelegate,
                             WSHBeginRoundActionDelegate, WSHHandsActionViewControllerDelegate {
     @IBOutlet weak var actionButton: UIBarButtonItem!
-    @IBOutlet weak var scoreButton: UIBarButtonItem!
     @IBOutlet weak var tableViewObject: UITableView!
     @IBOutlet weak var collectionViewObject: UICollectionView!
     
-    @IBOutlet private weak var collectionViewWidth: NSLayoutConstraint!
     @IBOutlet private weak var tableViewWidth: NSLayoutConstraint!
     
     private var currentGame: WSHGame! {
@@ -60,7 +59,7 @@ class WSHGameViewController: UIViewController,
         super.viewWillLayoutSubviews()
         
         setupScoreViewsWidths(forSize: view.bounds.size);
-        rowHeight = floor((view.frame.height - kHeaderHeight) / 6.0)
+        rowHeight = floor((view.frame.height - kHeaderHeight) / (CGFloat(self.currentGame.players.count) ?? 6.0))
         tableViewObject.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
         
         let offsetPoint = collectionViewObject.contentOffset
@@ -84,10 +83,10 @@ class WSHGameViewController: UIViewController,
     
     
     private func setupScoreViewsWidths(forSize size: CGSize) {
-        let numberOfVisibleCells = Int((size.width - 164.0) / kScoreCellWidth) + 1
+        let numberOfVisibleCells = Int((size.width - kTableViewMinWidth) / kScoreCellWidth) + 1
         
-        collectionViewWidth.constant = kScoreCellWidth * CGFloat(numberOfVisibleCells)
-        tableViewWidth.constant = size.width - collectionViewWidth.constant
+        let scoreCellsWidth = kScoreCellWidth * CGFloat(numberOfVisibleCells)
+        tableViewWidth.constant = size.width - scoreCellsWidth
         
         view.setNeedsLayout()
     }
