@@ -219,7 +219,7 @@ class WSHGameViewController: UIViewController,
     }
     
     
-    //MARK: - Scroll view delegates
+    //MARK: - ScrollViewDelegate functions
     
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -259,7 +259,7 @@ class WSHGameViewController: UIViewController,
     }
     
     
-    //MARK: - Table view delegates
+    //MARK: - TableViewDelegate functions
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -295,7 +295,9 @@ class WSHGameViewController: UIViewController,
         cell?.textLabel?.adjustsFontSizeToFitWidth = true
         cell?.textLabel?.text = currentPlayer.name.substringToIndex(currentPlayer.name.startIndex.advancedBy(min(currentPlayer.name.characters.count, 4)))
         cell?.detailTextLabel?.text = "\(currentGame.totalPlayerScores[currentPlayer]!)"
-        cell?.imageView?.image = currentPlayer.image?.scale(toSize: CGSizeMake(rowHeight * 3.0/4.0 , rowHeight  * 3.0/4.0))
+        let cellSize = min(rowHeight * 3.0/4.0, kScoreCellWidth)
+        
+        cell?.imageView?.image = currentPlayer.image?.scale(toSize: CGSizeMake(cellSize, cellSize))
         cell?.backgroundColor = UIColor.clearColor()
         
         return cell!
