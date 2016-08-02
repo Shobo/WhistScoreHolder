@@ -23,9 +23,23 @@ class WSHGameViewController: UIViewController,
     
     @IBOutlet private weak var tableViewWidth: NSLayoutConstraint!
     
+    private var _currentGame: WSHGame?
     private var currentGame: WSHGame! {
         get {
-            return WSHGameManager.sharedInstance.currentGame ?? WSHGame(players: [])
+            if let game = _currentGame {
+                return game
+            } else {
+                _currentGame = WSHGameManager.sharedInstance.currentGame
+                
+                if let game = _currentGame {
+                    return game
+                } else {
+                    return WSHGame(players: [])
+                }
+            }
+        }
+        set {
+            _currentGame = newValue
         }
     }
     private var rowHeight: CGFloat = 0.0
@@ -206,7 +220,7 @@ class WSHGameViewController: UIViewController,
     }
 
     func gameManager(gameManager: WSHGameManager, didEndGame game: WSHGame) {
-
+        currentGame = game
     }
     
     
@@ -354,6 +368,14 @@ class WSHGameViewController: UIViewController,
                         betString = "?"
                     }
                 }
+            } else {
+                if let (bet, hand) = indexRound.roundInformation[currentPlayer] {
+                    betString = "\(bet.intValue)"
+                    handString = "\(hand.intValue)"
+                } else {
+                    betString = "?"
+                }
+                scoreString = "\(indexRound.playerScores[currentPlayer]!)"
             }
             
             headerCell.mainLabel.text = scoreString
