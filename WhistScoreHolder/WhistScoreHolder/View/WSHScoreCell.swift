@@ -46,9 +46,9 @@ class WSHScoreCell: UICollectionViewCell {
     private func addLine(forRect rect: CGRect) {
         let aPath = UIBezierPath()
         
-        aPath.moveToPoint(CGPoint(x:0.0, y:rect.height))
+        aPath.moveToPoint(guessLabel.frame.origin)
         
-        aPath.addLineToPoint(CGPoint(x:24.0, y:0.0))
+        aPath.addLineToPoint(CGPointMake(realityLabel.frame.maxX, realityLabel.frame.maxY))
         
         //Keep using the method addLineToPoint until you get to the one where about to close the path
         

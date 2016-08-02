@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -15,27 +15,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="427" height="383"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmF-QZ-n9M">
+                        <rect key="frame" x="0.0" y="0.0" width="208" height="110"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfe-Zz-HaT">
+                        <rect key="frame" x="220" y="0.0" width="207" height="109"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="0Hh-9f-x6k">
-                        <rect key="frame" x="24" y="0.0" width="403" height="383"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmF-QZ-n9M">
-                        <rect key="frame" x="0.0" y="0.0" width="12" height="192"/>
-                        <constraints>
-                            <constraint firstAttribute="width" priority="998" constant="12" id="amX-e6-0JI"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfe-Zz-HaT">
-                        <rect key="frame" x="12" y="191" width="12" height="192"/>
-                        <constraints>
-                            <constraint firstAttribute="width" priority="998" constant="12" id="E3M-Yw-Qvq"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="2" y="112" width="423" height="269"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="52"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -43,16 +37,18 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="0Hh-9f-x6k" secondAttribute="bottom" id="3mF-LE-R0s"/>
-                <constraint firstAttribute="bottom" secondItem="Nfe-Zz-HaT" secondAttribute="bottom" id="4dU-bF-kVy"/>
-                <constraint firstAttribute="trailing" secondItem="0Hh-9f-x6k" secondAttribute="trailing" id="4wy-8M-rxL"/>
-                <constraint firstItem="RmF-QZ-n9M" firstAttribute="height" secondItem="lE6-3u-v48" secondAttribute="height" multiplier="1:2" id="8mC-Qd-4j6"/>
+                <constraint firstAttribute="bottom" secondItem="0Hh-9f-x6k" secondAttribute="bottom" priority="999" constant="2" id="3mF-LE-R0s"/>
+                <constraint firstAttribute="trailing" secondItem="0Hh-9f-x6k" secondAttribute="trailing" priority="999" constant="2" id="4wy-8M-rxL"/>
+                <constraint firstItem="RmF-QZ-n9M" firstAttribute="height" secondItem="lE6-3u-v48" secondAttribute="height" multiplier="1:3.5" id="8mC-Qd-4j6"/>
                 <constraint firstItem="RmF-QZ-n9M" firstAttribute="top" secondItem="lE6-3u-v48" secondAttribute="top" id="9nG-sI-FJP"/>
-                <constraint firstItem="0Hh-9f-x6k" firstAttribute="leading" secondItem="Nfe-Zz-HaT" secondAttribute="trailing" id="TsQ-PH-Q63"/>
+                <constraint firstItem="0Hh-9f-x6k" firstAttribute="leading" secondItem="lE6-3u-v48" secondAttribute="leading" priority="999" constant="2" id="EoX-oh-qsk"/>
+                <constraint firstItem="Nfe-Zz-HaT" firstAttribute="top" secondItem="lE6-3u-v48" secondAttribute="top" id="Fjw-R5-6qa"/>
+                <constraint firstAttribute="trailing" secondItem="Nfe-Zz-HaT" secondAttribute="trailing" id="QpY-Dv-5z5"/>
+                <constraint firstItem="0Hh-9f-x6k" firstAttribute="top" secondItem="RmF-QZ-n9M" secondAttribute="bottom" priority="999" constant="2" id="Yhx-1y-pRi"/>
                 <constraint firstItem="RmF-QZ-n9M" firstAttribute="leading" secondItem="lE6-3u-v48" secondAttribute="leading" id="gqb-mf-HRq"/>
-                <constraint firstItem="Nfe-Zz-HaT" firstAttribute="leading" secondItem="RmF-QZ-n9M" secondAttribute="trailing" id="hzi-0C-H3o"/>
-                <constraint firstItem="Nfe-Zz-HaT" firstAttribute="height" secondItem="lE6-3u-v48" secondAttribute="height" multiplier="1:2" id="kLt-af-nQP"/>
-                <constraint firstItem="0Hh-9f-x6k" firstAttribute="top" secondItem="lE6-3u-v48" secondAttribute="top" id="yse-vo-jWv"/>
+                <constraint firstItem="Nfe-Zz-HaT" firstAttribute="leading" secondItem="RmF-QZ-n9M" secondAttribute="trailing" priority="999" constant="12" id="hzi-0C-H3o"/>
+                <constraint firstItem="Nfe-Zz-HaT" firstAttribute="height" secondItem="lE6-3u-v48" secondAttribute="height" multiplier="1:3.5" id="kLt-af-nQP"/>
+                <constraint firstItem="RmF-QZ-n9M" firstAttribute="width" secondItem="Nfe-Zz-HaT" secondAttribute="width" id="tJ7-u6-WcZ"/>
             </constraints>
             <size key="customSize" width="427" height="383"/>
             <connections>
