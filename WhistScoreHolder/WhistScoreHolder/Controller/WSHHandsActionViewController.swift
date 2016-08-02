@@ -27,8 +27,8 @@ class WSHHandsActionViewController: WSHActionViewController {
     
     
     private func buttonsForPlayers() -> [UIButton] {
-        var buttons = [UIButton]()
-        var btn: UIButton
+        var buttons = [WSHBetButton]()
+        var btn: WSHBetButton
         
         for pleya in self.players ?? [] {
             btn = self.configuredStandardChoiceButton(pleya)
@@ -38,20 +38,14 @@ class WSHHandsActionViewController: WSHActionViewController {
         return buttons
     }
     
-    private func configuredStandardChoiceButton(forPlayer: WSHPlayer) -> UIButton {
-        let button = UIButton(type: .Custom)
+    private func configuredStandardChoiceButton(forPlayer: WSHPlayer) -> WSHBetButton {
+        let button = WSHBetButton(type: .Custom)
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
-//        button.backgroundColor = UIColor(red: 127.5 / 255, green: 127.5 / 255, blue: 127.5 / 255, alpha: 0.5)
         button.setBackgroundImage(forPlayer.image, forState: .Normal)
-//        button.setImage(forPlayer.image, forState: .Normal)
-        button.imageView?.contentMode = .ScaleAspectFit
-        button.setTitle(forPlayer.name, forState: .Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(100)
-        button.titleLabel?.textAlignment = .Center
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.titleLabel?.minimumScaleFactor = 0.05
-        button.setTitleColor(UIColor.blackColor().colorWithAlphaComponent(0.85), forState: .Normal)
+//        button.imageView?.contentMode = .ScaleAspectFit
+        button.bottomLabel.text = forPlayer.name
+        button.mainLabel.text = "0"
         
         button.addTarget(self, action: #selector(self.takeHandButtonPressed(_:)), forControlEvents: .TouchUpInside)
         
@@ -64,14 +58,14 @@ class WSHHandsActionViewController: WSHActionViewController {
     //MARK: - Actions
     
     
-    func takeHandButtonPressed(button: UIButton) {
+    func takeHandButtonPressed(button: WSHBetButton) {
         if let delegate = self.delegate {
-            delegate.handsActionControllerPlayerDidTakeHand(self, player: (self.players?[button.tag])!)
+            button.mainLabel.text = "\(delegate.handsActionControllerPlayerDidTakeHand(self, player: (self.players?[button.tag])!))"
         }
     }
     
 }
 
 protocol WSHHandsActionViewControllerDelegate {
-    func handsActionControllerPlayerDidTakeHand(controller: WSHHandsActionViewController, player: WSHPlayer)
+    func handsActionControllerPlayerDidTakeHand(controller: WSHHandsActionViewController, player: WSHPlayer) -> Int
 }

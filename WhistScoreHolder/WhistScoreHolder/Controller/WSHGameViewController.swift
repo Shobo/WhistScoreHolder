@@ -395,12 +395,13 @@ class WSHGameViewController: UIViewController,
     //MARK: - WSHHandsActionViewControllerDelegate functions
     
     
-    func handsActionControllerPlayerDidTakeHand(controller: WSHHandsActionViewController, player: WSHPlayer) {
+    func handsActionControllerPlayerDidTakeHand(controller: WSHHandsActionViewController, player: WSHPlayer) -> Int {
         do {
             try WSHGameManager.sharedInstance.playerDidTakeHand(player)
         } catch let error {
             presentError(error, fromController: self.navigationController!)
         }
+        return currentGame.currentRound?.roundInformation[player]?.hands.intValue ?? 0
     }
     
     

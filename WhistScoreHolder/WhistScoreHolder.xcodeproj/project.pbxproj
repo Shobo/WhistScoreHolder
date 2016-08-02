@@ -28,6 +28,8 @@
 		59E867941C861ED6007C6257 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867931C861ED6007C6257 /* UIImage+Additions.swift */; };
 		59E867C51C88DB6E007C6257 /* WSHPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867C41C88DB6E007C6257 /* WSHPlayerViewController.swift */; };
 		59E867C91C88EA41007C6257 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E867C81C88EA41007C6257 /* UIAlertController+Additions.swift */; };
+		59E8E4B11D50FE1800D14C7E /* WSHBetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E8E4B01D50FE1800D14C7E /* WSHBetButton.swift */; };
+		59E8E4B31D50FE2A00D14C7E /* WSHBetButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E8E4B21D50FE2A00D14C7E /* WSHBetButton.xib */; };
 		D28910271C9B414E00C50932 /* WhistScoreHolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28910261C9B414E00C50932 /* WhistScoreHolderTests.swift */; };
 		D2B9DB691CC160A100E35B67 /* WSHBettingActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9DB681CC160A100E35B67 /* WSHBettingActionViewController.swift */; };
 		D2CB75CF1C838AA000D7BB0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CB75CE1C838AA000D7BB0D /* AppDelegate.swift */; };
@@ -73,6 +75,8 @@
 		59E867931C861ED6007C6257 /* UIImage+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Additions.swift"; path = "WhistScoreHolder/Additions/UIImage+Additions.swift"; sourceTree = SOURCE_ROOT; };
 		59E867C41C88DB6E007C6257 /* WSHPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHPlayerViewController.swift; sourceTree = "<group>"; };
 		59E867C81C88EA41007C6257 /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIAlertController+Additions.swift"; path = "WhistScoreHolder/Additions/UIAlertController+Additions.swift"; sourceTree = SOURCE_ROOT; };
+		59E8E4B01D50FE1800D14C7E /* WSHBetButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHBetButton.swift; sourceTree = "<group>"; };
+		59E8E4B21D50FE2A00D14C7E /* WSHBetButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHBetButton.xib; sourceTree = "<group>"; };
 		D28910241C9B414E00C50932 /* WhistScoreHolderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhistScoreHolderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D28910261C9B414E00C50932 /* WhistScoreHolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhistScoreHolderTests.swift; sourceTree = "<group>"; };
 		D28910281C9B414E00C50932 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -196,6 +200,8 @@
 				59C9608D1C9DBC9C007FDBD6 /* WSHHeaderCell.xib */,
 				59E771601D2EDA680001923B /* WSHGridView.swift */,
 				59625EB91D48FC0F00646F4F /* WSHPlayerCellSummary.swift */,
+				59E8E4B01D50FE1800D14C7E /* WSHBetButton.swift */,
+				59E8E4B21D50FE2A00D14C7E /* WSHBetButton.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -326,6 +332,7 @@
 				59A4F8B11C9B538D0077B5EC /* WSHScoreCell.xib in Resources */,
 				594BEA201C83B813007D296D /* Main.storyboard in Resources */,
 				59C9608E1C9DBC9C007FDBD6 /* WSHHeaderCell.xib in Resources */,
+				59E8E4B31D50FE2A00D14C7E /* WSHBetButton.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +369,7 @@
 				D2CB75EF1C839BD400D7BB0D /* WSHGameManagerDelegate.swift in Sources */,
 				D2D086E91CDE7C6B00210DAF /* WSHMathAdditions.swift in Sources */,
 				59625EBA1D48FC0F00646F4F /* WSHPlayerCellSummary.swift in Sources */,
+				59E8E4B11D50FE1800D14C7E /* WSHBetButton.swift in Sources */,
 				D2CB75EA1C8398E700D7BB0D /* WSHGame.swift in Sources */,
 				59E771721D3427220001923B /* WSHUtils.swift in Sources */,
 				D2B9DB691CC160A100E35B67 /* WSHBettingActionViewController.swift in Sources */,
