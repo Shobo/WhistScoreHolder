@@ -33,11 +33,11 @@ class WSHScoreCell: UICollectionViewCell {
         addLine(forRect: rect)
     }
     
-    override var backgroundColor: UIColor? {
-        didSet {
-            tintColour = backgroundColor?.complementaryColor() ?? UIColor.blackColor()
-        }
-    }
+//    override var backgroundColor: UIColor? {
+//        didSet {
+//            tintColour = backgroundColor?.complementaryColor() ?? UIColor.blackColor()
+//        }
+//    }
     
     
     //MARK - Private

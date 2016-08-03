@@ -23,6 +23,18 @@ class WSHGameViewController: UIViewController,
     
     @IBOutlet private weak var tableViewWidth: NSLayoutConstraint!
     
+    private var rowHeight: CGFloat = 0.0
+    private var collectionViewOffsetXBeforeScroll: CGFloat = 0.0
+    private var actionViewController: WSHActionViewController? {
+        didSet {
+            if actionViewController == nil {
+                actionButton.enabled = false
+            } else {
+                actionButton.enabled = true
+            }
+        }
+    }
+    
     private var _currentGame: WSHGame?
     private var currentGame: WSHGame! {
         get {
@@ -40,17 +52,6 @@ class WSHGameViewController: UIViewController,
         }
         set {
             _currentGame = newValue
-        }
-    }
-    private var rowHeight: CGFloat = 0.0
-    private var collectionViewOffsetXBeforeScroll: CGFloat = 0.0
-    private var actionViewController: WSHActionViewController? {
-        didSet {
-            if actionViewController == nil {
-                actionButton.enabled = false
-            } else {
-                actionButton.enabled = true
-            }
         }
     }
     
@@ -202,6 +203,12 @@ class WSHGameViewController: UIViewController,
         
         let handsActionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHHandsActionViewController") as! WSHHandsActionViewController
         handsActionViewController.players = self.currentGame.players
+        
+        var bets: [WSHPlayer : Int] = [:]
+        for (key, val) in self.currentGame.currentRound?.roundInformation ?? [:] {
+            bets[key] = val.bet.intValue
+        }
+        handsActionViewController.bets = bets
         handsActionViewController.delegate = self
         
         self.actionViewController = handsActionViewController
@@ -343,11 +350,12 @@ class WSHGameViewController: UIViewController,
             cell = headerCell
             
         } else {
-            let headerCell: WSHScoreCell = (collectionView.dequeueReusableCellWithReuseIdentifier("ScoreCell", forIndexPath: indexPath) as! WSHScoreCell)
+            let scoreCell: WSHScoreCell = (collectionView.dequeueReusableCellWithReuseIdentifier("ScoreCell", forIndexPath: indexPath) as! WSHScoreCell)
+            scoreCell.backgroundColor = UIColor.whiteColor()
             
-            var scoreString = "--"
-            var betString = "-"
-            var handString = "-"
+            var scoreString = "?"
+            var betString = "?"
+            var handString = "?"
             
             let indexRound: WSHRound = currentGame.rounds[indexPath.section]
             let currentPlayer: WSHPlayer = currentGame.players[indexPath.row - 1]
@@ -364,27 +372,44 @@ class WSHGameViewController: UIViewController,
                     if let (bet, hand) = indexRound.roundInformation[currentPlayer] {
                         betString = "\(bet.intValue)"
                         handString = "\(hand.intValue)"
-                    } else {
-                        betString = "?"
+                        
+                        if currentRound == round {
+                            scoreCell.backgroundColor = UIColor.blueColor().colorWithAlphaComponent(0.05)
+                            
+                        } else if bet.intValue == hand.intValue {
+                            scoreCell.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.05)
+                            
+                        } else {
+                            scoreCell.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.05)
+                        }
                     }
                 }
             } else {
                 if let (bet, hand) = indexRound.roundInformation[currentPlayer] {
                     betString = "\(bet.intValue)"
                     handString = "\(hand.intValue)"
-                } else {
-                    betString = "?"
+                    
+                    if bet.intValue == hand.intValue {
+                        scoreCell.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.05)
+                    } else {
+                        scoreCell.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.05)
+                    }
                 }
                 scoreString = "\(indexRound.playerScores[currentPlayer]!)"
             }
+            if let bonus = self.currentGame.playerBonusesPerRound[round!]?[currentPlayer] {
+                if bonus < 0 {
+                    scoreCell.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.2)
+                } else {
+                    scoreCell.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.2)
+                }
+            }
             
-            headerCell.mainLabel.text = scoreString
-            headerCell.guessLabel.text = betString
-            headerCell.realityLabel.text = handString
+            scoreCell.mainLabel.text = scoreString
+            scoreCell.guessLabel.text = betString
+            scoreCell.realityLabel.text = handString
             
-            headerCell.backgroundColor = UIColor.whiteColor()
-            
-            cell = headerCell
+            cell = scoreCell
         }
         
         return cell!

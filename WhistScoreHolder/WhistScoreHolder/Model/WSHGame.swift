@@ -13,7 +13,7 @@ class WSHGame {
     private(set) var rounds: [WSHRound] = []
     private(set) var currentRound: WSHRound?
     private(set) var totalPlayerScores: [WSHPlayer: Int] = [:]
-    private(set) var playerBonusesForLastRound: [WSHPlayer: Int]?
+    private(set) var playerBonusesPerRound: [WSHRound : [WSHPlayer: Int]] = [:]
     private var counterForPlayerRightGuesses: [WSHPlayer: Int] = [:]
     
     var totalNumberOfRounds: Int {
@@ -90,10 +90,6 @@ class WSHGame {
         }
     }
     
-    private func resetPlayerBonusesForLastRound() {
-        self.playerBonusesForLastRound = nil
-    }
-    
     private func addScoresFromRound(round: WSHRound) {
         for player in self.players {
             self.totalPlayerScores[player]! += round.playerScores[player]!
@@ -133,9 +129,7 @@ class WSHGame {
             }
             
             if bonuses.count > 0 {
-                self.playerBonusesForLastRound = bonuses
-            } else {
-                self.resetPlayerBonusesForLastRound()
+                self.playerBonusesPerRound[round] = bonuses
             }
         }
     }

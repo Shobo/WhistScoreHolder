@@ -91,7 +91,7 @@ class WSHGameManager {
             round.addHandForPlayer(player)
             
             if round.isRoundComplete {
-                self.delegate?.roundDidFinish(round, withBonuses: self.currentGame?.playerBonusesForLastRound ?? [:])
+                self.delegate?.roundDidFinish(round, withBonuses: self.currentGame?.playerBonusesPerRound[round] ?? [:])
             }
         } catch let error {
             throw error

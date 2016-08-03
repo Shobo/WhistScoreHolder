@@ -13,6 +13,7 @@ class WSHHandsActionViewController: WSHActionViewController {
     var delegate: WSHHandsActionViewControllerDelegate?
     
     var players: [WSHPlayer]?
+    var bets: [WSHPlayer : Int] = [:]
     
     @IBOutlet weak var gridPlayersView: WSHGridView!
     
@@ -45,7 +46,7 @@ class WSHHandsActionViewController: WSHActionViewController {
         button.setBackgroundImage(forPlayer.image, forState: .Normal)
 //        button.imageView?.contentMode = .ScaleAspectFit
         button.bottomLabel.text = forPlayer.name
-        button.mainLabel.text = "0"
+        button.mainLabel.text = "0/\(bets[forPlayer]!)"
         
         button.addTarget(self, action: #selector(self.takeHandButtonPressed(_:)), forControlEvents: .TouchUpInside)
         
@@ -60,7 +61,9 @@ class WSHHandsActionViewController: WSHActionViewController {
     
     func takeHandButtonPressed(button: WSHBetButton) {
         if let delegate = self.delegate {
-            button.mainLabel.text = "\(delegate.handsActionControllerPlayerDidTakeHand(self, player: (self.players?[button.tag])!))"
+            if let pleya = self.players?[button.tag] {
+                button.mainLabel.text = "\(delegate.handsActionControllerPlayerDidTakeHand(self, player: pleya))/\(bets[pleya]!)"
+            }
         }
     }
     
