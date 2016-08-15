@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WSHCameraView" customModule="WhistScoreHolder" customModuleProvider="target">
+            <connections>
+                <outlet property="cameraContainerView" destination="vJj-eQ-BIU" id="6UF-G3-X3C"/>
+                <outlet property="imageView" destination="164-Ff-bMT" id="ztL-f7-UDH"/>
+                <outlet property="overlayView" destination="WyA-ol-out" id="Hyg-bU-xCs"/>
+                <outlet property="previewView" destination="TrI-Ao-xXN" id="3aW-pM-v4K"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJj-eQ-BIU" customClass="WSHOverlayView" customModule="WhistScoreHolder" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TrI-Ao-xXN">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="164-Ff-bMT">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="164-Ff-bMT" firstAttribute="leading" secondItem="vJj-eQ-BIU" secondAttribute="leading" id="4nd-8A-gig"/>
+                        <constraint firstItem="TrI-Ao-xXN" firstAttribute="leading" secondItem="vJj-eQ-BIU" secondAttribute="leading" id="DMp-5I-OyG"/>
+                        <constraint firstItem="164-Ff-bMT" firstAttribute="top" secondItem="vJj-eQ-BIU" secondAttribute="top" id="LAV-HN-lDP"/>
+                        <constraint firstAttribute="bottom" secondItem="TrI-Ao-xXN" secondAttribute="bottom" id="U6W-o0-WmZ"/>
+                        <constraint firstAttribute="trailing" secondItem="164-Ff-bMT" secondAttribute="trailing" id="d7W-gY-p0z"/>
+                        <constraint firstAttribute="bottom" secondItem="164-Ff-bMT" secondAttribute="bottom" id="hFz-Ue-gWf"/>
+                        <constraint firstItem="TrI-Ao-xXN" firstAttribute="top" secondItem="vJj-eQ-BIU" secondAttribute="top" id="mdV-VJ-v3g"/>
+                        <constraint firstAttribute="trailing" secondItem="TrI-Ao-xXN" secondAttribute="trailing" id="yLk-vc-a8G"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WyA-ol-out">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="HWj-l9-M7h" appends="YES" id="Ztr-pw-LON"/>
+                    </connections>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="WyA-ol-out" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5A7-r6-5FZ"/>
+                <constraint firstItem="vJj-eQ-BIU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="CS5-g2-t1v"/>
+                <constraint firstItem="WyA-ol-out" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="DTV-fr-L8I"/>
+                <constraint firstAttribute="trailing" secondItem="WyA-ol-out" secondAttribute="trailing" id="FM2-CL-I1U"/>
+                <constraint firstAttribute="bottom" secondItem="vJj-eQ-BIU" secondAttribute="bottom" id="ODb-Ba-J06"/>
+                <constraint firstItem="vJj-eQ-BIU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="YQs-co-d0J"/>
+                <constraint firstAttribute="bottom" secondItem="WyA-ol-out" secondAttribute="bottom" id="aPL-yC-mRf"/>
+                <constraint firstAttribute="trailing" secondItem="vJj-eQ-BIU" secondAttribute="trailing" id="ejN-R7-NsR"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-17" y="507"/>
+        </view>
+        <tapGestureRecognizer id="HWj-l9-M7h">
+            <connections>
+                <action selector="didTap:" destination="-1" id="PjL-Nb-aFC"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>

@@ -24,7 +24,7 @@ class WSHBeginRoundActionViewController: WSHActionViewController,
     var player: WSHPlayer? {
         didSet {
             nameOfPlayerLabel?.text = player?.name ?? ""
-            playerImageView?.image = player?.image ?? nil
+            playerImageView?.image = player?.presentableImage()
         }
     }
     var round: WSHRoundType? {
@@ -49,7 +49,7 @@ class WSHBeginRoundActionViewController: WSHActionViewController,
 
         // Do any additional setup after loading the view.
         nameOfPlayerLabel?.text = player?.name ?? ""
-        playerImageView?.image = player?.image ?? nil
+        playerImageView?.image = player?.presentableImage()
         
         if let roundIf = round {
             roundOfLabel?.text = "\(kRoundOfString)\(roundIf.intValue)"
@@ -88,7 +88,7 @@ class WSHBeginRoundActionViewController: WSHActionViewController,
                 }
             }
             
-            playerCell.leftImageView.image = currentPlayer.image
+            playerCell.leftImageView.image = currentPlayer.presentableImage()
             playerCell.mainLabel.text = currentPlayer.name
             playerCell.scoreLabel.text = scoreString
             

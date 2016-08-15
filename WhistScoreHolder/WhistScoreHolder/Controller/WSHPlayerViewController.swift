@@ -27,7 +27,8 @@ class WSHPlayerViewController: UIViewController {
         didSet {
             if self.isViewLoaded() && self.view.window != nil {
                 playerView.name = editPlayer?.name ?? ""
-                playerView.image = editPlayer?.image ?? UIImage.randomColorImage(withSize: CGSizeZero)
+                playerView.image = editPlayer?.image
+                playerView.colorHex = (editPlayer?.colour)!
             }
         }
     }
@@ -43,7 +44,8 @@ class WSHPlayerViewController: UIViewController {
             navigationItem.leftBarButtonItem = cancelButtonItem
             
             playerView.name = player.name ?? ""
-            playerView.image = player.image ?? UIImage.randomColorImage(withSize: CGSizeZero)
+            playerView.image = player.image
+            playerView.colorHex = player.colour
         } else {
             navigationItem.rightBarButtonItem = addButtonItem
             navigationItem.leftBarButtonItem = leftDoneButtonItem
@@ -76,18 +78,28 @@ class WSHPlayerViewController: UIViewController {
         if playerView.name.isEmpty {
             presentAddNameAlertView()
             
-        } else if delegate?.didAddPlayer(self, player: WSHPlayer(name: playerView.name, image: playerView.image)) < kMAX_NUMBER_OF_PLAYERS  {
-            // todo: (foc) show a notification : "cutarica" added
-            playerView.resetToDefault()
-            
         } else {
-            // todo: (foc) show a notification : added enough players
-            dismissAnimated()
+            let pleya = WSHPlayer(name: playerView.name)
+            pleya.image = self.playerView.image
+            pleya.colour = self.playerView.colorHex
+            
+            if delegate?.didAddPlayer(self, player: pleya) < kMAX_NUMBER_OF_PLAYERS  {
+                // todo: (foc) show a notification : "cutarica" added
+                playerView.resetToDefault()
+                
+            } else {
+                // todo: (foc) show a notification : added enough players
+                dismissAnimated()
+            }
         }
     }
     
     @IBAction func doneButtonTapped(sender: AnyObject) {
-        delegate?.didEditPlayer(self, player: WSHPlayer(name: playerView.name, image: playerView.image))
+        let pleya = WSHPlayer(name: playerView.name)
+        pleya.image = self.playerView.image
+        pleya.colour = self.playerView.colorHex
+        
+        delegate?.didEditPlayer(self, player: pleya)
         dismissAnimated()
     }
     

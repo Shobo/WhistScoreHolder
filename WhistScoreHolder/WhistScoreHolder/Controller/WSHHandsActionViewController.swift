@@ -43,9 +43,17 @@ class WSHHandsActionViewController: WSHActionViewController {
         let button = WSHBetButton(type: .Custom)
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
-        button.setBackgroundImage(forPlayer.image, forState: .Normal)
-//        button.imageView?.contentMode = .ScaleAspectFit
+        button.setBackgroundImage(forPlayer.presentableImage(), forState: .Normal)
+        
         button.bottomLabel.text = forPlayer.name
+        if let _ = forPlayer.image {
+            button.filter = WSHUIFilterType.White
+        } else {
+            button.filter = WSHUIFilterType.Zero
+        }
+        
+//        button.bottomLabel.textColor = forPlayer.complementaryColor
+//        button.mainLabel.textColor = forPlayer.complementaryColor
         button.mainLabel.text = "0/\(bets[forPlayer]!)"
         
         button.addTarget(self, action: #selector(self.takeHandButtonPressed(_:)), forControlEvents: .TouchUpInside)

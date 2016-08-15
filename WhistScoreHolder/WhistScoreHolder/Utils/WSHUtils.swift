@@ -18,3 +18,13 @@ func presentError(err: ErrorType, fromController: UINavigationController) {
     
     fromController.presentViewController(alertController, animated: true, completion: nil)
 }
+
+func randHEX() -> UInt {
+    return UInt(drand48() * 0xffffff)
+}
+
+func prefferedImageSize() -> CGSize {
+    let minWH = min(UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height)
+    
+    return CGSizeMake(minWH, minWH)
+}

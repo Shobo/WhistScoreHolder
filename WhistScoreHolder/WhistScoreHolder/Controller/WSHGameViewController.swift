@@ -190,7 +190,7 @@ class WSHGameViewController: UIViewController,
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
         let bettingActionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHBettingActionViewController") as! WSHBettingActionViewController
-        bettingActionViewController.playerImage = player.image
+        bettingActionViewController.playerImage = player.presentableImage()
         bettingActionViewController.playerName = player.name
         bettingActionViewController.playerOptions = self.bettingChoiceButtonsForRoundType(roundType, excludingChoice: choice)
         
@@ -318,7 +318,7 @@ class WSHGameViewController: UIViewController,
         cell?.detailTextLabel?.text = "\(currentGame.totalPlayerScores[currentPlayer]!)"
         let cellSize = min(rowHeight * 3.0/4.0, kScoreCellWidth)
         
-        cell?.imageView?.image = currentPlayer.image?.scale(toSize: CGSizeMake(cellSize, cellSize))
+        cell?.imageView?.image = currentPlayer.presentableImage().scale(toSize: CGSizeMake(cellSize, cellSize))
         cell?.backgroundColor = UIColor.clearColor()
         
         return cell!

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		590D57A21D5F775E009CD914 /* WSHCameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 590D57A11D5F775E009CD914 /* WSHCameraView.xib */; };
+		590D57A41D5F77BC009CD914 /* WSHCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590D57A31D5F77BC009CD914 /* WSHCameraView.swift */; };
+		590D57A71D5F7C4C009CD914 /* WSHOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590D57A51D5F7C4C009CD914 /* WSHOverlayView.swift */; };
+		590D57A81D5F7C4C009CD914 /* WSHOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 590D57A61D5F7C4C009CD914 /* WSHOverlayView.xib */; };
 		592554781C9DBB0C000C3642 /* WSHHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592554771C9DBB0C000C3642 /* WSHHeaderCell.swift */; };
 		5939A1C41C9881FD00FF622C /* WSHGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5939A1C31C9881FD00FF622C /* WSHGameViewController.swift */; };
 		594BEA201C83B813007D296D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 594BEA1E1C83B813007D296D /* Main.storyboard */; };
@@ -54,6 +58,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		590D57A11D5F775E009CD914 /* WSHCameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHCameraView.xib; sourceTree = "<group>"; };
+		590D57A31D5F77BC009CD914 /* WSHCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHCameraView.swift; sourceTree = "<group>"; };
+		590D57A51D5F7C4C009CD914 /* WSHOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHOverlayView.swift; sourceTree = "<group>"; };
+		590D57A61D5F7C4C009CD914 /* WSHOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHOverlayView.xib; sourceTree = "<group>"; };
 		592554771C9DBB0C000C3642 /* WSHHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHHeaderCell.swift; sourceTree = "<group>"; };
 		5939A1C31C9881FD00FF622C /* WSHGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHGameViewController.swift; sourceTree = "<group>"; };
 		594BEA1F1C83B813007D296D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -202,6 +210,10 @@
 				59625EB91D48FC0F00646F4F /* WSHPlayerCellSummary.swift */,
 				59E8E4B01D50FE1800D14C7E /* WSHBetButton.swift */,
 				59E8E4B21D50FE2A00D14C7E /* WSHBetButton.xib */,
+				590D57A31D5F77BC009CD914 /* WSHCameraView.swift */,
+				590D57A11D5F775E009CD914 /* WSHCameraView.xib */,
+				590D57A51D5F7C4C009CD914 /* WSHOverlayView.swift */,
+				590D57A61D5F7C4C009CD914 /* WSHOverlayView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -292,6 +304,7 @@
 					};
 					D2CB75CA1C838AA000D7BB0D = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 2CR838W4BK;
 					};
 				};
 			};
@@ -326,8 +339,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				590D57A21D5F775E009CD914 /* WSHCameraView.xib in Resources */,
 				D2CB75D91C838AA000D7BB0D /* LaunchScreen.storyboard in Resources */,
 				5961A9CE1C83C03100FD186F /* WSHPlayerView.xib in Resources */,
+				590D57A81D5F7C4C009CD914 /* WSHOverlayView.xib in Resources */,
 				D2CB75D61C838AA000D7BB0D /* Assets.xcassets in Resources */,
 				59A4F8B11C9B538D0077B5EC /* WSHScoreCell.xib in Resources */,
 				594BEA201C83B813007D296D /* Main.storyboard in Resources */,
@@ -356,10 +371,12 @@
 				59CC74411CAFE65D00E755B8 /* WSHActionViewController.swift in Sources */,
 				59E867C51C88DB6E007C6257 /* WSHPlayerViewController.swift in Sources */,
 				D2CB75CF1C838AA000D7BB0D /* AppDelegate.swift in Sources */,
+				590D57A41D5F77BC009CD914 /* WSHCameraView.swift in Sources */,
 				59E7716D1D3423970001923B /* WSHHandsActionViewController.swift in Sources */,
 				592554781C9DBB0C000C3642 /* WSHHeaderCell.swift in Sources */,
 				59E867941C861ED6007C6257 /* UIImage+Additions.swift in Sources */,
 				5961A9CC1C83C02200FD186F /* WSHPlayerView.swift in Sources */,
+				590D57A71D5F7C4C009CD914 /* WSHOverlayView.swift in Sources */,
 				59E771701D3427080001923B /* WSHDefinitions.swift in Sources */,
 				59E867C91C88EA41007C6257 /* UIAlertController+Additions.swift in Sources */,
 				5939A1C41C9881FD00FF622C /* WSHGameViewController.swift in Sources */,
@@ -524,10 +541,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WhistScoreHolder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wshgmbh.WhistScoreHolder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -536,10 +555,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WhistScoreHolder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wshgmbh.WhistScoreHolder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -102,3 +102,12 @@ enum WSHRoundType: Int {
         }
     }
 }
+
+
+// MARK: - UI
+
+enum WSHUIFilterType: UInt8 {
+    case Zero = 0
+    case White
+    case Black
+}

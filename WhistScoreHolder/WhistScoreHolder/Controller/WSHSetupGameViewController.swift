@@ -93,7 +93,7 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
             
         let player = players[indexPath.row]
         cell.textLabel?.text = player.name
-        cell.imageView?.image = player.image?.scale(toSize: CGSizeMake(rowHeight - kMargin, rowHeight - kMargin))
+        cell.imageView?.image = player.presentableImage().scale(toSize: CGSizeMake(rowHeight - kMargin, rowHeight - kMargin))
         
         return cell
     }
@@ -145,6 +145,7 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     func didEditPlayer(sender: WSHPlayerViewController, player: WSHPlayer) {
         currentPlayer?.name = player.name
         currentPlayer?.image = player.image
+        currentPlayer?.colour = player.colour
         
         reloadTableView()
     }
@@ -171,6 +172,7 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
         
         switch identifier {
         case "addPlayer":
+            currentPlayer = nil
             setupPlayerViewController(from: (segue.destinationViewController as! UINavigationController))
             break
             

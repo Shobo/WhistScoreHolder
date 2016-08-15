@@ -13,6 +13,15 @@ class WSHBetButton: UIButton {
     @IBOutlet weak var mainLabel: UILabel!
     @IBOutlet weak var bottomLabel: UILabel!
     
+    var filter: WSHUIFilterType = WSHUIFilterType.Zero {
+        didSet(asdf) {
+            self.refreshFilter()
+        }
+    }
+    
+    private var xiew: UIView?
+    private var backgroundImageView: UIImageView?
+    
     
     // MARK: - Lifecycle
     
@@ -20,13 +29,23 @@ class WSHBetButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        setupBackgroundImageView()
         xibSetup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        setupBackgroundImageView()
         xibSetup()
+    }
+    
+    
+    // MARK: - Overriden
+    
+    
+    override func setBackgroundImage(image: UIImage?, forState state: UIControlState) {
+        self.backgroundImageView?.image = image
     }
     
 
@@ -36,9 +55,41 @@ class WSHBetButton: UIButton {
     private func xibSetup() {
         let bundle = NSBundle(forClass: self.dynamicType)
         let nib = UINib(nibName: "WSHBetButton", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
-        view.frame = bounds
-        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.addSubview(view);
+        self.xiew = nib.instantiateWithOwner(self, options: nil)[0] as? UIView
+        self.xiew?.frame = bounds
+        self.xiew?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.refreshFilter()
+        
+        if let asdf = self.xiew {
+            self.addSubview(asdf);
+        }
     }
+    
+    private func setupBackgroundImageView() {
+        self.backgroundImageView = UIImageView(frame: self.bounds)
+        self.backgroundImageView?.contentMode = .ScaleAspectFill
+        self.backgroundImageView?.backgroundColor = UIColor.clearColor()
+        self.backgroundImageView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        
+        if let asdf = self.backgroundImageView {
+            self.addSubview(asdf)
+        }
+    }
+    
+    private func refreshFilter() {
+        switch self.filter {
+        case .Zero:
+            self.xiew?.backgroundColor = UIColor.clearColor()
+            break
+            
+        case .White:
+            self.xiew?.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+            break
+            
+        case .Black:
+            self.xiew?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+            break
+        }
+    }
+    
 }

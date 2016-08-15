@@ -12,8 +12,10 @@ import UIKit
 class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var cameraView: UIImageView!
+    @IBOutlet weak var cameraView: WSHCameraView!
     @IBOutlet weak var nameTextField: UITextField!
+    
+    @IBOutlet private weak var cameraWidthConstraint: NSLayoutConstraint!
     
     var name: String {
         set(newName) {
@@ -24,12 +26,18 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
         }
     }
     
-    var image: UIImage {
+    var image: UIImage? {
         set(newImage) {
-            cameraView.image = newImage
+            cameraView.setFitImage(newImage)
         }
         get {
-            return cameraView.image ?? UIImage.randomColorImage(withSize: CGSizeMake(100.0, 100.0))
+            return cameraView.image
+        }
+    }
+    
+    var colorHex: UInt = randHEX() {
+        didSet {
+            self.backgroundColor = UIColor.colorFromRGB(colorHex)
         }
     }
     
@@ -66,7 +74,8 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     
     func resetToDefault() {
         nameTextField.text = nil
-        image = UIImage.randomColorImage(withSize: CGSizeMake(100.0, 100.0))
+        image = nil
+        colorHex = randHEX()
     }
     
     func resignKeyboardIfNeeded() {
@@ -89,12 +98,15 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
         let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
         view.frame = bounds
         view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        
         self.addSubview(view);
     }
     
     private func setupView() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WSHPlayerView.keyboardWillChangeFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
-        image = UIImage.imageWithColor(UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0), size: CGSizeMake(100.0, 100.0))
+        self.backgroundColor = UIColor.colorFromRGB(colorHex)
+        self.cameraView.backgroundColor = UIColor.white().colorWithAlphaComponent(0.33)
+        self.cameraWidthConstraint.constant = min(UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height)
     }
     
     
@@ -135,8 +147,8 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     // MARK: - Actions
     
     
-    @IBAction func cameraTapped(sender: AnyObject) {
-        image = UIImage.randomColorImage(withSize: CGSizeMake(100.0, 100.0))
+    @IBAction func colourTapped(sender: AnyObject) {
+        colorHex = randHEX()
     }
     
 }

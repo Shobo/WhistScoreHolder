@@ -11,7 +11,23 @@ import UIKit
 class WSHPlayer: NSObject {
     
     var name: String
-    var image: UIImage?
+    var image: UIImage? {
+        didSet(newValue) {
+            if let avgImageColour = image?.averageColour() {
+                complementaryColor = avgImageColour.complementaryColor()
+            } else {
+                complementaryColor = UIColor.colorFromRGB(colour).complementaryColor()
+            }
+        }
+    }
+    private(set) var complementaryColor: UIColor?
+    var colour: UInt = 0 {
+        didSet(newValue) {
+            if image == nil {
+                complementaryColor = UIColor.colorFromRGB(colour).complementaryColor()
+            }
+        }
+    }
     
     init(name: String) {
         self.name = name
@@ -19,10 +35,13 @@ class WSHPlayer: NSObject {
         super.init()
     }
     
-    convenience init(name: String, image: UIImage) {
-        self.init(name: name)
-        
-        self.image = image
-    }
     
+    //MARK: - Public
+    
+    
+    func presentableImage() -> UIImage {
+        let presentableImageSize = CGSizeMake(100.0, 100.0)
+        
+        return image?.scale(toSize: presentableImageSize) ?? UIImage.imageWithColor(UIColor.colorFromRGB(colour), size: presentableImageSize)
+    }
 }
