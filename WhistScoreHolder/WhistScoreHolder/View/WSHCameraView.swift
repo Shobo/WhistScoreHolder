@@ -12,13 +12,15 @@ import AVFoundation
 class WSHCameraView: UIView {
 
     @IBOutlet private weak var cameraContainerView: WSHOverlayView!
-    @IBOutlet weak var previewView: UIView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet private weak var switchCameraButton: UIButton!
+    @IBOutlet private weak var previewView: UIView!
+    @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var overlayView: UIView!
     
     private var captureSession: AVCaptureSession?
     private var backCameraDevice: AVCaptureDevice?
     private var frontCameraDevice: AVCaptureDevice?
+    private var currentCameraDevice: AVCaptureDevice?
     private var stillImageOutput: AVCaptureStillImageOutput?
     private var previewLayer: AVCaptureVideoPreviewLayer?
     private var videoConnection: AVCaptureConnection!
@@ -48,6 +50,7 @@ class WSHCameraView: UIView {
         
         xibSetup()
         setupCamera()
+        setupOverlayButtons()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,6 +58,7 @@ class WSHCameraView: UIView {
         
         xibSetup()
         setupCamera()
+        setupOverlayButtons()
     }
     
     override func layoutSubviews() {
@@ -128,15 +132,21 @@ class WSHCameraView: UIView {
         self.startCamera()
     }
     
+    private func setupOverlayButtons() {
+        self.switchCameraButton.tintColor = UIColor.white()
+    }
+    
     private func startCamera() {
         self.captureSession?.startRunning()
         self.previewView.hidden = false
+        self.switchCameraButton.hidden = false
         self.imageView.hidden = true
     }
     
     private func stopCamera() {
         self.captureSession?.stopRunning()
         self.previewView.hidden = true
+        self.switchCameraButton.hidden = true
         self.imageView.hidden = false
     }
     
@@ -146,6 +156,8 @@ class WSHCameraView: UIView {
             
             if self.captureSession!.canAddInput(input) {
                 self.captureSession!.addInput(input)
+                
+                self.currentCameraDevice = inputDevice
             }
         } catch {//let error {
 //            presentError(error, fromController: nil)
@@ -178,21 +190,45 @@ class WSHCameraView: UIView {
     private func imageOrientationForCurrentDeviceOrientation() -> UIImageOrientation {
         var imageOrientation: UIImageOrientation = .Up
         
-        switch UIDevice.currentDevice().orientation {
-        case .Portrait:
-            imageOrientation = .Right
-            break
+        if self.currentCameraDevice == self.frontCameraDevice {
+            switch UIDevice.currentDevice().orientation {
+            case .Portrait:
+                imageOrientation = .Right
+                break
+                
+            case .PortraitUpsideDown:
+                imageOrientation = .Right
+                break
+                
+            case .LandscapeRight:
+                imageOrientation = .UpMirrored
+                break
             
-        case .PortraitUpsideDown:
-            imageOrientation = .Left
-            break
+            case .LandscapeLeft:
+                imageOrientation = .DownMirrored
+                break
+                
+            default:
+                break
+            }
             
-        case .LandscapeRight:
-            imageOrientation = .Down
-            break
-            
-        default:
-            break
+        } else {
+            switch UIDevice.currentDevice().orientation {
+            case .Portrait:
+                imageOrientation = .Right
+                break
+                
+            case .PortraitUpsideDown:
+                imageOrientation = .Left
+                break
+                
+            case .LandscapeRight:
+                imageOrientation = .Down
+                break
+                
+            default:
+                break
+            }
         }
         return imageOrientation
     }
@@ -241,4 +277,20 @@ class WSHCameraView: UIView {
                 })
         }
     }
+    
+    @IBAction func didTapSwitchCamera(sender: AnyObject) {
+        if let input = self.captureSession?.inputs[0] as? AVCaptureInput {
+            self.captureSession?.removeInput(input)
+        }
+        if self.currentCameraDevice == self.frontCameraDevice {
+            self.currentCameraDevice = self.backCameraDevice
+        } else {
+            self.currentCameraDevice = self.frontCameraDevice
+        }
+        if let asdf = self.currentCameraDevice {
+            self.setupIntputTo(asdf)
+            self.videoConnection = self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
+        }
+    }
+    
 }
