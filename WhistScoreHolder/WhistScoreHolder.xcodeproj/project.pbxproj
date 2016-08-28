@@ -16,6 +16,9 @@
 		5961A9CE1C83C03100FD186F /* WSHPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5961A9CD1C83C03000FD186F /* WSHPlayerView.xib */; };
 		59625EBA1D48FC0F00646F4F /* WSHPlayerCellSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59625EB91D48FC0F00646F4F /* WSHPlayerCellSummary.swift */; };
 		597AC93E1D7331EB00095838 /* WSHPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AC93D1D7331EB00095838 /* WSHPath.swift */; };
+		597AC9401D73485600095838 /* WSHAddressTheUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AC93F1D73485600095838 /* WSHAddressTheUserView.swift */; };
+		597AC9421D73486D00095838 /* WSHAddressTheUserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 597AC9411D73486D00095838 /* WSHAddressTheUserView.xib */; };
+		597AC9441D734CB300095838 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 597AC9431D734CB300095838 /* Media.xcassets */; };
 		59A4F8AB1C9B46040077B5EC /* WSHScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F8AA1C9B46040077B5EC /* WSHScoreCell.swift */; };
 		59A4F8AF1C9B47350077B5EC /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F8AE1C9B47350077B5EC /* UIColor+Additions.swift */; };
 		59A4F8B11C9B538D0077B5EC /* WSHScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F8B01C9B538D0077B5EC /* WSHScoreCell.xib */; };
@@ -68,6 +71,9 @@
 		5961A9CD1C83C03000FD186F /* WSHPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHPlayerView.xib; sourceTree = "<group>"; };
 		59625EB91D48FC0F00646F4F /* WSHPlayerCellSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHPlayerCellSummary.swift; sourceTree = "<group>"; };
 		597AC93D1D7331EB00095838 /* WSHPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHPath.swift; sourceTree = "<group>"; };
+		597AC93F1D73485600095838 /* WSHAddressTheUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHAddressTheUserView.swift; sourceTree = "<group>"; };
+		597AC9411D73486D00095838 /* WSHAddressTheUserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHAddressTheUserView.xib; sourceTree = "<group>"; };
+		597AC9431D734CB300095838 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		59A4F8AA1C9B46040077B5EC /* WSHScoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHScoreCell.swift; sourceTree = "<group>"; };
 		59A4F8AE1C9B47350077B5EC /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Additions.swift"; path = "WhistScoreHolder/Additions/UIColor+Additions.swift"; sourceTree = SOURCE_ROOT; };
 		59A4F8B01C9B538D0077B5EC /* WSHScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WSHScoreCell.xib; sourceTree = "<group>"; };
@@ -194,6 +200,7 @@
 				D2CB75D71C838AA000D7BB0D /* LaunchScreen.storyboard */,
 				594BEA1E1C83B813007D296D /* Main.storyboard */,
 				D2CB75DA1C838AA000D7BB0D /* Info.plist */,
+				597AC9431D734CB300095838 /* Media.xcassets */,
 			);
 			path = WhistScoreHolder;
 			sourceTree = "<group>";
@@ -222,6 +229,8 @@
 				59625EB91D48FC0F00646F4F /* WSHPlayerCellSummary.swift */,
 				59E8E4B01D50FE1800D14C7E /* WSHBetButton.swift */,
 				59E8E4B21D50FE2A00D14C7E /* WSHBetButton.xib */,
+				597AC93F1D73485600095838 /* WSHAddressTheUserView.swift */,
+				597AC9411D73486D00095838 /* WSHAddressTheUserView.xib */,
 				59F8ED321D72F53400E677DB /* CameraView */,
 				590D57A51D5F7C4C009CD914 /* WSHOverlayView.swift */,
 				590D57A61D5F7C4C009CD914 /* WSHOverlayView.xib */,
@@ -350,12 +359,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				597AC9441D734CB300095838 /* Media.xcassets in Resources */,
 				D2CB75D91C838AA000D7BB0D /* LaunchScreen.storyboard in Resources */,
 				5961A9CE1C83C03100FD186F /* WSHPlayerView.xib in Resources */,
 				59F8ED361D72F53400E677DB /* WSHCameraView.xib in Resources */,
 				590D57A81D5F7C4C009CD914 /* WSHOverlayView.xib in Resources */,
 				59A4F8B11C9B538D0077B5EC /* WSHScoreCell.xib in Resources */,
 				594BEA201C83B813007D296D /* Main.storyboard in Resources */,
+				597AC9421D73486D00095838 /* WSHAddressTheUserView.xib in Resources */,
 				59C9608E1C9DBC9C007FDBD6 /* WSHHeaderCell.xib in Resources */,
 				59E8E4B31D50FE2A00D14C7E /* WSHBetButton.xib in Resources */,
 			);
@@ -385,6 +396,7 @@
 				592554781C9DBB0C000C3642 /* WSHHeaderCell.swift in Sources */,
 				59E867941C861ED6007C6257 /* UIImage+Additions.swift in Sources */,
 				5961A9CC1C83C02200FD186F /* WSHPlayerView.swift in Sources */,
+				597AC9401D73485600095838 /* WSHAddressTheUserView.swift in Sources */,
 				590D57A71D5F7C4C009CD914 /* WSHOverlayView.swift in Sources */,
 				59E771701D3427080001923B /* WSHDefinitions.swift in Sources */,
 				59F8ED381D72F5D200E677DB /* WSHCircleButton.swift in Sources */,
@@ -551,7 +563,6 @@
 		D2CB75DE1C838AA000D7BB0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WhistScoreHolder/Info.plist;
@@ -565,7 +576,6 @@
 		D2CB75DF1C838AA000D7BB0D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WhistScoreHolder/Info.plist;

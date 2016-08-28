@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
 
 protocol WSHPlayerViewControllerDelegate: class {
     func didAddPlayer(sender: WSHPlayerViewController, player: WSHPlayer) -> Int
     func didEditPlayer(sender: WSHPlayerViewController, player: WSHPlayer)
 }
 
-class WSHPlayerViewController: UIViewController {
+class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSHCameraViewDelegate {
     @IBOutlet private weak var doneButtonItem: UIBarButtonItem!
     @IBOutlet private weak var addButtonItem: UIBarButtonItem!
     @IBOutlet private weak var leftDoneButtonItem: UIBarButtonItem!
@@ -31,6 +32,13 @@ class WSHPlayerViewController: UIViewController {
                 playerView.colorHex = (editPlayer?.colour)!
             }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.checkCameraPermission()
+        playerView.cameraView.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -68,6 +76,45 @@ class WSHPlayerViewController: UIViewController {
     private func dismissAnimated() {
         playerView.resignKeyboardIfNeeded()
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    private func checkCameraPermission() {
+        let avStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+        
+        switch avStatus {
+        case .Authorized:
+            self.playerView.cameraView.permissionGranted = true
+            break
+            
+        case .NotDetermined:
+            let alert = UIAlertController.prepareForCameraAlertView(self)
+            self.presentViewController(alert, animated: true, completion: nil)
+            break
+            
+        default:
+            break
+        }
+    }
+    
+    
+    // MARK: - WSHAlertControllerDelegate funcs
+    
+    
+    func alertControllerDidTapOk(controller: UIAlertController) {
+        AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo) { (granted) in
+            if (granted) {
+                self.playerView.cameraView.permissionGranted = true
+            }
+        }
+    }
+    
+    
+    // MARK: - WSHCameraViewDelegate funcs
+    
+    
+    func cameraViewWantsToGiveCameraPermission(cameraView: WSHCameraView) {
+        let alert = UIAlertController.cameraPermissionSettingsAlertView()
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     

@@ -9,9 +9,34 @@
 import UIKit
 import AVFoundation
 
-class WSHCameraView: UIView {
+protocol WSHCameraViewDelegate: class {
+    func cameraViewWantsToGiveCameraPermission(cameraView: WSHCameraView)
+}
 
+class WSHCameraView: UIView {
+    
+    var delegate: WSHCameraViewDelegate?
+    var permissionGranted: Bool = false {
+        didSet {
+            if permissionGranted {
+                self.addressTheUserView.hidden = true
+                self.cameraContainerView.hidden = false
+                self.overlayButtonsView.hidden = false
+                
+                self.setupCamera()
+                
+            } else {
+                self.addressTheUserView.hidden = false
+                self.cameraContainerView.hidden = true
+                self.overlayButtonsView.hidden = true
+            }
+        }
+    }
+    
+    @IBOutlet private weak var addressTheUserView: WSHAddressTheUserView!
     @IBOutlet private weak var cameraContainerView: UIView!
+    @IBOutlet private weak var overlayButtonsView: WSHOverlayView!
+    
     @IBOutlet private weak var previewView: UIView!
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var couldBeAToolbarView: WSHOverlayView!
@@ -95,42 +120,45 @@ class WSHCameraView: UIView {
     }
     
     private func setupCamera() {
-        self.captureSession = AVCaptureSession()
-        self.captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
-        
-        let availableCameraDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
-        
-        for device in availableCameraDevices as! [AVCaptureDevice] {
-            if device.position == .Back {
-                self.backCameraDevice = device
-                self.setupDevice(self.backCameraDevice!)
-                
-            } else if device.position == .Front {
-                self.frontCameraDevice = device
-                self.setupDevice(self.frontCameraDevice!)
+        if self.permissionGranted {
+            self.captureSession = AVCaptureSession()
+            self.captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
+            
+            let availableCameraDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
+            
+            for device in availableCameraDevices as! [AVCaptureDevice] {
+                if device.position == .Back {
+                    self.backCameraDevice = device
+                    self.setupDevice(self.backCameraDevice!)
+                    
+                } else if device.position == .Front {
+                    self.frontCameraDevice = device
+                    self.setupDevice(self.frontCameraDevice!)
+                }
             }
+            self.setupIntputTo(self.backCameraDevice!)
+            
+            self.stillImageOutput = AVCaptureStillImageOutput()
+            self.stillImageOutput!.outputSettings = [AVVideoCodecJPEG: AVVideoCodecKey]
+            
+            if (self.captureSession?.canAddOutput(self.stillImageOutput) ?? false) {
+                self.captureSession!.addOutput(self.stillImageOutput)
+            }
+            
+            let deviceMin = min(UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height)
+            
+            self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+            self.previewLayer?.frame = CGRectMake(0.0, 0.0, deviceMin, deviceMin)
+            self.previewLayer?.position = CGPointMake(self.bounds.width / 2.0, self.bounds.height / 2.0)
+            self.previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+            self.setupPreviewLayerOrientationDeviceDependent()
+            
+            self.previewView.layer.addSublayer(self.previewLayer!)
+            
+            self.videoConnection = self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
+            
+            self.startCamera()
         }
-        self.setupIntputTo(self.backCameraDevice!)
-        
-        self.stillImageOutput = AVCaptureStillImageOutput()
-        self.stillImageOutput!.outputSettings = [AVVideoCodecJPEG: AVVideoCodecKey]
-        
-        if (self.captureSession?.canAddOutput(self.stillImageOutput) ?? false) {
-            self.captureSession!.addOutput(self.stillImageOutput)
-        }
-        
-        let deviceMin = min(UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height)
-        
-        self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-        self.previewLayer?.frame = CGRectMake(0.0, 0.0, deviceMin, deviceMin)
-        self.previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-        self.setupPreviewLayerOrientationDeviceDependent()
-        
-        self.previewView.layer.addSublayer(self.previewLayer!)
-        
-        self.videoConnection = self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
-        
-        self.startCamera()
     }
     
     private func setupOverlayButtons() {
@@ -319,6 +347,12 @@ class WSHCameraView: UIView {
                     
                     self.refreshInput()
             })
+        }
+    }
+    
+    @IBAction func wannaGivePermission(sender: AnyObject) {
+        if let asdf = self.delegate {
+            asdf.cameraViewWantsToGiveCameraPermission(self)
         }
     }
     

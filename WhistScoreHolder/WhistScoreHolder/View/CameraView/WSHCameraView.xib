@@ -9,10 +9,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WSHCameraView" customModule="WhistScoreHolder" customModuleProvider="target">
             <connections>
+                <outlet property="addressTheUserView" destination="SzH-QK-SwP" id="lS4-Wm-vcR"/>
                 <outlet property="cameraContainerView" destination="vJj-eQ-BIU" id="6UF-G3-X3C"/>
                 <outlet property="couldBeAToolbarView" destination="086-ZW-NE6" id="iZQ-pM-iDX"/>
                 <outlet property="couldBeATopbarView" destination="LaQ-hq-uLf" id="Vay-zF-gA1"/>
                 <outlet property="imageView" destination="164-Ff-bMT" id="ztL-f7-UDH"/>
+                <outlet property="overlayButtonsView" destination="WyA-ol-out" id="ceL-Db-xYq"/>
                 <outlet property="previewView" destination="TrI-Ao-xXN" id="3aW-pM-v4K"/>
                 <outlet property="takePicButton" destination="iL2-EF-BKj" id="L5M-A9-uoM"/>
             </connections>
@@ -22,7 +24,19 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJj-eQ-BIU">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SzH-QK-SwP" customClass="WSHAddressTheUserView" customModule="WhistScoreHolder" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="text" value="This could be YOU, but camera access NOT granted"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="image" value="user"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="6Wm-gP-JmZ" appends="YES" id="P64-fA-KhX"/>
+                    </connections>
+                </view>
+                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJj-eQ-BIU">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TrI-Ao-xXN">
@@ -46,7 +60,7 @@
                         <constraint firstAttribute="trailing" secondItem="TrI-Ao-xXN" secondAttribute="trailing" id="yLk-vc-a8G"/>
                     </constraints>
                 </view>
-                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WyA-ol-out" customClass="WSHOverlayView" customModule="WhistScoreHolder" customModuleProvider="target">
+                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WyA-ol-out" customClass="WSHOverlayView" customModule="WhistScoreHolder" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="086-ZW-NE6" customClass="WSHOverlayView" customModule="WhistScoreHolder" customModuleProvider="target">
@@ -111,13 +125,17 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="WyA-ol-out" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5A7-r6-5FZ"/>
+                <constraint firstAttribute="trailing" secondItem="SzH-QK-SwP" secondAttribute="trailing" id="6Y5-fR-pmh"/>
                 <constraint firstItem="vJj-eQ-BIU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="CS5-g2-t1v"/>
                 <constraint firstItem="WyA-ol-out" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="DTV-fr-L8I"/>
                 <constraint firstAttribute="trailing" secondItem="WyA-ol-out" secondAttribute="trailing" id="FM2-CL-I1U"/>
+                <constraint firstItem="SzH-QK-SwP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="M7N-R3-QGo"/>
                 <constraint firstAttribute="bottom" secondItem="vJj-eQ-BIU" secondAttribute="bottom" id="ODb-Ba-J06"/>
                 <constraint firstItem="vJj-eQ-BIU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="YQs-co-d0J"/>
                 <constraint firstAttribute="bottom" secondItem="WyA-ol-out" secondAttribute="bottom" id="aPL-yC-mRf"/>
                 <constraint firstAttribute="trailing" secondItem="vJj-eQ-BIU" secondAttribute="trailing" id="ejN-R7-NsR"/>
+                <constraint firstAttribute="bottom" secondItem="SzH-QK-SwP" secondAttribute="bottom" id="qBf-Bv-oWh"/>
+                <constraint firstItem="SzH-QK-SwP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="v3u-cR-74v"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -128,5 +146,13 @@
                 <action selector="didTapSwitchCamera:" destination="-1" id="qPX-M1-2ob"/>
             </connections>
         </tapGestureRecognizer>
+        <tapGestureRecognizer id="6Wm-gP-JmZ">
+            <connections>
+                <action selector="wannaGivePermission:" destination="-1" id="KAM-Uh-8X5"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
+    <resources>
+        <image name="user" width="512" height="512"/>
+    </resources>
 </document>
