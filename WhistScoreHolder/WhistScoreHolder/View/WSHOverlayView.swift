@@ -8,28 +8,28 @@
 
 import UIKit
 
+@IBDesignable
 class WSHOverlayView: UIView {
 
-    var forwardTouchesToSubviews: Bool = false
+    @IBInspectable var forwardTouchesToSubviews: Bool = false
     
     
     //MARK: - Private
 
     
     override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
-        if !self.forwardTouchesToSubviews {
-            return false
-        }
-        for view in self.subviews {
-            if !view.hidden {
-                let subPoint = view.convertPoint(point, fromView: self)
-                
-                if view.pointInside(subPoint, withEvent: event) {
-                    return true
+        if self.forwardTouchesToSubviews {
+            for view in self.subviews {
+                if !view.hidden {
+                    let subPoint = view.convertPoint(point, fromView: self)
+                    
+                    if view.pointInside(subPoint, withEvent: event) {
+                        return true
+                    }
                 }
             }
         }
-        return false
+        return self.userInteractionEnabled
     }
     
 }
