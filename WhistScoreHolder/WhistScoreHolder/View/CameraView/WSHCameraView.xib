@@ -27,6 +27,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SzH-QK-SwP" customClass="WSHAddressTheUserView" customModule="WhistScoreHolder" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" red="0.33307634320175433" green="0.33333333333333331" blue="0.33505516721491224" alpha="1" colorSpace="calibratedRGB"/>
                     <gestureRecognizers/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="text" value="This could be YOU, but camera access NOT granted"/>
