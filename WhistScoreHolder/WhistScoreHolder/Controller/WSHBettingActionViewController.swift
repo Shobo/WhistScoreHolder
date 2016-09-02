@@ -16,9 +16,21 @@ class WSHBettingActionViewController: WSHActionViewController {
     @IBOutlet private weak var playerNameLabel: UILabel!
     @IBOutlet private weak var playerImageView: UIImageView!
     
-    var playerName: String?
-    var playerImage: UIImage?
-    var playerOptions: [UIView] = []
+    var playerName: String? {
+        didSet {
+            self.playerNameLabel?.text = "\(self.playerName ?? "Player")'s"
+        }
+    }
+    var playerImage: UIImage? {
+        didSet {
+            self.playerImageView?.image = playerImage
+        }
+    }
+    var playerOptions: [UIView] = [] {
+        didSet {
+            self.bettingOptionsView?.views = playerOptions
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

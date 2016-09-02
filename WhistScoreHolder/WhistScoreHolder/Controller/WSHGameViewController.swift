@@ -16,7 +16,7 @@ class WSHGameViewController: UIViewController,
                             UITableViewDataSource, UITableViewDelegate,
                             UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,
                             WSHGameManagerDelegate,
-                            WSHBeginRoundActionDelegate, WSHHandsActionViewControllerDelegate {
+                            WSHActionViewControllerDelegate, WSHBeginRoundActionDelegate, WSHHandsActionViewControllerDelegate {
     @IBOutlet weak var actionButton: UIBarButtonItem!
     @IBOutlet weak var tableViewObject: UITableView!
     @IBOutlet weak var collectionViewObject: UICollectionView!
@@ -147,6 +147,7 @@ class WSHGameViewController: UIViewController,
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
         let beginRoundVC = mainStoryboard.instantiateViewControllerWithIdentifier("WSHBeginRoundActionViewController") as! WSHBeginRoundActionViewController
+        beginRoundVC.actionDelegate = self
         beginRoundVC.player = player
         beginRoundVC.round = roundType
         beginRoundVC.playerScore = score
@@ -169,6 +170,18 @@ class WSHGameViewController: UIViewController,
         collectionViewObject.setContentOffset(CGPointMake(collectionViewOffsetX, collectionViewObject.contentOffset.y), animated: true)
     }
     
+    private func undoAction() {
+        if WSHGameManager.sharedInstance.canUndo() {
+            if !self.actionViewController!.isKindOfClass(WSHHandsActionViewController) {
+                self.resignActionViewController()
+            }
+            WSHGameManager.sharedInstance.undo()
+            collectionViewObject.reloadData()
+        } else {
+            self.actionViewController?.undoButton?.enabled = false
+        }
+    }
+    
     
     //MARK: - WSHGameManagerDelegate functions
     
@@ -187,9 +200,12 @@ class WSHGameViewController: UIViewController,
     }
     
     func playerTurnToBet(player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?) {
+        var bettingActionViewController: WSHBettingActionViewController
+        
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let bettingActionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHBettingActionViewController") as! WSHBettingActionViewController
+        bettingActionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHBettingActionViewController") as! WSHBettingActionViewController
+        bettingActionViewController.actionDelegate = self
         bettingActionViewController.playerImage = player.presentableImage()
         bettingActionViewController.playerName = player.name
         bettingActionViewController.playerOptions = self.bettingChoiceButtonsForRoundType(roundType, excludingChoice: choice)
@@ -202,13 +218,8 @@ class WSHGameViewController: UIViewController,
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
         let handsActionViewController = mainStoryboard.instantiateViewControllerWithIdentifier("WSHHandsActionViewController") as! WSHHandsActionViewController
-        handsActionViewController.players = self.currentGame.players
-        
-        var bets: [WSHPlayer : Int] = [:]
-        for (key, val) in self.currentGame.currentRound?.roundInformation ?? [:] {
-            bets[key] = val.bet.intValue
-        }
-        handsActionViewController.bets = bets
+        handsActionViewController.round = self.currentGame.currentRound
+        handsActionViewController.actionDelegate = self
         handsActionViewController.delegate = self
         
         self.actionViewController = handsActionViewController
@@ -452,6 +463,14 @@ class WSHGameViewController: UIViewController,
     }
     
     
+    // MARK: - WSHActionViewControllerDelegate functions
+    
+    
+    func actionControllerUndoAction(actionController: WSHActionViewController) {
+        self.undoAction()
+    }
+    
+    
     // MARK: - Actions
     
     
@@ -483,8 +502,8 @@ class WSHGameViewController: UIViewController,
         }
     }
     
-    @IBAction func focusButtonPressed(sender: UIButton) {
-        self.scrollToCurrentRound()
+    @IBAction func undoButtonPressed(sender: UIButton) {
+        self.undoAction()
     }
     
     

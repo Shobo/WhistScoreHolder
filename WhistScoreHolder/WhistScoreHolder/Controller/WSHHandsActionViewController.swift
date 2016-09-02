@@ -11,9 +11,9 @@ import UIKit
 class WSHHandsActionViewController: WSHActionViewController {
 
     var delegate: WSHHandsActionViewControllerDelegate?
+    var round: WSHRound?
     
-    var players: [WSHPlayer]?
-    var bets: [WSHPlayer : Int] = [:]
+    private var theButtons: [WSHBetButton] = []
     
     @IBOutlet weak var gridPlayersView: WSHGridView!
     
@@ -23,6 +23,18 @@ class WSHHandsActionViewController: WSHActionViewController {
         self.gridPlayersView.views = buttonsForPlayers()
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.refreshButtonsText()
+    }
+    
+    override func undoAction(button: UIButton) {
+        super.undoAction(button)
+        
+        self.refreshButtonsText()
+    }
+    
     
     //MARK: - Private functions
     
@@ -31,11 +43,13 @@ class WSHHandsActionViewController: WSHActionViewController {
         var buttons = [WSHBetButton]()
         var btn: WSHBetButton
         
-        for pleya in self.players ?? [] {
+        for pleya in self.round?.players ?? [] {
             btn = self.configuredStandardChoiceButton(pleya)
             
             buttons.append(btn)
         }
+        self.theButtons = buttons
+        
         return buttons
     }
     
@@ -51,16 +65,28 @@ class WSHHandsActionViewController: WSHActionViewController {
         } else {
             button.filter = WSHUIFilterType.Zero
         }
+        let hands = round?.roundInformation[forPlayer]?.hands.intValue ?? 0
+        let bet = round?.roundInformation[forPlayer]?.bet.intValue ?? 0
         
-//        button.bottomLabel.textColor = forPlayer.complementaryColor
-//        button.mainLabel.textColor = forPlayer.complementaryColor
-        button.mainLabel.text = "0/\(bets[forPlayer]!)"
+        button.mainLabel.text = "\(hands)/\(bet)"
         
         button.addTarget(self, action: #selector(self.takeHandButtonPressed(_:)), forControlEvents: .TouchUpInside)
         
-        button.tag = (self.players?.indexOf(forPlayer))!
+        button.tag = self.round?.players.indexOf(forPlayer) ?? 0
         
         return button
+    }
+    
+    private func refreshButtonsText() {
+        for btn in self.theButtons {
+            if let pleya = self.round?.players[btn.tag] {
+                let hands = round?.roundInformation[pleya]?.hands.intValue ?? 0
+                let bet = round?.roundInformation[pleya]?.bet.intValue ?? 0
+                
+                btn.mainLabel.text = "\(hands)/\(bet)"
+            }
+            
+        }
     }
     
     
@@ -69,8 +95,9 @@ class WSHHandsActionViewController: WSHActionViewController {
     
     func takeHandButtonPressed(button: WSHBetButton) {
         if let delegate = self.delegate {
-            if let pleya = self.players?[button.tag] {
-                button.mainLabel.text = "\(delegate.handsActionControllerPlayerDidTakeHand(self, player: pleya))/\(bets[pleya]!)"
+            if let pleya = self.round?.players[button.tag] {
+                let bet = round?.roundInformation[pleya]?.bet.intValue ?? 0
+                button.mainLabel.text = "\(delegate.handsActionControllerPlayerDidTakeHand(self, player: pleya))/\(bet)"
             }
         }
     }

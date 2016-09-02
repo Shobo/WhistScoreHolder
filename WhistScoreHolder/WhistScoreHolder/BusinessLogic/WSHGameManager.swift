@@ -16,11 +16,15 @@ class WSHGameManager {
     
     private(set) var gameState: WSHGameManagerState = .Idle
     
+    private var lastTakingOrder: [WSHPlayer] = []
+    
     init() {
         
     }
     
+    
     // MARK:- Starting and resetting
+    
     
     func startGameWithPlayers(players: [WSHPlayer]) {
         if self.gameState != .Idle {
@@ -36,12 +40,51 @@ class WSHGameManager {
         self.advanceToNextRound()
     }
     
+    func undo() {
+        if let currentRound = self.currentGame?.currentRound {
+            if currentRound.roundInformation.count == 0 { // current round just started -- undo to previous round
+                if self.lastTakingOrder.count == 0 {
+                    return
+                }
+                self.currentGame?.revertToPreviousRound()
+                self.revertLastTaking()
+                
+                guard let round = self.currentGame?.currentRound else  {
+                    return
+                }
+                self.delegate?.didFinishBettingInRound(round)
+                self.gameState = .Taking
+                
+            } else if self.lastTakingOrder.count == 0 { // undo betting
+                self.gameState = .Betting
+                self.revertLastBet()
+                
+            } else { // undo taking
+                self.gameState = .Taking
+                self.revertLastTaking()
+            }
+        }
+    }
+    
+    func canUndo() -> Bool {
+        if let currentRound = self.currentGame?.currentRound {
+            if currentRound.roundInformation.count == 0 { // current round just started -- undo to previous round
+                if self.lastTakingOrder.count == 0 {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
     func resetAllData() {   //everything to default vaue
         self.currentGame = nil  //should release rounds, players and everything; double check with instruments
         self.gameState = .Idle
     }
     
+    
     // MARK:- Persistent games
+    
     
     func saveCurrentGameState() {
         // save current game state on disk; should be called if app is closing and game is not over
@@ -51,7 +94,9 @@ class WSHGameManager {
         // load game saved on disk; should be called when starting the app if a game has been saved
     }
     
+    
     // MARK:- Reporting
+    
     
     func startBetting() {
         //start sending delegate messages in order to receive betting information; playerTurnToBet:forRoundType:excluding:
@@ -75,6 +120,10 @@ class WSHGameManager {
             
             self.currentGame!.currentRound!.addBet(bet, forPlayer: player)
             self.advanceToNextBet()
+            
+            if lastTakingOrder.count > 0 {
+                lastTakingOrder = []
+            }
         } catch let error {
             throw error
         }
@@ -89,6 +138,7 @@ class WSHGameManager {
                 return
             }
             round.addHandForPlayer(player)
+            self.lastTakingOrder.append(player)
             
             if round.isRoundComplete {
                 self.delegate?.roundDidFinish(round, withBonuses: self.currentGame?.playerBonusesPerRound[round] ?? [:])
@@ -98,7 +148,9 @@ class WSHGameManager {
         }
     }
     
+    
     // MARK: - Private
+    
     
     private func advanceToNextRound() {
         self.gameState = .Shuffling
@@ -138,6 +190,29 @@ class WSHGameManager {
         }
     }
     
+    private func revertLastBet() {
+        guard let round = self.currentGame?.currentRound else {
+            return
+        }
+        self.gameState = .Betting
+        round.revertLastBet()
+        
+        if let currentPlayer = round.currentBettingPlayer {
+            self.delegate?.playerTurnToBet(currentPlayer,
+                                           forRoundType: self.currentGame!.currentRound!.roundType,
+                                           excluding: self.currentGame!.currentRound!.excludedGameChoiceForPlayer(currentPlayer))   //calculate exluding possibilities
+        }
+    }
+    
+    private func revertLastTaking() {
+        guard let round = self.currentGame?.currentRound else {
+            return
+        }
+        if let pleya = self.lastTakingOrder.popLast() {
+            round.removeHandFromPlayer(pleya)
+        }
+    }
+    
     private func validateBet(bet: WSHGameBetChoice, forPlayer player: WSHPlayer) throws {
         if self.gameState != .Betting {
             //throw error; user cannot bet unlease in betting mode
@@ -171,7 +246,9 @@ class WSHGameManager {
         }
     }
     
+    
     //MARK:- Utils
+    
     
     private func reorderList<T>(list: [T], index: Int) -> [T] {  //returns the ordered list starting from given index
         var i = 0

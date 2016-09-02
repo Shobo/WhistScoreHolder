@@ -81,6 +81,13 @@ class WSHRound: NSObject {
         self.roundType = roundType
     }
     
+    func reset() {
+        self.roundInformation = [:]
+        self.playerScores = [:]
+        self.currentBettingPlayer = self.players.first  //when initializing the players array, the first player is the current betting one
+        self.initializePlayerScores()
+    }
+    
     func addBet(bet: WSHGameBetChoice, forPlayer player: WSHPlayer) {
         //check if bet is added for currentBettingPlayer and switch to next betting player
         if player == self.currentBettingPlayer {
@@ -94,6 +101,24 @@ class WSHRound: NSObject {
         }
     }
     
+    func revertLastBet() { // all history of player is lost (you are in WSHRound class)
+        if self.areAllBetsPlaced {
+            self.currentBettingPlayer = self.players.last
+        } else {
+            if let currentBetter = self.currentBettingPlayer {
+                let currentBetterIndex = self.players.indexOf(currentBetter)!
+                
+                if currentBetterIndex > 0 {
+                    self.currentBettingPlayer = self.players[currentBetterIndex - 1]
+                }
+            }
+        }
+        guard let player = self.currentBettingPlayer else {
+            return
+        }
+        self.roundInformation[player] = nil
+    }
+    
     func addHandForPlayer(player: WSHPlayer) {
         //increment "hands" for current player
         if let info = self.roundInformation[player] {
@@ -104,6 +129,16 @@ class WSHRound: NSObject {
         if self.isRoundComplete {
             self.calculateScores()
         }
+    }
+    
+    func removeHandFromPlayer(fromPlayer: WSHPlayer) {
+        let fromPlayerBet = self.roundInformation[fromPlayer]?.bet ?? WSHGameBetChoice.Zero
+        var fromPlayerHand = self.roundInformation[fromPlayer]?.hands ?? WSHGameBetChoice.Zero
+        
+        if fromPlayerHand.intValue > 0 {
+            fromPlayerHand = WSHGameBetChoice(rawValue: fromPlayerHand.intValue - 1) ?? .Zero
+        }
+        self.roundInformation[fromPlayer] = (bet: fromPlayerBet, hands: fromPlayerHand)
     }
     
     func excludedGameChoiceForPlayer(player: WSHPlayer) -> WSHGameBetChoice? {

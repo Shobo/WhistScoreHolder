@@ -179,9 +179,9 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="64" id="AYl-RI-ZUx"/>
                                     </constraints>
-                                    <state key="normal" title="Focus"/>
+                                    <state key="normal" title="Undo"/>
                                     <connections>
-                                        <action selector="focusButtonPressed:" destination="JMw-5V-dHk" eventType="touchUpInside" id="q4u-Ad-ech"/>
+                                        <action selector="undoButtonPressed:" destination="JMw-5V-dHk" eventType="touchUpInside" id="fo5-T5-ckP"/>
                                     </connections>
                                 </button>
                             </subviews>

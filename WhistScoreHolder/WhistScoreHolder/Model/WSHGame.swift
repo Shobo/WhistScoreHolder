@@ -46,7 +46,27 @@ class WSHGame {
         }
     }
     
+    func revertToPreviousRound() {
+        guard let round = self.currentRound else {
+            self.currentRound = self.rounds.first
+            return
+        }
+        if round == self.rounds.first {
+            return
+        }
+        //all data of current round will be lost
+        self.revertScoresForRound(round)
+        round.reset()
+        self.currentRound = self.rounds[(self.rounds.indexOf(round) ?? 0) - 1]
+        
+        if let asdf = self.currentRound {
+            self.revertScoresForRound(asdf)
+        }
+    }
+    
+    
     //MARK:- Private
+    
     
     private func createRounds() {
         //create round objects based on number of players
@@ -133,4 +153,19 @@ class WSHGame {
             }
         }
     }
+    
+    private func revertScoresForRound(round: WSHRound) {
+        if round.isRoundComplete {
+            for player in self.players {
+                self.totalPlayerScores[player]! -= round.playerScores[player]!
+            }
+            if let bonusez = self.playerBonusesPerRound[round] {
+                for player in self.players {
+                    self.totalPlayerScores[player]! -= bonusez[player] ?? 0
+                }
+            }
+            self.playerBonusesPerRound[round] = nil
+        }
+    }
+    
 }
