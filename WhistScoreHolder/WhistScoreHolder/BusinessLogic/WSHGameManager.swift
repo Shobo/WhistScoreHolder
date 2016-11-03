@@ -12,11 +12,11 @@ class WSHGameManager {
     
     weak var delegate: WSHGameManagerDelegate?
     
-    private(set) var currentGame: WSHGame?
+    fileprivate(set) var currentGame: WSHGame?
     
-    private(set) var gameState: WSHGameManagerState = .Idle
+    fileprivate(set) var gameState: WSHGameManagerState = .idle
     
-    private var lastTakingOrder: [WSHPlayer] = []
+    fileprivate var lastTakingOrder: [WSHPlayer] = []
     
     init() {
         
@@ -26,8 +26,8 @@ class WSHGameManager {
     // MARK:- Starting and resetting
     
     
-    func startGameWithPlayers(players: [WSHPlayer]) {
-        if self.gameState != .Idle {
+    func startGameWithPlayers(_ players: [WSHPlayer]) {
+        if self.gameState != .idle {
             return  //cannot start game when game in progress
         }
         if !(kMIN_NUMBER_OF_PLAYERS..<kMAX_NUMBER_OF_PLAYERS + 1).contains(players.count) {
@@ -53,14 +53,14 @@ class WSHGameManager {
                     return
                 }
                 self.delegate?.didFinishBettingInRound(round)
-                self.gameState = .Taking
+                self.gameState = .taking
                 
             } else if self.lastTakingOrder.count == 0 { // undo betting
-                self.gameState = .Betting
+                self.gameState = .betting
                 self.revertLastBet()
                 
             } else { // undo taking
-                self.gameState = .Taking
+                self.gameState = .taking
                 self.revertLastTaking()
             }
         }
@@ -79,7 +79,7 @@ class WSHGameManager {
     
     func resetAllData() {   //everything to default vaue
         self.currentGame = nil  //should release rounds, players and everything; double check with instruments
-        self.gameState = .Idle
+        self.gameState = .idle
     }
     
     
@@ -100,11 +100,11 @@ class WSHGameManager {
     
     func startBetting() {
         //start sending delegate messages in order to receive betting information; playerTurnToBet:forRoundType:excluding:
-        if self.gameState != .Shuffling {
+        if self.gameState != .shuffling {
             return  //throw error if betting is started when not in shuffling mode
         }
         
-        self.gameState = .Betting
+        self.gameState = .betting
         
         self.advanceToNextBet()
     }
@@ -113,7 +113,7 @@ class WSHGameManager {
         self.advanceToNextRound()
     }
         
-    func player(player: WSHPlayer, didBet bet: WSHGameBetChoice) throws {
+    func player(_ player: WSHPlayer, didBet bet: WSHGameBetChoice) throws {
         //after saving the bet inside the current round, send another playerTurnToBet:forRoundType:excluding: to the delegate, unless it was the last one, in which case the didFinishBettingInRound: delegate method should be called
         do {
             try self.validateBet(bet, forPlayer: player)
@@ -129,7 +129,7 @@ class WSHGameManager {
         }
     }
     
-    func playerDidTakeHand(player: WSHPlayer) throws {
+    func playerDidTakeHand(_ player: WSHPlayer) throws {
         //after saving the taken hand inside the current round, check if the round is completed. if it is, send the willBeginRoundOfType:startingPlayer: delegate method
         do {
             try self.validateHandForPlayer(player)
@@ -152,8 +152,8 @@ class WSHGameManager {
     // MARK: - Private
     
     
-    private func advanceToNextRound() {
-        self.gameState = .Shuffling
+    fileprivate func advanceToNextRound() {
+        self.gameState = .shuffling
         
         let lastRound = self.currentGame!.currentRound
         self.currentGame?.advanceToNextRound()
@@ -174,7 +174,7 @@ class WSHGameManager {
         }
     }
     
-    private func advanceToNextBet() {
+    fileprivate func advanceToNextBet() {
         //check if all players have placed bets
         guard let round = self.currentGame?.currentRound else {
             return
@@ -182,7 +182,7 @@ class WSHGameManager {
         
         if round.areAllBetsPlaced {
             self.delegate?.didFinishBettingInRound(round)
-            self.gameState = .Taking
+            self.gameState = .taking
         } else if let currentPlayer = round.currentBettingPlayer {
             self.delegate?.playerTurnToBet(currentPlayer,
                                            forRoundType: self.currentGame!.currentRound!.roundType,
@@ -190,11 +190,11 @@ class WSHGameManager {
         }
     }
     
-    private func revertLastBet() {
+    fileprivate func revertLastBet() {
         guard let round = self.currentGame?.currentRound else {
             return
         }
-        self.gameState = .Betting
+        self.gameState = .betting
         round.revertLastBet()
         
         if let currentPlayer = round.currentBettingPlayer {
@@ -204,7 +204,7 @@ class WSHGameManager {
         }
     }
     
-    private func revertLastTaking() {
+    fileprivate func revertLastTaking() {
         guard let round = self.currentGame?.currentRound else {
             return
         }
@@ -213,8 +213,8 @@ class WSHGameManager {
         }
     }
     
-    private func validateBet(bet: WSHGameBetChoice, forPlayer player: WSHPlayer) throws {
-        if self.gameState != .Betting {
+    fileprivate func validateBet(_ bet: WSHGameBetChoice, forPlayer player: WSHPlayer) throws {
+        if self.gameState != .betting {
             //throw error; user cannot bet unlease in betting mode
         }
         
@@ -232,8 +232,8 @@ class WSHGameManager {
         }
     }
     
-    private func validateHandForPlayer(player: WSHPlayer) throws {
-        if self.gameState != .Taking {
+    fileprivate func validateHandForPlayer(_ player: WSHPlayer) throws {
+        if self.gameState != .taking {
             //throw error; user cannot take unlease in taking mode
         }
         //throw error if taken count exceeds current round type
@@ -250,14 +250,14 @@ class WSHGameManager {
     //MARK:- Utils
     
     
-    private func reorderList<T>(list: [T], index: Int) -> [T] {  //returns the ordered list starting from given index
+    fileprivate func reorderList<T>(_ list: [T], index: Int) -> [T] {  //returns the ordered list starting from given index
         var i = 0
-        let separated = list.split(2, allowEmptySlices: true) { (_) -> Bool in
+        let separated = list.split(maxSplits: 2, omittingEmptySubsequences: false) { (_) -> Bool in
             let result = i == index
             i += 1
             return result
         }
         
-        return [list[index]] + separated[1] + separated[0]
+        return [list[index]] as [T] + separated[1] + separated[0]
     }
 }

@@ -20,7 +20,7 @@ class WSHPlayer: NSObject {
             }
         }
     }
-    private(set) var complementaryColor: UIColor?
+    fileprivate(set) var complementaryColor: UIColor?
     var colour: UInt = 0 {
         didSet(newValue) {
             if image == nil {
@@ -40,7 +40,7 @@ class WSHPlayer: NSObject {
     
     
     func presentableImage() -> UIImage {
-        let presentableImageSize = CGSizeMake(100.0, 100.0)
+        let presentableImageSize = CGSize(width: 100.0, height: 100.0)
         
         return image?.scale(toSize: presentableImageSize) ?? UIImage.imageWithColor(UIColor.colorFromRGB(colour), size: presentableImageSize)
     }

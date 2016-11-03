@@ -9,12 +9,12 @@ import UIKit
 
 class WSHGame {
     
-    private(set) var players:[WSHPlayer]
-    private(set) var rounds: [WSHRound] = []
-    private(set) var currentRound: WSHRound?
-    private(set) var totalPlayerScores: [WSHPlayer: Int] = [:]
-    private(set) var playerBonusesPerRound: [WSHRound : [WSHPlayer: Int]] = [:]
-    private var counterForPlayerRightGuesses: [WSHPlayer: Int] = [:]
+    fileprivate(set) var players:[WSHPlayer]
+    fileprivate(set) var rounds: [WSHRound] = []
+    fileprivate(set) var currentRound: WSHRound?
+    fileprivate(set) var totalPlayerScores: [WSHPlayer: Int] = [:]
+    fileprivate(set) var playerBonusesPerRound: [WSHRound : [WSHPlayer: Int]] = [:]
+    fileprivate var counterForPlayerRightGuesses: [WSHPlayer: Int] = [:]
     
     var totalNumberOfRounds: Int {
         get {
@@ -39,7 +39,7 @@ class WSHGame {
         self.addScoresFromRound(round)
         
         if round != self.rounds.last {
-            let indexOfCurrentRound = self.rounds.indexOf(round)!
+            let indexOfCurrentRound = self.rounds.index(of: round)!
             self.currentRound = self.rounds[indexOfCurrentRound + 1]
         } else {
             self.currentRound = nil
@@ -57,7 +57,7 @@ class WSHGame {
         //all data of current round will be lost
         self.revertScoresForRound(round)
         round.reset()
-        self.currentRound = self.rounds[(self.rounds.indexOf(round) ?? 0) - 1]
+        self.currentRound = self.rounds[(self.rounds.index(of: round) ?? 0) - 1]
         
         if let asdf = self.currentRound {
             self.revertScoresForRound(asdf)
@@ -68,26 +68,26 @@ class WSHGame {
     //MARK:- Private
     
     
-    private func createRounds() {
+    fileprivate func createRounds() {
         //create round objects based on number of players
-        self.rounds.appendContentsOf(self.createRounds(self.players.count, ofType: .One))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Two))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Three))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Four))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Five))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Six))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Seven))
-        self.rounds.appendContentsOf(self.createRounds(self.players.count, ofType: .Eight))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Seven))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Six))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Five))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Four))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Three))
-        self.rounds.appendContentsOf(self.createRounds(1, ofType: .Two))
-        self.rounds.appendContentsOf(self.createRounds(self.players.count, ofType: .One))
+        self.rounds.append(contentsOf: self.createRounds(self.players.count, ofType: .one))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .two))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .three))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .four))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .five))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .six))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .seven))
+        self.rounds.append(contentsOf: self.createRounds(self.players.count, ofType: .eight))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .seven))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .six))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .five))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .four))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .three))
+        self.rounds.append(contentsOf: self.createRounds(1, ofType: .two))
+        self.rounds.append(contentsOf: self.createRounds(self.players.count, ofType: .one))
     }
     
-    private func createRounds(numberOfRounds: Int, ofType type: WSHRoundType) -> [WSHRound] {
+    fileprivate func createRounds(_ numberOfRounds: Int, ofType type: WSHRoundType) -> [WSHRound] {
         var rounds: [WSHRound] = []
         
         for _ in 0..<numberOfRounds {
@@ -98,25 +98,25 @@ class WSHGame {
         return rounds
     }
     
-    private func initializePlayerScores() {
+    fileprivate func initializePlayerScores() {
         for player in self.players {
             self.totalPlayerScores[player] = 0
         }
     }
     
-    private func resetCounterForPlayerRightGuesses() {
+    fileprivate func resetCounterForPlayerRightGuesses() {
         for player in self.players {
             self.counterForPlayerRightGuesses[player] = 0
         }
     }
     
-    private func addScoresFromRound(round: WSHRound) {
+    fileprivate func addScoresFromRound(_ round: WSHRound) {
         for player in self.players {
             self.totalPlayerScores[player]! += round.playerScores[player]!
         }
         
         //check for BONUS points
-        if round.roundType == .One {
+        if round.roundType == .one {
             self.resetCounterForPlayerRightGuesses()
         } else {
             var bonuses: [WSHPlayer: Int] = [:]
@@ -154,7 +154,7 @@ class WSHGame {
         }
     }
     
-    private func revertScoresForRound(round: WSHRound) {
+    fileprivate func revertScoresForRound(_ round: WSHRound) {
         if round.isRoundComplete {
             for player in self.players {
                 self.totalPlayerScores[player]! -= round.playerScores[player]!

@@ -15,7 +15,7 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     @IBOutlet weak var cameraView: WSHCameraView!
     @IBOutlet weak var nameTextField: UITextField!
     
-    @IBOutlet private weak var cameraWidthConstraint: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var cameraWidthConstraint: NSLayoutConstraint!
     
     var name: String {
         set(newName) {
@@ -60,16 +60,16 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     
     // MARK: - Public functions
     
     
-    func keyBoardHeightChanged(newHeight: CGFloat) {
-        scrollView.contentSize = CGSizeMake(self.frame.width, self.frame.size.height + newHeight)
-        scrollView.setContentOffset(CGPointMake(0.0, newHeight), animated: true)
+    func keyBoardHeightChanged(_ newHeight: CGFloat) {
+        scrollView.contentSize = CGSize(width: self.frame.width, height: self.frame.size.height + newHeight)
+        scrollView.setContentOffset(CGPoint(x: 0.0, y: newHeight), animated: true)
     }
     
     func resetToDefault() {
@@ -79,7 +79,7 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     }
     
     func resignKeyboardIfNeeded() {
-        if nameTextField.isFirstResponder() {
+        if nameTextField.isFirstResponder {
             nameTextField.resignFirstResponder()
         }
     }
@@ -92,28 +92,28 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     // MARK: - Private
     
     
-    private func xibSetup() {
-        let bundle = NSBundle(forClass: self.dynamicType)
+    fileprivate func xibSetup() {
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "WSHPlayerView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = bounds
-        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         self.addSubview(view);
     }
     
-    private func setupView() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WSHPlayerView.keyboardWillChangeFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
+    fileprivate func setupView() {
+        NotificationCenter.default.addObserver(self, selector: #selector(WSHPlayerView.keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         self.backgroundColor = UIColor.colorFromRGB(colorHex)
-        self.cameraView.backgroundColor = UIColor.white().colorWithAlphaComponent(0.33)
-        self.cameraWidthConstraint.constant = min(UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height)
+        self.cameraView.backgroundColor = UIColor.white().withAlphaComponent(0.33)
+        self.cameraWidthConstraint.constant = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
     }
     
     
     // MARK: - UITextFieldDelegate funcs
     
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
         return true
@@ -123,11 +123,11 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate funcs
     
     
-    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         resignKeyboardIfNeeded()
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         resignKeyboardIfNeeded()
     }
     
@@ -135,9 +135,9 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     // MARK: - Notifications
     
     
-    func keyboardWillChangeFrame(notification: NSNotification) {
-        if let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
-            self.keyBoardHeightChanged(UIScreen.mainScreen().bounds.height - keyboardRect.origin.y)
+    func keyboardWillChangeFrame(_ notification: Notification) {
+        if let keyboardRect = ((notification as NSNotification).userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.keyBoardHeightChanged(UIScreen.main.bounds.height - keyboardRect.origin.y)
         } else {
             self.keyBoardHeightChanged(0)
         }
@@ -147,7 +147,7 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     // MARK: - Actions
     
     
-    @IBAction func colourTapped(sender: AnyObject) {
+    @IBAction func colourTapped(_ sender: AnyObject) {
         colorHex = randHEX()
     }
     

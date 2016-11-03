@@ -21,51 +21,51 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        playBarButtonItem.enabled = false
-        tableView.editing = true
+        playBarButtonItem.isEnabled = false
+        tableView.isEditing = true
         tableView.tableFooterView = UIView()
         currentPlayer = nil
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         rowHeight = min(tableView.frame.height / 6.0, kMinRowHeight)
-        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+        tableView.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.automatic)
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         
         rowHeight = min(size.height / 6.0, kMinRowHeight)
-        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
-        tableView.separatorStyle = .None
+        tableView.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.automatic)
+        tableView.separatorStyle = .none
     }
     
     
     // MARK: - Private functions
     
     
-    private func refreshButtons() {
+    fileprivate func refreshButtons() {
         if players.count < kMIN_NUMBER_OF_PLAYERS {
-            playBarButtonItem.enabled = false
+            playBarButtonItem.isEnabled = false
         } else {
-            playBarButtonItem.enabled = true
+            playBarButtonItem.isEnabled = true
         }
         if players.count >= kMAX_NUMBER_OF_PLAYERS {
-            addBarButtonItem.enabled = false
+            addBarButtonItem.isEnabled = false
         } else {
-            addBarButtonItem.enabled = true
+            addBarButtonItem.isEnabled = true
         }
     }
     
-    private func reloadTableView() {
+    fileprivate func reloadTableView() {
         refreshButtons()
         
-        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+        tableView.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.automatic)
     }
     
-    private func setupPlayerViewController(from navigationController: UINavigationController) {
+    fileprivate func setupPlayerViewController(from navigationController: UINavigationController) {
         let playerViewController: WSHPlayerViewController = navigationController.viewControllers.first as! WSHPlayerViewController
         
         playerViewController.delegate = self
@@ -76,73 +76,73 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - UITableView DataSource & Delegate
     
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return rowHeight
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.players.count ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PlayerCell")! as UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerCell")! as UITableViewCell
             
-        let player = players[indexPath.row]
+        let player = players[(indexPath as NSIndexPath).row]
         cell.textLabel?.text = player.name
-        cell.imageView?.image = player.presentableImage().scale(toSize: CGSizeMake(rowHeight - kMargin, rowHeight - kMargin))
+        cell.imageView?.image = player.presentableImage().scale(toSize: CGSize(width: rowHeight - kMargin, height: rowHeight - kMargin))
         
         return cell
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .Delete
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
-        case .Delete:
-            players.removeAtIndex(indexPath.row)
+        case .delete:
+            players.remove(at: (indexPath as NSIndexPath).row)
             refreshButtons()
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            tableView.deleteRows(at: [indexPath], with: .left)
             break
         default:
             break
         }
     }
     
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        if sourceIndexPath.isEqual(destinationIndexPath) {
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if sourceIndexPath == destinationIndexPath {
             return
         }
-        let itemToMove = self.players[sourceIndexPath.row]
-        players.removeAtIndex(sourceIndexPath.row)
-        players.insert(itemToMove , atIndex: destinationIndexPath.row)
+        let itemToMove = self.players[(sourceIndexPath as NSIndexPath).row]
+        players.remove(at: (sourceIndexPath as NSIndexPath).row)
+        players.insert(itemToMove , at: (destinationIndexPath as NSIndexPath).row)
     }
     
     
     // MARK: - WSHPlayerViewControllerDelegate functions
     
     
-    func didAddPlayer(sender: WSHPlayerViewController, player: WSHPlayer) -> Int {
+    func didAddPlayer(_ sender: WSHPlayerViewController, player: WSHPlayer) -> Int {
         players.append(player)
         reloadTableView()
         
         return players.count ?? 0
     }
     
-    func didEditPlayer(sender: WSHPlayerViewController, player: WSHPlayer) {
+    func didEditPlayer(_ sender: WSHPlayerViewController, player: WSHPlayer) {
         currentPlayer?.name = player.name
         currentPlayer?.image = player.image
         currentPlayer?.colour = player.colour
@@ -154,35 +154,35 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - Actions
     
     
-    @IBAction func playButtonTapped(sender: AnyObject) {
+    @IBAction func playButtonTapped(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "Get ready", message:
-            "Game will start", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+            "Game will start", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
             // TODO: (foc) Dismiss alert after time has passed
-            self.performSegueWithIdentifier("presentGame", sender: sender)
+            self.performSegue(withIdentifier: "presentGame", sender: sender)
             WSHGameManager.sharedInstance.startGameWithPlayers(self.players)
         }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: nil))
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let identifier = segue.identifier ?? ""
         
         switch identifier {
         case "addPlayer":
             currentPlayer = nil
-            setupPlayerViewController(from: (segue.destinationViewController as! UINavigationController))
+            setupPlayerViewController(from: (segue.destination as! UINavigationController))
             break
             
         case "cellTapped":
-            currentPlayer = players[(tableView.indexPathForCell(sender as! UITableViewCell)?.row)!]
-            setupPlayerViewController(from: (segue.destinationViewController as! UINavigationController))
+            currentPlayer = players[((tableView.indexPath(for: sender as! UITableViewCell) as NSIndexPath?)?.row)!]
+            setupPlayerViewController(from: (segue.destination as! UINavigationController))
             break
             
         case "presentGame":
-            let gameVC = segue.destinationViewController as! WSHGameViewController
+            let gameVC = segue.destination as! WSHGameViewController
             WSHGameManager.sharedInstance.delegate = gameVC
             break
             

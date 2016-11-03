@@ -10,11 +10,11 @@ import UIKit
 
 extension UIColor {
     func complementaryColor() -> UIColor {
-        let componentColors = CGColorGetComponents(self.CGColor)
+        let componentColors = self.cgColor.components
         
-        return UIColor(red: 1.0 - componentColors[0],
-                        green: 1.0 - componentColors[1],
-                        blue: 1.0 - componentColors[2],
+        return UIColor(red: 1.0 - componentColors![0],
+                        green: 1.0 - componentColors![1],
+                        blue: 1.0 - componentColors![2],
                         alpha: 1.0)
     }
     
@@ -26,7 +26,7 @@ extension UIColor {
         return UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)
     }
     
-    class func colorFromRGB(rgbVal: UInt) -> UIColor {
+    class func colorFromRGB(_ rgbVal: UInt) -> UIColor {
         return UIColor(
             red: CGFloat((rgbVal & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbVal & 0x00FF00) >> 8) / 255.0,

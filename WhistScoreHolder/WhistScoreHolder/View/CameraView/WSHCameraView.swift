@@ -8,9 +8,29 @@
 
 import UIKit
 import AVFoundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 protocol WSHCameraViewDelegate: class {
-    func cameraViewWantsToGiveCameraPermission(cameraView: WSHCameraView)
+    func cameraViewWantsToGiveCameraPermission(_ cameraView: WSHCameraView)
 }
 
 class WSHCameraView: UIView {
@@ -19,46 +39,46 @@ class WSHCameraView: UIView {
     var permissionGranted: Bool = false {
         didSet {
             if permissionGranted {
-                self.addressTheUserView.hidden = true
-                self.cameraContainerView.hidden = false
-                self.overlayButtonsView.hidden = false
+                self.addressTheUserView.isHidden = true
+                self.cameraContainerView.isHidden = false
+                self.overlayButtonsView.isHidden = false
                 
                 self.setupCamera()
                 
             } else {
-                self.addressTheUserView.hidden = false
-                self.cameraContainerView.hidden = true
-                self.overlayButtonsView.hidden = true
+                self.addressTheUserView.isHidden = false
+                self.cameraContainerView.isHidden = true
+                self.overlayButtonsView.isHidden = true
             }
         }
     }
     
-    @IBOutlet private weak var addressTheUserView: WSHAddressTheUserView!
-    @IBOutlet private weak var cameraContainerView: UIView!
-    @IBOutlet private weak var overlayButtonsView: WSHOverlayView!
+    @IBOutlet fileprivate weak var addressTheUserView: WSHAddressTheUserView!
+    @IBOutlet fileprivate weak var cameraContainerView: UIView!
+    @IBOutlet fileprivate weak var overlayButtonsView: WSHOverlayView!
     
-    @IBOutlet private weak var previewView: UIView!
-    @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var couldBeAToolbarView: WSHOverlayView!
-    @IBOutlet private weak var couldBeATopbarView: WSHOverlayView!
-    @IBOutlet private weak var takePicButton: WSHCircleButton!
+    @IBOutlet fileprivate weak var previewView: UIView!
+    @IBOutlet fileprivate weak var imageView: UIImageView!
+    @IBOutlet fileprivate weak var couldBeAToolbarView: WSHOverlayView!
+    @IBOutlet fileprivate weak var couldBeATopbarView: WSHOverlayView!
+    @IBOutlet fileprivate weak var takePicButton: WSHCircleButton!
     
-    private var captureSession: AVCaptureSession?
-    private var backCameraDevice: AVCaptureDevice?
-    private var frontCameraDevice: AVCaptureDevice?
-    private var currentCameraDevice: AVCaptureDevice?
-    private var stillImageOutput: AVCaptureStillImageOutput?
-    private var previewLayer: AVCaptureVideoPreviewLayer?
-    private var videoConnection: AVCaptureConnection!
+    fileprivate var captureSession: AVCaptureSession?
+    fileprivate var backCameraDevice: AVCaptureDevice?
+    fileprivate var frontCameraDevice: AVCaptureDevice?
+    fileprivate var currentCameraDevice: AVCaptureDevice?
+    fileprivate var stillImageOutput: AVCaptureStillImageOutput?
+    fileprivate var previewLayer: AVCaptureVideoPreviewLayer?
+    fileprivate var videoConnection: AVCaptureConnection!
     
-    private(set) var image: UIImage? {
+    fileprivate(set) var image: UIImage? {
         set(newImage) {
             self.imageView.image = newImage
             
             if (newImage != nil) {
                 self.stopCamera()
             } else {
-                self.imageView.contentMode = .ScaleAspectFill
+                self.imageView.contentMode = .scaleAspectFill
                 self.startCamera()
             }
         }
@@ -90,7 +110,7 @@ class WSHCameraView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.previewLayer?.position = CGPointMake(self.bounds.width / 2.0, self.bounds.height / 2.0)
+        self.previewLayer?.position = CGPoint(x: self.bounds.width / 2.0, y: self.bounds.height / 2.0)
         self.setupPreviewLayerOrientationDeviceDependent()
     }
     
@@ -98,11 +118,11 @@ class WSHCameraView: UIView {
     // MARK: - Public
     
     
-    func setFitImage(givenImage: UIImage?) {
+    func setFitImage(_ givenImage: UIImage?) {
         self.image = givenImage
         
         if let _ = givenImage {
-            self.imageView.contentMode = .ScaleAspectFit
+            self.imageView.contentMode = .scaleAspectFit
         }
     }
     
@@ -110,28 +130,28 @@ class WSHCameraView: UIView {
     // MARK: - Private
     
     
-    private func xibSetup() {
-        let bundle = NSBundle(forClass: self.dynamicType)
+    fileprivate func xibSetup() {
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "WSHCameraView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = bounds
-        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.addSubview(view);
     }
     
-    private func setupCamera() {
+    fileprivate func setupCamera() {
         if self.permissionGranted {
             self.captureSession = AVCaptureSession()
             self.captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
             
-            let availableCameraDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
+            let availableCameraDevices = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo)
             
             for device in availableCameraDevices as! [AVCaptureDevice] {
-                if device.position == .Back {
+                if device.position == .back {
                     self.backCameraDevice = device
                     self.setupDevice(self.backCameraDevice!)
                     
-                } else if device.position == .Front {
+                } else if device.position == .front {
                     self.frontCameraDevice = device
                     self.setupDevice(self.frontCameraDevice!)
                 }
@@ -145,52 +165,52 @@ class WSHCameraView: UIView {
                 self.captureSession!.addOutput(self.stillImageOutput)
             }
             
-            let deviceMin = min(UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height)
+            let deviceMin = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
             
             self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-            self.previewLayer?.frame = CGRectMake(0.0, 0.0, deviceMin, deviceMin)
-            self.previewLayer?.position = CGPointMake(self.bounds.width / 2.0, self.bounds.height / 2.0)
+            self.previewLayer?.frame = CGRect(x: 0.0, y: 0.0, width: deviceMin, height: deviceMin)
+            self.previewLayer?.position = CGPoint(x: self.bounds.width / 2.0, y: self.bounds.height / 2.0)
             self.previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
             self.setupPreviewLayerOrientationDeviceDependent()
             
             self.previewView.layer.addSublayer(self.previewLayer!)
             
-            self.videoConnection = self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
+            self.videoConnection = self.stillImageOutput!.connection(withMediaType: AVMediaTypeVideo)
             
             self.startCamera()
         }
     }
     
-    private func setupOverlayButtons() {
+    fileprivate func setupOverlayButtons() {
         let gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = self.couldBeAToolbarView.bounds
-        gradient.colors = [UIColor.clearColor().CGColor, UIColor.blackColor().CGColor]
-        self.couldBeAToolbarView.layer.insertSublayer(gradient, atIndex: 0)
+        gradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        self.couldBeAToolbarView.layer.insertSublayer(gradient, at: 0)
         
         let topGradient: CAGradientLayer = CAGradientLayer()
         topGradient.frame = self.couldBeATopbarView.bounds
-        topGradient.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
-        self.couldBeATopbarView.layer.insertSublayer(topGradient, atIndex: 0)
+        topGradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
+        self.couldBeATopbarView.layer.insertSublayer(topGradient, at: 0)
     }
     
-    private func startCamera() {
+    fileprivate func startCamera() {
         self.captureSession?.startRunning()
         self.refreshInput()
         
-        self.previewView.hidden = false
-        self.imageView.hidden = true
+        self.previewView.isHidden = false
+        self.imageView.isHidden = true
         self.takePicButton.hasX = false
     }
     
-    private func stopCamera() {
+    fileprivate func stopCamera() {
         self.captureSession?.stopRunning()
         
-        self.previewView.hidden = true
-        self.imageView.hidden = false
+        self.previewView.isHidden = true
+        self.imageView.isHidden = false
         self.takePicButton.hasX = true
     }
     
-    private func setupIntputTo(inputDevice: AVCaptureDevice) {
+    fileprivate func setupIntputTo(_ inputDevice: AVCaptureDevice) {
         do {
             let input = try AVCaptureDeviceInput(device: inputDevice)
             
@@ -204,48 +224,48 @@ class WSHCameraView: UIView {
         }
     }
     
-    private func setupDevice(inputDevice: AVCaptureDevice) {
+    fileprivate func setupDevice(_ inputDevice: AVCaptureDevice) {
         let baseCameraSize = prefferedImageSize()
-        let focusPoint = CGPointMake(baseCameraSize.width / 2.0, baseCameraSize.height / 2.0)
+        let focusPoint = CGPoint(x: baseCameraSize.width / 2.0, y: baseCameraSize.height / 2.0)
         
-        if inputDevice.focusPointOfInterestSupported {
+        if inputDevice.isFocusPointOfInterestSupported {
             do {
                 try inputDevice.lockForConfiguration()
                 inputDevice.focusPointOfInterest = focusPoint
-                inputDevice.focusMode = .AutoFocus
+                inputDevice.focusMode = .autoFocus
                 inputDevice.exposurePointOfInterest = focusPoint
-                inputDevice.exposureMode = .AutoExpose
+                inputDevice.exposureMode = .autoExpose
             } catch {
                 //ERR
             }
         }
     }
     
-    private func setupPreviewLayerOrientationDeviceDependent() {
+    fileprivate func setupPreviewLayerOrientationDeviceDependent() {
         if let connection = self.previewLayer?.connection  {
-            connection.videoOrientation = self.avOrientation(UIDevice.currentDevice().orientation)
+            connection.videoOrientation = self.avOrientation(UIDevice.current.orientation)
         }
     }
     
-    private func imageOrientationForCurrentDeviceOrientation() -> UIImageOrientation {
-        var imageOrientation: UIImageOrientation = .Up
+    fileprivate func imageOrientationForCurrentDeviceOrientation() -> UIImageOrientation {
+        var imageOrientation: UIImageOrientation = .up
         
         if self.currentCameraDevice == self.frontCameraDevice {
-            switch UIDevice.currentDevice().orientation {
-            case .Portrait:
-                imageOrientation = .LeftMirrored
+            switch UIDevice.current.orientation {
+            case .portrait:
+                imageOrientation = .leftMirrored
                 break
                 
-            case .PortraitUpsideDown:
-                imageOrientation = .Right
+            case .portraitUpsideDown:
+                imageOrientation = .right
                 break
                 
-            case .LandscapeRight:
-                imageOrientation = .UpMirrored
+            case .landscapeRight:
+                imageOrientation = .upMirrored
                 break
             
-            case .LandscapeLeft:
-                imageOrientation = .DownMirrored
+            case .landscapeLeft:
+                imageOrientation = .downMirrored
                 break
                 
             default:
@@ -253,17 +273,17 @@ class WSHCameraView: UIView {
             }
             
         } else {
-            switch UIDevice.currentDevice().orientation {
-            case .Portrait:
-                imageOrientation = .Right
+            switch UIDevice.current.orientation {
+            case .portrait:
+                imageOrientation = .right
                 break
                 
-            case .PortraitUpsideDown:
-                imageOrientation = .Left
+            case .portraitUpsideDown:
+                imageOrientation = .left
                 break
                 
-            case .LandscapeRight:
-                imageOrientation = .Down
+            case .landscapeRight:
+                imageOrientation = .down
                 break
                 
             default:
@@ -273,15 +293,15 @@ class WSHCameraView: UIView {
         return imageOrientation
     }
     
-    private func avOrientation(forDeviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation {
-        var result:AVCaptureVideoOrientation = .Portrait
+    fileprivate func avOrientation(_ forDeviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation {
+        var result:AVCaptureVideoOrientation = .portrait
         
         switch forDeviceOrientation {
-        case .LandscapeLeft:
-            result = .LandscapeRight
+        case .landscapeLeft:
+            result = .landscapeRight
             break
-        case .LandscapeRight:
-            result = .LandscapeLeft
+        case .landscapeRight:
+            result = .landscapeLeft
             break
         default:
             break
@@ -289,10 +309,10 @@ class WSHCameraView: UIView {
         return result
     }
     
-    private func refreshInput() {
+    fileprivate func refreshInput() {
         if let asdf = self.currentCameraDevice {
             self.setupIntputTo(asdf)
-            self.videoConnection = self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
+            self.videoConnection = self.stillImageOutput!.connection(withMediaType: AVMediaTypeVideo)
         }
     }
     
@@ -300,16 +320,16 @@ class WSHCameraView: UIView {
     //MARK: - Actions
     
     
-    @IBAction func didTap(sender: AnyObject) {
+    @IBAction func didTap(_ sender: AnyObject) {
         if let _ = self.image {
             self.image = nil
             
         } else {
-            self.stillImageOutput?.captureStillImageAsynchronouslyFromConnection(self.videoConnection, completionHandler: {[weak self] (sampleBuffer, error) in
+            self.stillImageOutput?.captureStillImageAsynchronously(from: self.videoConnection, completionHandler: {[weak self] (sampleBuffer, error) in
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
-                let dataProvider = CGDataProviderCreateWithCFData(imageData)
-                let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
-                let image = UIImage(CGImage: cgImageRef!, scale: 0.7, orientation: self?.imageOrientationForCurrentDeviceOrientation() ?? .Up)
+                let dataProvider = CGDataProvider(data: imageData as! CFData)
+                let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+                let image = UIImage(cgImage: cgImageRef!, scale: 0.7, orientation: self?.imageOrientationForCurrentDeviceOrientation() ?? .up)
                 
                 self?.image = image
                 
@@ -325,7 +345,7 @@ class WSHCameraView: UIView {
         }
     }
     
-    @IBAction func didTapSwitchCamera(sender: AnyObject) {
+    @IBAction func didTapSwitchCamera(_ sender: AnyObject) {
         if self.image == nil {
             if self.captureSession?.inputs.count > 0 {
                 if let input = self.captureSession?.inputs[0] as? AVCaptureInput {
@@ -338,11 +358,11 @@ class WSHCameraView: UIView {
                 }
             }
             
-            UIView.transitionWithView(self.previewView, duration: kAnimationDuration, options: .TransitionFlipFromLeft, animations: {
-                self.previewView.hidden = true
+            UIView.transition(with: self.previewView, duration: kAnimationDuration, options: .transitionFlipFromLeft, animations: {
+                self.previewView.isHidden = true
                 }, completion: { (_) in
-                    UIView.transitionWithView(self.previewView, duration: kAnimationDuration, options: .TransitionFlipFromLeft, animations: {
-                        self.previewView.hidden = false
+                    UIView.transition(with: self.previewView, duration: kAnimationDuration, options: .transitionFlipFromLeft, animations: {
+                        self.previewView.isHidden = false
                         }, completion: nil)
                     
                     self.refreshInput()
@@ -350,7 +370,7 @@ class WSHCameraView: UIView {
         }
     }
     
-    @IBAction func wannaGivePermission(sender: AnyObject) {
+    @IBAction func wannaGivePermission(_ sender: AnyObject) {
         if let asdf = self.delegate {
             asdf.cameraViewWantsToGiveCameraPermission(self)
         }

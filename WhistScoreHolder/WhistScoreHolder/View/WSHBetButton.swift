@@ -13,14 +13,14 @@ class WSHBetButton: UIButton {
     @IBOutlet weak var mainLabel: UILabel!
     @IBOutlet weak var bottomLabel: UILabel!
     
-    var filter: WSHUIFilterType = WSHUIFilterType.Zero {
+    var filter: WSHUIFilterType = WSHUIFilterType.zero {
         didSet(asdf) {
             self.refreshFilter()
         }
     }
     
-    private var xiew: UIView?
-    private var backgroundImageView: UIImageView?
+    fileprivate var xiew: UIView?
+    fileprivate var backgroundImageView: UIImageView?
     
     
     // MARK: - Lifecycle
@@ -44,7 +44,7 @@ class WSHBetButton: UIButton {
     // MARK: - Overriden
     
     
-    override func setBackgroundImage(image: UIImage?, forState state: UIControlState) {
+    override func setBackgroundImage(_ image: UIImage?, for state: UIControlState) {
         self.backgroundImageView?.image = image
     }
     
@@ -52,12 +52,12 @@ class WSHBetButton: UIButton {
     // MARK: - Private
     
     
-    private func xibSetup() {
-        let bundle = NSBundle(forClass: self.dynamicType)
+    fileprivate func xibSetup() {
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "WSHBetButton", bundle: bundle)
-        self.xiew = nib.instantiateWithOwner(self, options: nil)[0] as? UIView
+        self.xiew = nib.instantiate(withOwner: self, options: nil)[0] as? UIView
         self.xiew?.frame = bounds
-        self.xiew?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.xiew?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.refreshFilter()
         
         if let asdf = self.xiew {
@@ -65,29 +65,29 @@ class WSHBetButton: UIButton {
         }
     }
     
-    private func setupBackgroundImageView() {
+    fileprivate func setupBackgroundImageView() {
         self.backgroundImageView = UIImageView(frame: self.bounds)
-        self.backgroundImageView?.contentMode = .ScaleAspectFill
-        self.backgroundImageView?.backgroundColor = UIColor.clearColor()
-        self.backgroundImageView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.backgroundImageView?.contentMode = .scaleAspectFill
+        self.backgroundImageView?.backgroundColor = UIColor.clear
+        self.backgroundImageView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         if let asdf = self.backgroundImageView {
             self.addSubview(asdf)
         }
     }
     
-    private func refreshFilter() {
+    fileprivate func refreshFilter() {
         switch self.filter {
-        case .Zero:
-            self.xiew?.backgroundColor = UIColor.clearColor()
+        case .zero:
+            self.xiew?.backgroundColor = UIColor.clear
             break
             
-        case .White:
-            self.xiew?.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+        case .white:
+            self.xiew?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
             break
             
-        case .Black:
-            self.xiew?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+        case .black:
+            self.xiew?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
             break
         }
     }

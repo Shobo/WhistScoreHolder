@@ -10,16 +10,16 @@ import Foundation
 
 class WSHRound: NSObject {
     
-    private(set) var roundType: WSHRoundType
-    private(set) var roundInformation: [WSHPlayer: (bet: WSHGameBetChoice, hands: WSHGameBetChoice)] = [:]
-    private(set) var playerScores: [WSHPlayer: Int] = [:]
+    fileprivate(set) var roundType: WSHRoundType
+    fileprivate(set) var roundInformation: [WSHPlayer: (bet: WSHGameBetChoice, hands: WSHGameBetChoice)] = [:]
+    fileprivate(set) var playerScores: [WSHPlayer: Int] = [:]
     var players: [WSHPlayer] = [] {   //array of players in current round, arranged in order
         didSet {
             self.currentBettingPlayer = self.players.first  //when initializing the players array, the first player is the current betting one
             self.initializePlayerScores()
         }
     }
-    private(set) var currentBettingPlayer: WSHPlayer?
+    fileprivate(set) var currentBettingPlayer: WSHPlayer?
     
     var bettedHands: Int {
         get {
@@ -88,13 +88,13 @@ class WSHRound: NSObject {
         self.initializePlayerScores()
     }
     
-    func addBet(bet: WSHGameBetChoice, forPlayer player: WSHPlayer) {
+    func addBet(_ bet: WSHGameBetChoice, forPlayer player: WSHPlayer) {
         //check if bet is added for currentBettingPlayer and switch to next betting player
         if player == self.currentBettingPlayer {
-            self.roundInformation[player] = (bet: bet, hands: WSHGameBetChoice.Zero)
+            self.roundInformation[player] = (bet: bet, hands: WSHGameBetChoice.zero)
             
             if player != self.players.last {
-                self.currentBettingPlayer = self.players[self.players.indexOf(player)! + 1]
+                self.currentBettingPlayer = self.players[self.players.index(of: player)! + 1]
             } else {
                 self.currentBettingPlayer = nil
             }
@@ -106,7 +106,7 @@ class WSHRound: NSObject {
             self.currentBettingPlayer = self.players.last
         } else {
             if let currentBetter = self.currentBettingPlayer {
-                let currentBetterIndex = self.players.indexOf(currentBetter)!
+                let currentBetterIndex = self.players.index(of: currentBetter)!
                 
                 if currentBetterIndex > 0 {
                     self.currentBettingPlayer = self.players[currentBetterIndex - 1]
@@ -119,7 +119,7 @@ class WSHRound: NSObject {
         self.roundInformation[player] = nil
     }
     
-    func addHandForPlayer(player: WSHPlayer) {
+    func addHandForPlayer(_ player: WSHPlayer) {
         //increment "hands" for current player
         if let info = self.roundInformation[player] {
             let currentHands = info.hands.intValue
@@ -131,17 +131,17 @@ class WSHRound: NSObject {
         }
     }
     
-    func removeHandFromPlayer(fromPlayer: WSHPlayer) {
-        let fromPlayerBet = self.roundInformation[fromPlayer]?.bet ?? WSHGameBetChoice.Zero
-        var fromPlayerHand = self.roundInformation[fromPlayer]?.hands ?? WSHGameBetChoice.Zero
+    func removeHandFromPlayer(_ fromPlayer: WSHPlayer) {
+        let fromPlayerBet = self.roundInformation[fromPlayer]?.bet ?? WSHGameBetChoice.zero
+        var fromPlayerHand = self.roundInformation[fromPlayer]?.hands ?? WSHGameBetChoice.zero
         
         if fromPlayerHand.intValue > 0 {
-            fromPlayerHand = WSHGameBetChoice(rawValue: fromPlayerHand.intValue - 1) ?? .Zero
+            fromPlayerHand = WSHGameBetChoice(rawValue: fromPlayerHand.intValue - 1) ?? .zero
         }
         self.roundInformation[fromPlayer] = (bet: fromPlayerBet, hands: fromPlayerHand)
     }
     
-    func excludedGameChoiceForPlayer(player: WSHPlayer) -> WSHGameBetChoice? {
+    func excludedGameChoiceForPlayer(_ player: WSHPlayer) -> WSHGameBetChoice? {
         if !self.isPlayerLastInCurrentRound(player) {
             return nil
         }
@@ -154,13 +154,13 @@ class WSHRound: NSObject {
         return nil
     }
     
-    func didPlayerAlreadyBetInCurrentRound(player: WSHPlayer) -> Bool { //rename and maybe move this?
+    func didPlayerAlreadyBetInCurrentRound(_ player: WSHPlayer) -> Bool { //rename and maybe move this?
         return self.roundInformation[player]?.bet != nil
     }
     
     // MARK:- Private
     
-    private func currentTotalOfBetsAndHands() -> (betsNumber: Int, handsNumber: Int) {
+    fileprivate func currentTotalOfBetsAndHands() -> (betsNumber: Int, handsNumber: Int) {
         var totalBets = 0
         var totalHands = 0
         
@@ -172,17 +172,17 @@ class WSHRound: NSObject {
         return (totalBets, totalHands)
     }
     
-    private func isPlayerLastInCurrentRound(player: WSHPlayer) -> Bool {
+    fileprivate func isPlayerLastInCurrentRound(_ player: WSHPlayer) -> Bool {
         return self.players.last == player
     }
     
-    private func calculateScores() {
+    fileprivate func calculateScores() {
         for player in self.players {
             self.playerScores[player] = self.pointsForPlayer(player)
         }
     }
     
-    private func pointsForPlayer(player: WSHPlayer) -> Int {
+    fileprivate func pointsForPlayer(_ player: WSHPlayer) -> Int {
         var points = 0
         
         if self.playerDidGuessCorrectly(player) {
@@ -195,7 +195,7 @@ class WSHRound: NSObject {
         return points
     }
     
-    private func playerDidGuessCorrectly(player: WSHPlayer) -> Bool {
+    fileprivate func playerDidGuessCorrectly(_ player: WSHPlayer) -> Bool {
         let playerInformation = self.roundInformation[player]
         
         if playerInformation == nil {
@@ -205,7 +205,7 @@ class WSHRound: NSObject {
         }
     }
     
-    private func initializePlayerScores() {
+    fileprivate func initializePlayerScores() {
         for player in self.players {
             self.playerScores[player] = 0
         }

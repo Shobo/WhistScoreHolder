@@ -7,11 +7,11 @@
 //
 
 protocol WSHGameManagerDelegate: class {
-    func gameManager(gameManager: WSHGameManager, didStartGame game: WSHGame)
-    func gameManager(gameManager: WSHGameManager, didEndGame game: WSHGame)
+    func gameManager(_ gameManager: WSHGameManager, didStartGame game: WSHGame)
+    func gameManager(_ gameManager: WSHGameManager, didEndGame game: WSHGame)
     
-    func willBeginRoundOfType(type: WSHRoundType, startingPlayer player: WSHPlayer)
-    func playerTurnToBet(player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?)
-    func didFinishBettingInRound(round: WSHRound)
-    func roundDidFinish(round: WSHRound, withBonuses bonuses: [WSHPlayer: Int])
+    func willBeginRoundOfType(_ type: WSHRoundType, startingPlayer player: WSHPlayer)
+    func playerTurnToBet(_ player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?)
+    func didFinishBettingInRound(_ round: WSHRound)
+    func roundDidFinish(_ round: WSHRound, withBonuses bonuses: [WSHPlayer: Int])
 }

@@ -14,92 +14,92 @@ let kBONUS_VALUE = 10
 
 let kAnimationDuration = 0.25
 
-enum WSHGameManagerErrorType: ErrorType, CustomStringConvertible {
-    case InvalidPlayers
-    case WrongActionForCurrentGameState(gameState: WSHGameManagerState)
-    case Wrong
+enum WSHGameManagerErrorType: Error, CustomStringConvertible {
+    case invalidPlayers
+    case wrongActionForCurrentGameState(gameState: WSHGameManagerState)
+    case wrong
     
     var description: String {
         switch self {
-        case .InvalidPlayers:
+        case .invalidPlayers:
             return "Invalid players"
-        case let .WrongActionForCurrentGameState(gameState: gameState):
+        case let .wrongActionForCurrentGameState(gameState: gameState):
             return "Wrong action for current game state: \(gameState)"
-        case .Wrong:
+        case .wrong:
             return "WrongSmth"
         }
     }
 }
 
 enum WSHGameManagerState {
-    case Idle
-    case Shuffling
-    case Betting
-    case Taking
+    case idle
+    case shuffling
+    case betting
+    case taking
 }
 
 enum WSHGameBetChoice: Int {
-    case Zero = 0
-    case One
-    case Two
-    case Three
-    case Four
-    case Five
-    case Six
-    case Seven
-    case Eight
+    case zero = 0
+    case one
+    case two
+    case three
+    case four
+    case five
+    case six
+    case seven
+    case eight
     
     var intValue: Int {
         switch self {
-        case .Zero:
+        case .zero:
             return 0
-        case .One:
+        case .one:
             return 1
-        case .Two:
+        case .two:
             return 2
-        case .Three:
+        case .three:
             return 3
-        case .Four:
+        case .four:
             return 4
-        case .Five:
+        case .five:
             return 5
-        case .Six:
+        case .six:
             return 6
-        case .Seven:
+        case .seven:
             return 7
-        case .Eight:
+        case .eight:
             return 8
         }
     }
 }
 
 enum WSHRoundType: Int {
-    case One = 1
-    case Two
-    case Three
-    case Four
-    case Five
-    case Six
-    case Seven
-    case Eight
+    case one = 1
+    case two
+    case three
+    case four
+    case five
+    case six
+    case seven
+    case eight
     
     var intValue: Int {
         switch self {
-        case .One:
+        case .one:
             return 1
-        case .Two:
+        case .two:
             return 2
-        case .Three:
+        case .three:
             return 3
-        case .Four:
+        case .four:
             return 4
-        case .Five:
+        case .five:
             return 5
-        case .Six:
+        case .six:
             return 6
-        case .Seven:
+        case .seven:
             return 7
-        case .Eight:
+        case .eight:
             return 8
         }
     }
@@ -109,7 +109,7 @@ enum WSHRoundType: Int {
 // MARK: - UI
 
 enum WSHUIFilterType: UInt8 {
-    case Zero = 0
-    case White
-    case Black
+    case zero = 0
+    case white
+    case black
 }

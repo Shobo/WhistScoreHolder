@@ -11,10 +11,10 @@ import UIKit
 @IBDesignable
 class WSHAddressTheUserView: UIView {
 
-    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet fileprivate weak var imageView: UIImageView!
     @IBOutlet weak var mainLabel: UILabel!
-    @IBOutlet private weak var imageViewHeight: NSLayoutConstraint!
-    @IBOutlet private weak var labelFixedHeight: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var imageViewHeight: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var labelFixedHeight: NSLayoutConstraint!
     
     @IBInspectable var image: UIImage? {
         didSet {
@@ -48,7 +48,7 @@ class WSHAddressTheUserView: UIView {
     // MARK: - Overridden
     
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         self.mainLabel.textColor = self.tintColor
         self.refreshImageView()
     }
@@ -63,30 +63,30 @@ class WSHAddressTheUserView: UIView {
     // MARK: - Private
     
     
-    private func xibSetup() {
-        let bundle = NSBundle(forClass: self.dynamicType)
+    fileprivate func xibSetup() {
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "WSHAddressTheUserView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = bounds
-        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         self.addSubview(view);
     }
     
-    private func setupView() {
+    fileprivate func setupView() {
         self.imageViewHeight.constant = 0.0
-        self.imageViewHeight.active = ((image != nil) ? false : true)
+        self.imageViewHeight.isActive = ((image != nil) ? false : true)
     }
     
-    private func refreshImageView() {
+    fileprivate func refreshImageView() {
         if let asdf = image {
             self.imageView.image = asdf
-            self.imageViewHeight?.active = false
-            self.labelFixedHeight?.active = true
+            self.imageViewHeight?.isActive = false
+            self.labelFixedHeight?.isActive = true
             
         } else {
-            self.imageViewHeight?.active = true
-            self.labelFixedHeight?.active = false
+            self.imageViewHeight?.isActive = true
+            self.labelFixedHeight?.isActive = false
         }
     }
     

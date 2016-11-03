@@ -9,6 +9,72 @@
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
+        <!--Side Menu Navigation Controller-->
+        <scene sceneID="iT8-gX-Laz">
+            <objects>
+                <navigationController id="SZ7-7N-5kg" customClass="UISideMenuNavigationController" customModule="SideMenu" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fbm-1Q-xVq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="leftSide" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <segue destination="H9y-i2-S1y" kind="relationship" relationship="rootViewController" id="LYk-BO-NtM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zoh-PG-EnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-448" y="-2786"/>
+        </scene>
+        <!--Rules-->
+        <scene sceneID="zKX-iO-hWy">
+            <objects>
+                <viewController id="H9y-i2-S1y" customClass="WSHRulesViewController" customModule="WhistScoreHolder" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wx4-7u-i7Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="K0B-bI-Azg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BQL-Ro-iAV">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Zb-Wy-rGR">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">The Romanian Whist game has the following rules:
+
+from the standard deck card, only 8 cards for every player are kept (for example, 24 cards when playing with 3 players).
+in order to reach the required number, cards are discarded starting from the lower values (2, 3, 4 and so on).
+with the remaining cards, several rounds are played, according to the pattern 1 - 8 - 1.
+this means 1 card is dealt to each player initially, then 2, 3 and so on, up to 8, and then back towards 1.
+as an exception, the rounds of 1 and 8 repeat in order to allow every player to be the 'dealer' for them.
+each round consists in a estimation phase, where players say the number of tricks they'll make, and a play phase.
+in the play phase, the player to dealer's left plays the first card; others must play a card of the same suit.
+if they don't have a card of the same suit, they must play a trump, otherwise they can put down any card.
+the trick is made by the player with the highest trump (or the highest initial suit if no trump was put down).
+if players estimate correctly the number of tricks, they're rewarded with 5 points + 1 point per trick made.
+otherwise, their score is lowered with the difference between the estimation and number of tricks made.
+the game ends after the last round; the winner is the player with the highest score at the end of the game.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="8Zb-Wy-rGR" secondAttribute="trailing" id="4kE-jA-B4U"/>
+                            <constraint firstItem="8Zb-Wy-rGR" firstAttribute="leading" secondItem="BQL-Ro-iAV" secondAttribute="leading" id="gwT-yb-pxX"/>
+                            <constraint firstItem="8Zb-Wy-rGR" firstAttribute="top" secondItem="Wx4-7u-i7Y" secondAttribute="bottom" id="h3X-U6-JYd"/>
+                            <constraint firstItem="K0B-bI-Azg" firstAttribute="top" secondItem="8Zb-Wy-rGR" secondAttribute="bottom" id="zw8-A8-FBW"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Rules" id="tyB-Cr-qq9"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dMz-56-7qG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="241" y="-2786"/>
+        </scene>
         <!--Setup Game View Controller-->
         <scene sceneID="2Kp-9p-wDm">
             <objects>
@@ -62,11 +128,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Old-TN-qTk">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="ndB-9Q-OrM">
-                            <connections>
-                                <segue destination="URF-qz-yur" kind="presentation" identifier="addPlayer" id="ZaL-4F-bhK"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="organize" id="oaf-5v-SQe">
+                                <connections>
+                                    <segue destination="SZ7-7N-5kg" kind="presentation" id="shQ-AI-k75"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="ndB-9Q-OrM">
+                                <connections>
+                                    <segue destination="URF-qz-yur" kind="presentation" identifier="addPlayer" id="ZaL-4F-bhK"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" systemItem="play" id="0GF-kk-fwS">
                             <connections>
                                 <action selector="playButtonTapped:" destination="tij-l3-FRJ" id="6DA-I0-AjH"/>
@@ -266,7 +339,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qw8-RY-e6S" id="YlL-6m-WUw">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mdj-RS-HqK">
@@ -599,6 +672,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="leftSide" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="tij-l3-FRJ" kind="relationship" relationship="rootViewController" id="SXc-aI-cMF"/>
                     </connections>

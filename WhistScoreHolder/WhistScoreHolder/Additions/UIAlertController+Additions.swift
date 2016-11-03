@@ -10,10 +10,10 @@ import UIKit
 
 extension UIAlertController {
     
-    class func prepareForCameraAlertView(handler: WSHAlertControllerDelegate) -> UIAlertController {
+    class func prepareForCameraAlertView(_ handler: WSHAlertControllerDelegate) -> UIAlertController {
         let alertController = UIAlertController(title: "We will ask permission for camera usage", message:
-            "Allowing access to camera will enable putting a face near each player's name", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (_) in
+            "Allowing access to camera will enable putting a face near each player's name", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (_) in
             handler.alertControllerDidTapOk(alertController)
         }))
         
@@ -21,15 +21,15 @@ extension UIAlertController {
     }
     
     class func cameraPermissionSettingsAlertView() -> UIAlertController {
-        let alertController = UIAlertController(title: "Access settings", message: "Going to ENABLE camera access", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (_) in
-            let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+        let alertController = UIAlertController(title: "Access settings", message: "Going to ENABLE camera access", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.default, handler: { (_) in
+            let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsUrl {
-                UIApplication.sharedApplication().openURL(url)
+                UIApplication.shared.openURL(url)
             }
         }))
         
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         
         return alertController
     }
@@ -37,5 +37,5 @@ extension UIAlertController {
 }
 
 protocol WSHAlertControllerDelegate: class {
-    func alertControllerDidTapOk(controller: UIAlertController)
+    func alertControllerDidTapOk(_ controller: UIAlertController)
 }

@@ -32,7 +32,7 @@ class WSHGridView: UIView {
     
     
     //Only works for portrait style views
-    private func populateWithEqualSizedViews(viewZ: [UIView]) { //views should be already styled, having labels and targets
+    fileprivate func populateWithEqualSizedViews(_ viewZ: [UIView]) { //views should be already styled, having labels and targets
         
         var numberOfCollumns: Int
         var numberOfRows: Int
@@ -54,10 +54,10 @@ class WSHGridView: UIView {
         
         var itemsOnCurrentLine = 0
         var currentLineIndex = 1
-        let numberOfItemsOnRow = numberOfCollumns - ((numberOfViewsOnLastRow != 0 && numberOfViewsOnLastRow != min(numberOfRows, numberOfCollumns)) ? Int(!isVerticallyOriented) : 0)
+        let numberOfItemsOnRow = numberOfCollumns - ((numberOfViewsOnLastRow != 0 && numberOfViewsOnLastRow != min(numberOfRows, numberOfCollumns)) ? (!isVerticallyOriented ? 1 : 0) : 0)
         
         for view in viewZ {
-            view.frame = CGRectMake(currentX, currentY, insideViewSize, insideViewSize)
+            view.frame = CGRect(x: currentX, y: currentY, width: insideViewSize, height: insideViewSize)
             
             itemsOnCurrentLine += 1
             
@@ -83,7 +83,7 @@ class WSHGridView: UIView {
         }
     }
     
-    private func positioningGenerator(rectSize: CGSize, numberOfElements: Int) -> (rows: Int, collumns: Int, onLast: Int, size: CGFloat) {
+    fileprivate func positioningGenerator(_ rectSize: CGSize, numberOfElements: Int) -> (rows: Int, collumns: Int, onLast: Int, size: CGFloat) {
         let squarePositioning = smallestSquareRootWithSquareLargerThan(numberOfElements)
         
         var rez: (rows: Int, collumns: Int, onLast: Int, size: CGFloat) = (0, 0, 0, 0)
@@ -112,7 +112,7 @@ class WSHGridView: UIView {
         return (rez.rows, rez.collumns, min(rez.rows, rez.collumns) - (rez.rows * rez.collumns - numberOfElements), rez.size)
     }
     
-    private func sizeForPositioning(positioning: (collumns: Int, rows: Int), onSize: CGSize) -> CGFloat {
+    fileprivate func sizeForPositioning(_ positioning: (collumns: Int, rows: Int), onSize: CGSize) -> CGFloat {
         return min((onSize.width - CGFloat(positioning.collumns + 1) * kInsideViewsMargin) / CGFloat(positioning.collumns),
                    (onSize.height - CGFloat(positioning.rows + 1) * kInsideViewsMargin) / CGFloat(positioning.rows))
     }

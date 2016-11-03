@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WSHActionViewControllerDelegate : class {
-    func actionControllerUndoAction(actionController: WSHActionViewController)
+    func actionControllerUndoAction(_ actionController: WSHActionViewController)
 }
 
 class WSHActionViewController: UIViewController {
@@ -28,11 +28,11 @@ class WSHActionViewController: UIViewController {
     //MARK: - Actions
     
     
-    func closeButtonTapped(sender: AnyObject) {
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    func closeButtonTapped(_ sender: AnyObject) {
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
-    func undoAction(button: UIButton) {
+    func undoAction(_ button: UIButton) {
         self.actionDelegate?.actionControllerUndoAction(self)
     }
     
@@ -40,31 +40,31 @@ class WSHActionViewController: UIViewController {
     //MARK: - Private UI methods
     
     
-    private func setupNavigationBarButtonItems() {
-        let undoBtn = UIButton(type: .System)
+    fileprivate func setupNavigationBarButtonItems() {
+        let undoBtn = UIButton(type: .system)
         self.undoButton = undoBtn
-        undoBtn.setTitle("Undo", forState: .Normal)
-        undoBtn.setTitleColor(undoBtn.tintColor, forState: .Normal)
-        undoBtn.setTitleColor(undoBtn.tintColor.colorWithAlphaComponent(0.75), forState: .Highlighted)
-        undoBtn.setTitleColor(UIColor.grayColor(), forState: .Disabled)
-        undoBtn.addTarget(self, action: #selector(WSHActionViewController.undoAction(_:)), forControlEvents: .TouchUpInside)
+        undoBtn.setTitle("Undo", for: UIControlState())
+        undoBtn.setTitleColor(undoBtn.tintColor, for: UIControlState())
+        undoBtn.setTitleColor(undoBtn.tintColor.withAlphaComponent(0.75), for: .highlighted)
+        undoBtn.setTitleColor(UIColor.gray, for: .disabled)
+        undoBtn.addTarget(self, action: #selector(WSHActionViewController.undoAction(_:)), for: .touchUpInside)
         undoBtn.translatesAutoresizingMaskIntoConstraints = false;
         
-        let undoView = UIView(frame: CGRectMake(0.0, 0.0, 64.0, 34.0))
+        let undoView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 64.0, height: 34.0))
         undoView.addSubview(undoBtn)
         
         undoView.addConstraints([
-            NSLayoutConstraint(item: undoView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 0.0, constant: 64.0),
-            NSLayoutConstraint(item: undoView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 0.0, constant: 34.0),
-            NSLayoutConstraint(item: undoView, attribute: .CenterX, relatedBy: .Equal, toItem: undoBtn, attribute: .CenterX, multiplier: 1.0, constant: 0.0),
-            NSLayoutConstraint(item: undoView, attribute: .CenterY, relatedBy: .Equal, toItem: undoBtn, attribute: .CenterY, multiplier: 1.0, constant: 0.0),
-            NSLayoutConstraint(item: undoView, attribute: .Width, relatedBy: .Equal, toItem: undoBtn, attribute: .Width, multiplier: 1.0, constant: 0.0),
-            NSLayoutConstraint(item: undoView, attribute: .Height, relatedBy: .Equal, toItem: undoBtn, attribute: .Height, multiplier: 1.0, constant: 0.0)
+            NSLayoutConstraint(item: undoView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 0.0, constant: 64.0),
+            NSLayoutConstraint(item: undoView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 0.0, constant: 34.0),
+            NSLayoutConstraint(item: undoView, attribute: .centerX, relatedBy: .equal, toItem: undoBtn, attribute: .centerX, multiplier: 1.0, constant: 0.0),
+            NSLayoutConstraint(item: undoView, attribute: .centerY, relatedBy: .equal, toItem: undoBtn, attribute: .centerY, multiplier: 1.0, constant: 0.0),
+            NSLayoutConstraint(item: undoView, attribute: .width, relatedBy: .equal, toItem: undoBtn, attribute: .width, multiplier: 1.0, constant: 0.0),
+            NSLayoutConstraint(item: undoView, attribute: .height, relatedBy: .equal, toItem: undoBtn, attribute: .height, multiplier: 1.0, constant: 0.0)
             ])
         
         self.navigationItem.titleView = undoView
         
-        let score = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: #selector(WSHActionViewController.closeButtonTapped(_:)))
+        let score = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(WSHActionViewController.closeButtonTapped(_:)))
         
         self.navigationItem.rightBarButtonItem = score
     }

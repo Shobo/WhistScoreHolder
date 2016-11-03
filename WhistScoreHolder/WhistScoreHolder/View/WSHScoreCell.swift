@@ -15,7 +15,7 @@ class WSHScoreCell: UICollectionViewCell {
     @IBOutlet weak var guessLabel: UILabel!
     @IBOutlet weak var realityLabel: UILabel!
     
-    var tintColour: UIColor = UIColor.blackColor() {
+    var tintColour: UIColor = UIColor.black {
         didSet {
             mainLabel.textColor = tintColour
             guessLabel.textColor = tintColour
@@ -29,7 +29,7 @@ class WSHScoreCell: UICollectionViewCell {
     //MARK - Overridden
     
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         addLine(forRect: rect)
     }
     
@@ -43,16 +43,16 @@ class WSHScoreCell: UICollectionViewCell {
     //MARK - Private
     
     
-    private func addLine(forRect rect: CGRect) {
+    fileprivate func addLine(forRect rect: CGRect) {
         let aPath = UIBezierPath()
         
-        aPath.moveToPoint(guessLabel.frame.origin)
+        aPath.move(to: guessLabel.frame.origin)
         
-        aPath.addLineToPoint(CGPointMake(realityLabel.frame.maxX, realityLabel.frame.maxY))
+        aPath.addLine(to: CGPoint(x: realityLabel.frame.maxX, y: realityLabel.frame.maxY))
         
         //Keep using the method addLineToPoint until you get to the one where about to close the path
         
-        aPath.closePath()
+        aPath.close()
         
         //If you want to stroke it with a red color
         tintColour.set()

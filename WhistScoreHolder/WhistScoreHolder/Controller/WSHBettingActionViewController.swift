@@ -12,9 +12,9 @@ let kPlayerTitleViewWidth: CGFloat = 212.0
 
 class WSHBettingActionViewController: WSHActionViewController {
     
-    @IBOutlet private weak var bettingOptionsView: WSHGridView!
-    @IBOutlet private weak var playerNameLabel: UILabel!
-    @IBOutlet private weak var playerImageView: UIImageView!
+    @IBOutlet fileprivate weak var bettingOptionsView: WSHGridView!
+    @IBOutlet fileprivate weak var playerNameLabel: UILabel!
+    @IBOutlet fileprivate weak var playerImageView: UIImageView!
     
     var playerName: String? {
         didSet {

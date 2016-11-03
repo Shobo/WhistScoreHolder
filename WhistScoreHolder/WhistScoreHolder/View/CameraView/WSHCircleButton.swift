@@ -11,27 +11,27 @@ import UIKit
 @IBDesignable
 class WSHCircleButton: UIButton {
 
-    private var circleView: UIView?
-    private var intCircleView: UIView?
-    private var xLayer: CAShapeLayer! = CAShapeLayer()
+    fileprivate var circleView: UIView?
+    fileprivate var intCircleView: UIView?
+    fileprivate var xLayer: CAShapeLayer! = CAShapeLayer()
     
-    @IBInspectable var circleColor: UIColor = UIColor.greenColor() {
+    @IBInspectable var circleColor: UIColor = UIColor.green {
         didSet (newValue) {
             self.intCircleView?.backgroundColor = newValue
         }
     }
-    @IBInspectable var circleHighlightedColor: UIColor = UIColor.grayColor() {
+    @IBInspectable var circleHighlightedColor: UIColor = UIColor.gray {
         didSet (newValue) {
             self.intCircleView?.backgroundColor = newValue
         }
     }
     @IBInspectable var hasX: Bool = false {
         didSet {
-            self.xLayer.hidden = !self.hasX
+            self.xLayer.isHidden = !self.hasX
         }
     }
     
-    private var bkColor: UIColor = UIColor.white() {
+    fileprivate var bkColor: UIColor = UIColor.white() {
         didSet {
             self.circleView?.backgroundColor = bkColor
         }
@@ -52,70 +52,70 @@ class WSHCircleButton: UIButton {
         setupView()
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         self.circleView?.backgroundColor = self.bkColor
         self.circleView?.layer.cornerRadius = min(rect.height, rect.width) / 2.0
         
-        self.intCircleView?.backgroundColor = self.highlighted ? self.circleHighlightedColor : self.circleColor
+        self.intCircleView?.backgroundColor = self.isHighlighted ? self.circleHighlightedColor : self.circleColor
         self.intCircleView?.layer.cornerRadius = min((self.intCircleView?.bounds.height)!, (self.intCircleView?.bounds.width)!) / 2.0
     }
     
     @IBInspectable override var backgroundColor: UIColor? {
         set (newValue) {
-            self.bkColor = newValue ?? UIColor.clearColor()
+            self.bkColor = newValue ?? UIColor.clear
         }
         get {
             return bkColor
         }
     }
     
-    override var highlighted: Bool {
+    override var isHighlighted: Bool {
         didSet {
-            self.intCircleView?.backgroundColor = self.highlighted ? self.circleHighlightedColor : self.circleColor
+            self.intCircleView?.backgroundColor = self.isHighlighted ? self.circleHighlightedColor : self.circleColor
         }
     }
     
     // MARK: - Private
     
     
-    private func setupView() {
+    fileprivate func setupView() {
         self.setupCircleView()
         self.setupIntCircleView()
     }
     
-    private func setupCircleView() {
+    fileprivate func setupCircleView() {
         self.circleView = UIView()
         self.circleView?.frame = self.bounds
-        self.circleView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.circleView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.circleView?.clipsToBounds = true
         self.circleView?.backgroundColor = self.bkColor
         self.circleView?.layer.masksToBounds = true
-        self.circleView?.userInteractionEnabled = false
+        self.circleView?.isUserInteractionEnabled = false
         
         if let asdf = self.circleView {
             self.addSubview(asdf)
         }
     }
     
-    private func setupIntCircleView() {
+    fileprivate func setupIntCircleView() {
         self.intCircleView = UIView()
-        self.intCircleView?.frame = CGRectMake(0.0, 0.0, self.bounds.width - 7.0, self.bounds.height - 7.0)
-        self.intCircleView?.center = CGPointMake(self.bounds.width / 2.0, self.bounds.height / 2.0)
-        self.intCircleView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.intCircleView?.frame = CGRect(x: 0.0, y: 0.0, width: self.bounds.width - 7.0, height: self.bounds.height - 7.0)
+        self.intCircleView?.center = CGPoint(x: self.bounds.width / 2.0, y: self.bounds.height / 2.0)
+        self.intCircleView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.intCircleView?.clipsToBounds = true
         self.intCircleView?.backgroundColor = self.circleColor
         self.intCircleView?.layer.masksToBounds = true
-        self.intCircleView?.userInteractionEnabled = false
+        self.intCircleView?.isUserInteractionEnabled = false
         
         self.setupXLayer()
         self.intCircleView?.layer.addSublayer(self.xLayer)
         
-        let dotPath = UIBezierPath(ovalInRect:self.intCircleView?.bounds ?? CGRectZero)
+        let dotPath = UIBezierPath(ovalIn:self.intCircleView?.bounds ?? CGRect.zero)
         let shapeLayer = CAShapeLayer()
-        shapeLayer.path = dotPath.CGPath
+        shapeLayer.path = dotPath.cgPath
         shapeLayer.lineWidth = 4.0
-        shapeLayer.strokeColor = UIColor.blackColor().CGColor
-        shapeLayer.fillColor = UIColor.clearColor().CGColor
+        shapeLayer.strokeColor = UIColor.black.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
         self.intCircleView?.layer.addSublayer(shapeLayer)
         
         if let asdf = self.intCircleView {
@@ -123,16 +123,16 @@ class WSHCircleButton: UIButton {
         }
     }
     
-    private func setupXLayer() {
-        let dotPath = WSHPath.xPath(self.intCircleView?.bounds ?? CGRectZero, lineWidth: 12.0)
+    fileprivate func setupXLayer() {
+        let dotPath = WSHPath.xPath(self.intCircleView?.bounds ?? CGRect.zero, lineWidth: 12.0)
 //        let dotPath = WSHPath.xPath(self.intCircleView?.bounds ?? CGRectZero)
         self.xLayer = CAShapeLayer()
-        self.xLayer.path = dotPath.CGPath
+        self.xLayer.path = dotPath.cgPath
 //        self.xLayer.lineWidth = 6.0
-        self.xLayer.strokeColor = UIColor.blackColor().colorWithAlphaComponent(0.5).CGColor
+        self.xLayer.strokeColor = UIColor.black.withAlphaComponent(0.5).cgColor
 //        self.xLayer.strokeColor = UIColor.blackColor().colorWithAlphaComponent(0.35).CGColor
-        self.xLayer.fillColor = UIColor.blackColor().colorWithAlphaComponent(0.35).CGColor
-        self.xLayer.hidden = !self.hasX
+        self.xLayer.fillColor = UIColor.black.withAlphaComponent(0.35).cgColor
+        self.xLayer.isHidden = !self.hasX
     }
     
 }

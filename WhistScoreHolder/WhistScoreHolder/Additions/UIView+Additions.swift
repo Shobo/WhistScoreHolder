@@ -14,11 +14,11 @@ let kMinRowHeight: CGFloat = 80.0
 let kInsideViewsMargin: CGFloat = 25.0
 
 extension UIView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView! {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> UIView! {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as! UIView
+            ).instantiate(withOwner: nil, options: nil)[0] as! UIView
     }
     
     func removeSubviews() {
@@ -27,7 +27,7 @@ extension UIView {
         }
     }
     
-    func keepSubviews(views: [UIView]) {
+    func keepSubviews(_ views: [UIView]) {
         let currentSubViewsArray = self.subviews
         
         for view in currentSubViewsArray {

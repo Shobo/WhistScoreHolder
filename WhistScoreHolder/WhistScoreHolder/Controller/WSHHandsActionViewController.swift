@@ -13,7 +13,7 @@ class WSHHandsActionViewController: WSHActionViewController {
     var delegate: WSHHandsActionViewControllerDelegate?
     var round: WSHRound?
     
-    private var theButtons: [WSHBetButton] = []
+    fileprivate var theButtons: [WSHBetButton] = []
     
     @IBOutlet weak var gridPlayersView: WSHGridView!
     
@@ -23,13 +23,13 @@ class WSHHandsActionViewController: WSHActionViewController {
         self.gridPlayersView.views = buttonsForPlayers()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.refreshButtonsText()
     }
     
-    override func undoAction(button: UIButton) {
+    override func undoAction(_ button: UIButton) {
         super.undoAction(button)
         
         self.refreshButtonsText()
@@ -39,7 +39,7 @@ class WSHHandsActionViewController: WSHActionViewController {
     //MARK: - Private functions
     
     
-    private func buttonsForPlayers() -> [UIButton] {
+    fileprivate func buttonsForPlayers() -> [UIButton] {
         var buttons = [WSHBetButton]()
         var btn: WSHBetButton
         
@@ -53,31 +53,31 @@ class WSHHandsActionViewController: WSHActionViewController {
         return buttons
     }
     
-    private func configuredStandardChoiceButton(forPlayer: WSHPlayer) -> WSHBetButton {
-        let button = WSHBetButton(type: .Custom)
+    fileprivate func configuredStandardChoiceButton(_ forPlayer: WSHPlayer) -> WSHBetButton {
+        let button = WSHBetButton(type: .custom)
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
-        button.setBackgroundImage(forPlayer.presentableImage(), forState: .Normal)
+        button.setBackgroundImage(forPlayer.presentableImage(), for: UIControlState())
         
         button.bottomLabel.text = forPlayer.name
         if let _ = forPlayer.image {
-            button.filter = WSHUIFilterType.White
+            button.filter = WSHUIFilterType.white
         } else {
-            button.filter = WSHUIFilterType.Zero
+            button.filter = WSHUIFilterType.zero
         }
         let hands = round?.roundInformation[forPlayer]?.hands.intValue ?? 0
         let bet = round?.roundInformation[forPlayer]?.bet.intValue ?? 0
         
         button.mainLabel.text = "\(hands)/\(bet)"
         
-        button.addTarget(self, action: #selector(self.takeHandButtonPressed(_:)), forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(self.takeHandButtonPressed(_:)), for: .touchUpInside)
         
-        button.tag = self.round?.players.indexOf(forPlayer) ?? 0
+        button.tag = self.round?.players.index(of: forPlayer) ?? 0
         
         return button
     }
     
-    private func refreshButtonsText() {
+    fileprivate func refreshButtonsText() {
         for btn in self.theButtons {
             if let pleya = self.round?.players[btn.tag] {
                 let hands = round?.roundInformation[pleya]?.hands.intValue ?? 0
@@ -93,7 +93,7 @@ class WSHHandsActionViewController: WSHActionViewController {
     //MARK: - Actions
     
     
-    func takeHandButtonPressed(button: WSHBetButton) {
+    func takeHandButtonPressed(_ button: WSHBetButton) {
         if let delegate = self.delegate {
             if let pleya = self.round?.players[button.tag] {
                 let bet = round?.roundInformation[pleya]?.bet.intValue ?? 0
@@ -105,5 +105,5 @@ class WSHHandsActionViewController: WSHActionViewController {
 }
 
 protocol WSHHandsActionViewControllerDelegate {
-    func handsActionControllerPlayerDidTakeHand(controller: WSHHandsActionViewController, player: WSHPlayer) -> Int
+    func handsActionControllerPlayerDidTakeHand(_ controller: WSHHandsActionViewController, player: WSHPlayer) -> Int
 }

@@ -9,48 +9,48 @@
 import UIKit
 
 class WSHPath: UIBezierPath {
-    class func xPath(inRect: CGRect, lineWidth: CGFloat) -> WSHPath {
+    class func xPath(_ inRect: CGRect, lineWidth: CGFloat) -> WSHPath {
         let aPath = WSHPath();
         
         //top left
-        aPath.moveToPoint(CGPointZero)
+        aPath.move(to: CGPoint.zero)
         //x corner should start equally on L/l (w/h)
         let zeroDeviation = lineWidth / (2.0 * sqrt(2.0))
         //top left +
-        aPath.addLineToPoint(CGPointMake(zeroDeviation, 0.0))
-        aPath.addLineToPoint(CGPointMake(inRect.width / 2.0, inRect.height / 2.0 - zeroDeviation))
-        aPath.addLineToPoint(CGPointMake(inRect.width - zeroDeviation, 0.0))
-        aPath.addLineToPoint(CGPointMake(inRect.width, 0.0))
-        aPath.addLineToPoint(CGPointMake(inRect.width, zeroDeviation))
-        aPath.addLineToPoint(CGPointMake(inRect.width / 2.0 + zeroDeviation, inRect.height / 2.0))
-        aPath.addLineToPoint(CGPointMake(inRect.width, inRect.height - zeroDeviation))
-        aPath.addLineToPoint(CGPointMake(inRect.width, inRect.height))
-        aPath.addLineToPoint(CGPointMake(inRect.width - zeroDeviation, inRect.height))
-        aPath.addLineToPoint(CGPointMake(inRect.width / 2.0, inRect.height / 2.0 + zeroDeviation))
-        aPath.addLineToPoint(CGPointMake(zeroDeviation, inRect.height))
-        aPath.addLineToPoint(CGPointMake(0.0, inRect.height))
-        aPath.addLineToPoint(CGPointMake(0.0, inRect.height - zeroDeviation))
-        aPath.addLineToPoint(CGPointMake(inRect.width / 2.0 - zeroDeviation, inRect.height / 2.0))
-        aPath.addLineToPoint(CGPointMake(0.0, zeroDeviation))
+        aPath.addLine(to: CGPoint(x: zeroDeviation, y: 0.0))
+        aPath.addLine(to: CGPoint(x: inRect.width / 2.0, y: inRect.height / 2.0 - zeroDeviation))
+        aPath.addLine(to: CGPoint(x: inRect.width - zeroDeviation, y: 0.0))
+        aPath.addLine(to: CGPoint(x: inRect.width, y: 0.0))
+        aPath.addLine(to: CGPoint(x: inRect.width, y: zeroDeviation))
+        aPath.addLine(to: CGPoint(x: inRect.width / 2.0 + zeroDeviation, y: inRect.height / 2.0))
+        aPath.addLine(to: CGPoint(x: inRect.width, y: inRect.height - zeroDeviation))
+        aPath.addLine(to: CGPoint(x: inRect.width, y: inRect.height))
+        aPath.addLine(to: CGPoint(x: inRect.width - zeroDeviation, y: inRect.height))
+        aPath.addLine(to: CGPoint(x: inRect.width / 2.0, y: inRect.height / 2.0 + zeroDeviation))
+        aPath.addLine(to: CGPoint(x: zeroDeviation, y: inRect.height))
+        aPath.addLine(to: CGPoint(x: 0.0, y: inRect.height))
+        aPath.addLine(to: CGPoint(x: 0.0, y: inRect.height - zeroDeviation))
+        aPath.addLine(to: CGPoint(x: inRect.width / 2.0 - zeroDeviation, y: inRect.height / 2.0))
+        aPath.addLine(to: CGPoint(x: 0.0, y: zeroDeviation))
         
-        aPath.closePath()
+        aPath.close()
         
         return aPath
     }
     
-    class func xPath(inRect: CGRect) -> WSHPath {
+    class func xPath(_ inRect: CGRect) -> WSHPath {
         let aPath = WSHPath();
         
-        aPath.moveToPoint(CGPointZero)
-        aPath.addLineToPoint(CGPointMake(inRect.width / 2.0, inRect.height / 2.0))
-        aPath.addLineToPoint(CGPointMake(inRect.width, 0.0))
-        aPath.addLineToPoint(CGPointMake(inRect.width / 2.0, inRect.height / 2.0))
-        aPath.addLineToPoint(CGPointMake(inRect.width, inRect.height))
-        aPath.addLineToPoint(CGPointMake(inRect.width / 2.0, inRect.height / 2.0))
-        aPath.addLineToPoint(CGPointMake(0.0, inRect.height))
-        aPath.addLineToPoint(CGPointMake(inRect.width / 2.0, inRect.height / 2.0))
+        aPath.move(to: CGPoint.zero)
+        aPath.addLine(to: CGPoint(x: inRect.width / 2.0, y: inRect.height / 2.0))
+        aPath.addLine(to: CGPoint(x: inRect.width, y: 0.0))
+        aPath.addLine(to: CGPoint(x: inRect.width / 2.0, y: inRect.height / 2.0))
+        aPath.addLine(to: CGPoint(x: inRect.width, y: inRect.height))
+        aPath.addLine(to: CGPoint(x: inRect.width / 2.0, y: inRect.height / 2.0))
+        aPath.addLine(to: CGPoint(x: 0.0, y: inRect.height))
+        aPath.addLine(to: CGPoint(x: inRect.width / 2.0, y: inRect.height / 2.0))
         
-        aPath.closePath()
+        aPath.close()
         
         return aPath
     }

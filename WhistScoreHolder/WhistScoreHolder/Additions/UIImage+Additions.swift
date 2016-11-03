@@ -19,30 +19,30 @@ extension UIImage {
         // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
         if(widthRatio > heightRatio) {
-            newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio)
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
         } else {
-            newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio)
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
         }
         
         // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
         
         // Actually do the resizing to the rect using the ImageContext stuff
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        self.drawInRect(rect)
+        self.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return newImage
+        return newImage!
     }
     
     func averageColour() -> UIColor {
-        let rgba = UnsafeMutablePointer<CUnsignedChar>.alloc(4)
-        let colorSpace: CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()!
-        let info = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-        let context: CGContextRef = CGBitmapContextCreate(rgba, 1, 1, 8, 4, colorSpace, info.rawValue)!
+        let rgba = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: 4)
+        let colorSpace: CGColorSpace = CGColorSpaceCreateDeviceRGB()
+        let info = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        let context: CGContext = CGContext(data: rgba, width: 1, height: 1, bitsPerComponent: 8, bytesPerRow: 4, space: colorSpace, bitmapInfo: info.rawValue)!
         
-        CGContextDrawImage(context, CGRectMake(0, 0, 1, 1), self.CGImage)
+        context.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: 1, height: 1))
         
         if rgba[3] > 0 {
             
@@ -57,15 +57,15 @@ extension UIImage {
         }
     }
     
-    func centerCroppedImage(withSize: CGSize) -> UIImage {
+    func centerCroppedImage(_ withSize: CGSize) -> UIImage {
         let x = max((self.size.width - withSize.width) / 2.0, 0.0)
         let y = max((self.size.height - withSize.height) / 2.0, 0.0)
-        let rect = CGRectMake(x, y, withSize.width, withSize.height)
+        let rect = CGRect(x: x, y: y, width: withSize.width, height: withSize.height)
         
-        let imageRef = CGImageCreateWithImageInRect(self.CGImage, rect)
+        let imageRef = self.cgImage?.cropping(to: rect)
         
         if let imageR = imageRef {
-            return UIImage.init(CGImage: imageR, scale: 1.0, orientation: self.imageOrientation)
+            return UIImage.init(cgImage: imageR, scale: 1.0, orientation: self.imageOrientation)
         }
         return self
     }
@@ -74,12 +74,12 @@ extension UIImage {
     //MARK: - Class methods
     
     
-    class func imageWithColor(color: UIColor, size: CGSize) -> UIImage {
-        let rect = CGRectMake(0, 0, size.width, size.height)
+    class func imageWithColor(_ color: UIColor, size: CGSize) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         color.setFill()
         UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         return image
@@ -89,14 +89,14 @@ extension UIImage {
         return UIImage.imageWithColor(UIColor.randomColor(), size:size)
     }
     
-    class func visibleImageFromImageView(imageView: UIImageView) -> UIImage? {
+    class func visibleImageFromImageView(_ imageView: UIImageView) -> UIImage? {
         var image: UIImage?
         
         UIGraphicsBeginImageContext(imageView.bounds.size)
         if let context = UIGraphicsGetCurrentContext() {
-            CGContextRotateCTM(context, CGFloat(2 * M_PI))
+            context.rotate(by: CGFloat(2 * M_PI))
             
-            imageView.layer.renderInContext(context)
+            imageView.layer.render(in: context)
             image = UIGraphicsGetImageFromCurrentImageContext()
         }
         UIGraphicsEndImageContext()

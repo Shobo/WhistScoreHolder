@@ -8,17 +8,28 @@
 
 import UIKit
 import AVFoundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 protocol WSHPlayerViewControllerDelegate: class {
-    func didAddPlayer(sender: WSHPlayerViewController, player: WSHPlayer) -> Int
-    func didEditPlayer(sender: WSHPlayerViewController, player: WSHPlayer)
+    func didAddPlayer(_ sender: WSHPlayerViewController, player: WSHPlayer) -> Int
+    func didEditPlayer(_ sender: WSHPlayerViewController, player: WSHPlayer)
 }
 
 class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSHCameraViewDelegate {
-    @IBOutlet private weak var doneButtonItem: UIBarButtonItem!
-    @IBOutlet private weak var addButtonItem: UIBarButtonItem!
-    @IBOutlet private weak var leftDoneButtonItem: UIBarButtonItem!
-    @IBOutlet private weak var cancelButtonItem: UIBarButtonItem!
+    @IBOutlet fileprivate weak var doneButtonItem: UIBarButtonItem!
+    @IBOutlet fileprivate weak var addButtonItem: UIBarButtonItem!
+    @IBOutlet fileprivate weak var leftDoneButtonItem: UIBarButtonItem!
+    @IBOutlet fileprivate weak var cancelButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var playerView: WSHPlayerView!
     
@@ -26,7 +37,7 @@ class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSH
     
     var editPlayer: WSHPlayer? {
         didSet {
-            if self.isViewLoaded() && self.view.window != nil {
+            if self.isViewLoaded && self.view.window != nil {
                 playerView.name = editPlayer?.name ?? ""
                 playerView.image = editPlayer?.image
                 playerView.colorHex = (editPlayer?.colour)!
@@ -41,7 +52,7 @@ class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSH
         playerView.cameraView.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationItem.rightBarButtonItems = []
@@ -64,31 +75,31 @@ class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSH
     // MARK: - Private funcs
     
     
-    private func presentAddNameAlertView() {
+    fileprivate func presentAddNameAlertView() {
         let alertController = UIAlertController(title: "Add a name", message:
-            "Each player should have a name", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+            "Each player should have a name", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
             self.playerView.focusName()
         }))
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
-    private func dismissAnimated() {
+    fileprivate func dismissAnimated() {
         playerView.resignKeyboardIfNeeded()
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
-    private func checkCameraPermission() {
-        let avStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+    fileprivate func checkCameraPermission() {
+        let avStatus = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
         
         switch avStatus {
-        case .Authorized:
+        case .authorized:
             self.playerView.cameraView.permissionGranted = true
             break
             
-        case .NotDetermined:
+        case .notDetermined:
             let alert = UIAlertController.prepareForCameraAlertView(self)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             break
             
         default:
@@ -100,8 +111,8 @@ class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSH
     // MARK: - WSHAlertControllerDelegate funcs
     
     
-    func alertControllerDidTapOk(controller: UIAlertController) {
-        AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo) { (granted) in
+    func alertControllerDidTapOk(_ controller: UIAlertController) {
+        AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { (granted) in
             if (granted) {
                 self.playerView.cameraView.permissionGranted = true
             }
@@ -112,16 +123,16 @@ class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSH
     // MARK: - WSHCameraViewDelegate funcs
     
     
-    func cameraViewWantsToGiveCameraPermission(cameraView: WSHCameraView) {
+    func cameraViewWantsToGiveCameraPermission(_ cameraView: WSHCameraView) {
         let alert = UIAlertController.cameraPermissionSettingsAlertView()
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     
     // MARK: - Actions
     
     
-    @IBAction func addButtonTapped(sender: AnyObject) {
+    @IBAction func addButtonTapped(_ sender: AnyObject) {
         if playerView.name.isEmpty {
             presentAddNameAlertView()
             
@@ -141,7 +152,7 @@ class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSH
         }
     }
     
-    @IBAction func doneButtonTapped(sender: AnyObject) {
+    @IBAction func doneButtonTapped(_ sender: AnyObject) {
         let pleya = WSHPlayer(name: playerView.name)
         pleya.image = self.playerView.image
         pleya.colour = self.playerView.colorHex
@@ -150,7 +161,7 @@ class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSH
         dismissAnimated()
     }
     
-    @IBAction func cancelButtonTapped(sender: AnyObject) {
+    @IBAction func cancelButtonTapped(_ sender: AnyObject) {
         dismissAnimated()
     }
 }

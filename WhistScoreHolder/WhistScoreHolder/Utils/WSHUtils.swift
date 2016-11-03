@@ -8,15 +8,15 @@
 
 import UIKit
 
-func presentError(err: ErrorType, fromController: UINavigationController) {
+func presentError(_ err: Error, fromController: UINavigationController) {
     let alertController = UIAlertController(title: "ERROR", message:
-        "\(err)", preferredStyle: UIAlertControllerStyle.Alert)
+        "\(err)", preferredStyle: UIAlertControllerStyle.alert)
     
-    alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
-        fromController.popViewControllerAnimated(true)
+    alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+        fromController.popViewController(animated: true)
     }))
     
-    fromController.presentViewController(alertController, animated: true, completion: nil)
+    fromController.present(alertController, animated: true, completion: nil)
 }
 
 func randHEX() -> UInt {
@@ -24,7 +24,7 @@ func randHEX() -> UInt {
 }
 
 func prefferedImageSize() -> CGSize {
-    let minWH = min(UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height)
+    let minWH = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
     
-    return CGSizeMake(minWH, minWH)
+    return CGSize(width: minWH, height: minWH)
 }

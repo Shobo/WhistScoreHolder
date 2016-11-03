@@ -11,7 +11,7 @@ import XCTest
 
 class WhistScoreHolderTests: XCTestCase, WSHGameManagerDelegate {
     
-    private var players: [WSHPlayer] = []
+    fileprivate var players: [WSHPlayer] = []
     
     override func setUp() {
         super.setUp()
@@ -41,30 +41,30 @@ class WhistScoreHolderTests: XCTestCase, WSHGameManagerDelegate {
     func testRoundCreation() {
         WSHGameManager.sharedInstance.startGameWithPlayers(players)
         XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds.count == self.players.count * 3 + 6 * 2) //total number of rounds
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[0].roundType == .One)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[1].roundType == .One)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[2].roundType == .One)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[3].roundType == .One)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[4].roundType == .Two)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[5].roundType == .Three)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[6].roundType == .Four)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[7].roundType == .Five)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[8].roundType == .Six)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[9].roundType == .Seven)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[10].roundType == .Eight)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[11].roundType == .Eight)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[12].roundType == .Eight)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[13].roundType == .Eight)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[14].roundType == .Seven)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[15].roundType == .Six)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[16].roundType == .Five)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[17].roundType == .Four)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[18].roundType == .Three)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[19].roundType == .Two)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[20].roundType == .One)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[21].roundType == .One)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[22].roundType == .One)
-        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[23].roundType == .One)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[0].roundType == .one)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[1].roundType == .one)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[2].roundType == .one)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[3].roundType == .one)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[4].roundType == .two)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[5].roundType == .three)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[6].roundType == .four)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[7].roundType == .five)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[8].roundType == .six)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[9].roundType == .seven)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[10].roundType == .eight)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[11].roundType == .eight)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[12].roundType == .eight)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[13].roundType == .eight)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[14].roundType == .seven)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[15].roundType == .six)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[16].roundType == .five)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[17].roundType == .four)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[18].roundType == .three)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[19].roundType == .two)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[20].roundType == .one)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[21].roundType == .one)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[22].roundType == .one)
+        XCTAssert(WSHGameManager.sharedInstance.currentGame!.rounds[23].roundType == .one)
     }
     
     func testPlayerBetting() {
@@ -73,30 +73,30 @@ class WhistScoreHolderTests: XCTestCase, WSHGameManagerDelegate {
     
     //MARK:- WSHGameManagerDelegate methods
     
-    func gameManager(gameManager: WSHGameManager, didStartGame game: WSHGame) {
+    func gameManager(_ gameManager: WSHGameManager, didStartGame game: WSHGame) {
         
     }
     
-    func gameManager(gameManager: WSHGameManager, didEndGame game: WSHGame) {
+    func gameManager(_ gameManager: WSHGameManager, didEndGame game: WSHGame) {
         
     }
     
-    func willBeginRoundOfType(type: WSHRoundType, startingPlayer player: WSHPlayer) {
+    func willBeginRoundOfType(_ type: WSHRoundType, startingPlayer player: WSHPlayer) {
         WSHGameManager.sharedInstance.startBetting()
     }
     
-    func playerTurnToBet(player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?) {
-        try! WSHGameManager.sharedInstance.player(player, didBet: .Zero)
+    func playerTurnToBet(_ player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?) {
+        try! WSHGameManager.sharedInstance.player(player, didBet: .zero)
     }
     
-    func didFinishBettingInRound(round: WSHRound) {
+    func didFinishBettingInRound(_ round: WSHRound) {
         try! WSHGameManager.sharedInstance.playerDidTakeHand(self.players[0])
         try! WSHGameManager.sharedInstance.playerDidTakeHand(self.players[0])
         try! WSHGameManager.sharedInstance.playerDidTakeHand(self.players[0])
         try! WSHGameManager.sharedInstance.playerDidTakeHand(self.players[0])
     }
     
-    func roundDidFinish(round: WSHRound, withBonuses bonuses: [WSHPlayer: Int]) {
+    func roundDidFinish(_ round: WSHRound, withBonuses bonuses: [WSHPlayer: Int]) {
         WSHGameManager.sharedInstance.startNextRound()
     }
 }

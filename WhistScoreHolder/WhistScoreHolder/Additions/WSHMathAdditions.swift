@@ -8,7 +8,7 @@
 
 import Foundation
 
-func smallestSquareRootWithSquareLargerThan(number: Int) -> Int {
+func smallestSquareRootWithSquareLargerThan(_ number: Int) -> Int {
     var counter = number
     
     while counter <= (number ^^ 2) {
@@ -24,7 +24,7 @@ func smallestSquareRootWithSquareLargerThan(number: Int) -> Int {
     return 0    //no result found
 }
 
-infix operator ^^ { }
+infix operator ^^
 
 func ^^(radix: Int, power: Int) -> Int {
     return Int(pow(Double(radix), Double(power)))

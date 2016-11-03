@@ -17,19 +17,19 @@ class WSHOverlayView: UIView {
     //MARK: - Private
 
     
-    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if self.forwardTouchesToSubviews {
             for view in self.subviews {
-                if !view.hidden {
-                    let subPoint = view.convertPoint(point, fromView: self)
+                if !view.isHidden {
+                    let subPoint = view.convert(point, from: self)
                     
-                    if view.pointInside(subPoint, withEvent: event) {
+                    if view.point(inside: subPoint, with: event) {
                         return true
                     }
                 }
             }
         }
-        return self.userInteractionEnabled
+        return self.isUserInteractionEnabled
     }
     
 }
