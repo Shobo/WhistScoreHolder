@@ -85,7 +85,7 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.players.count ?? 0
+        return self.players.count 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -139,7 +139,7 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
         players.append(player)
         reloadTableView()
         
-        return players.count ?? 0
+        return players.count 
     }
     
     func didEditPlayer(_ sender: WSHPlayerViewController, player: WSHPlayer) {

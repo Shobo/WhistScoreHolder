@@ -103,7 +103,7 @@ class WSHGameViewController: UIViewController,
         super.viewWillLayoutSubviews()
         
         setupScoreViewsWidths(forSize: view.bounds.size);
-        rowHeight = floor((view.frame.height - kHeaderHeight) / (CGFloat(self.currentGame.players.count) ?? 6.0))
+        rowHeight = floor((view.frame.height - kHeaderHeight) / ((self.currentGame.players.count > 0) ?CGFloat(self.currentGame.players.count) : 6.0))
         tableViewObject.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.automatic)
         
         let offsetPoint = collectionViewObject.contentOffset
@@ -328,7 +328,7 @@ class WSHGameViewController: UIViewController,
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentGame.players.count ?? 0
+        return currentGame.players.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -369,11 +369,11 @@ class WSHGameViewController: UIViewController,
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return currentGame.totalNumberOfRounds ?? 0
+        return currentGame.totalNumberOfRounds 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (currentGame.players.count ?? 0) + 1
+        return currentGame.players.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -508,7 +508,7 @@ class WSHGameViewController: UIViewController,
             "Game will be aborted", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
             WSHGameManager.sharedInstance.resetAllData()
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: nil))
         

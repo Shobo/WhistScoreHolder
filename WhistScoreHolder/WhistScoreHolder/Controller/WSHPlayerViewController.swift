@@ -62,7 +62,7 @@ class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSH
             navigationItem.rightBarButtonItem = doneButtonItem
             navigationItem.leftBarButtonItem = cancelButtonItem
             
-            playerView.name = player.name ?? ""
+            playerView.name = player.name
             playerView.image = player.image
             playerView.colorHex = player.colour
         } else {

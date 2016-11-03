@@ -21,7 +21,7 @@ extension UIAlertController {
     }
     
     class func cameraPermissionSettingsAlertView() -> UIAlertController {
-        let alertController = UIAlertController(title: "Access settings", message: "Going to ENABLE camera access", preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: "Access settings", message: "ENABLE camera access from settings", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.default, handler: { (_) in
             let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsUrl {
