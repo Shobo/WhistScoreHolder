@@ -342,7 +342,7 @@ class WSHGameViewController: UIViewController,
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Player \\ Round"
+        label.text = "\(NSLocalizedString("player", comment: "")) \\ \(NSLocalizedString("round", comment: ""))"
         label.backgroundColor = UIColor.lightText
         
         return label
@@ -504,13 +504,16 @@ class WSHGameViewController: UIViewController,
     
     
     @IBAction func closeButtonTapped(_ sender: AnyObject) {
-        let alertController = UIAlertController(title: "Game will end", message:
-            "Game will be aborted", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+        let alertController = UIAlertController(title: NSLocalizedString("game_will_end", comment: ""),
+                                                message: NSLocalizedString("game_will_abort", comment: ""),
+                                                preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""),
+                                                style: UIAlertActionStyle.default, handler: { action in
             WSHGameManager.sharedInstance.resetAllData()
             _ = self.navigationController?.popViewController(animated: true)
         }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: nil))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""),
+                                                style: UIAlertActionStyle.destructive, handler: nil))
         
         present(alertController, animated: true, completion: nil)
     }

@@ -76,9 +76,11 @@ class WSHPlayerViewController: UIViewController, WSHAlertControllerDelegate, WSH
     
     
     fileprivate func presentAddNameAlertView() {
-        let alertController = UIAlertController(title: "Add a name", message:
-            "Each player should have a name", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+        let alertController = UIAlertController(title: NSLocalizedString("add_a_name", comment: ""),
+                                                message: NSLocalizedString("player_must_have_name", comment: ""),
+                                                preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment:""),
+                                                style: UIAlertActionStyle.default, handler: { action in
             self.playerView.focusName()
         }))
         self.present(alertController, animated: true, completion: nil)

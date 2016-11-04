@@ -43,7 +43,7 @@ class WSHActionViewController: UIViewController {
     fileprivate func setupNavigationBarButtonItems() {
         let undoBtn = UIButton(type: .system)
         self.undoButton = undoBtn
-        undoBtn.setTitle("Undo", for: UIControlState())
+        undoBtn.setTitle(NSLocalizedString("undo", comment: ""), for: UIControlState())
         undoBtn.setTitleColor(undoBtn.tintColor, for: UIControlState())
         undoBtn.setTitleColor(undoBtn.tintColor.withAlphaComponent(0.75), for: .highlighted)
         undoBtn.setTitleColor(UIColor.gray, for: .disabled)

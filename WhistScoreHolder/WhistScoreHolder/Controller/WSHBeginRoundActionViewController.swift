@@ -8,9 +8,6 @@
 
 import UIKit
 
-let kRoundOfString = "Round of "
-let kScoreString = "Score: "
-
 class WSHBeginRoundActionViewController: WSHActionViewController,
                                             UITableViewDelegate, UITableViewDataSource {
     @IBOutlet fileprivate weak var roundOfLabel: UILabel!
@@ -30,13 +27,13 @@ class WSHBeginRoundActionViewController: WSHActionViewController,
     var round: WSHRoundType? {
         didSet {
             if let roundIf = round {
-                roundOfLabel?.text = "\(kRoundOfString)\(roundIf.intValue)"
+                roundOfLabel?.text = "\(NSLocalizedString("round", comment: "")) \(NSLocalizedString("of", comment: "")) \(roundIf.intValue)"
             }
         }
     }
     var playerScore: Int = 0 {
         didSet {
-            playerScoreLabel?.text = "\(kScoreString)\(playerScore)"
+            playerScoreLabel?.text = "\(NSLocalizedString("score", comment: "")): \(playerScore)"
         }
     }
     
@@ -52,9 +49,9 @@ class WSHBeginRoundActionViewController: WSHActionViewController,
         playerImageView?.image = player?.presentableImage()
         
         if let roundIf = round {
-            roundOfLabel?.text = "\(kRoundOfString)\(roundIf.intValue)"
+            roundOfLabel?.text = "\(NSLocalizedString("round", comment: "")) \(NSLocalizedString("of", comment: ""))\(roundIf.intValue)"
         }
-        playerScoreLabel?.text = "\(kScoreString)\(playerScore)"
+        playerScoreLabel?.text = "\(NSLocalizedString("score", comment: "")): \(playerScore)"
     }
     
     

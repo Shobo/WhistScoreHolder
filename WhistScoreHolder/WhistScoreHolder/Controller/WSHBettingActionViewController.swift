@@ -18,7 +18,7 @@ class WSHBettingActionViewController: WSHActionViewController {
     
     var playerName: String? {
         didSet {
-            self.playerNameLabel?.text = "\(self.playerName ?? "Player")'s"
+            self.playerNameLabel?.text = "\(self.playerName ?? NSLocalizedString("player", comment: ""))\(NSLocalizedString("possesion_short", comment: ""))"
         }
     }
     var playerImage: UIImage? {
@@ -35,7 +35,7 @@ class WSHBettingActionViewController: WSHActionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.playerNameLabel.text = "\(self.playerName ?? "Player")'s"
+        self.playerNameLabel.text = "\(self.playerName ?? NSLocalizedString("player", comment: ""))\(NSLocalizedString("possesion_short", comment: ""))"
         self.playerImageView.image = playerImage
         
         self.bettingOptionsView.views = self.playerOptions

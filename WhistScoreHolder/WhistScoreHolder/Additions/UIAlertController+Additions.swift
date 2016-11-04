@@ -11,9 +11,11 @@ import UIKit
 extension UIAlertController {
     
     class func prepareForCameraAlertView(_ handler: WSHAlertControllerDelegate) -> UIAlertController {
-        let alertController = UIAlertController(title: "We will ask permission for camera usage", message:
-            "Allowing access to camera will enable putting a face near each player's name", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (_) in
+        let alertController = UIAlertController(title: "",//"We will ask permission for camera usage",
+                                                message: NSLocalizedString("camera_put_a_face", comment: ""),
+                                                preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""),
+                                                style: UIAlertActionStyle.default, handler: { (_) in
             handler.alertControllerDidTapOk(alertController)
         }))
         
@@ -21,15 +23,18 @@ extension UIAlertController {
     }
     
     class func cameraPermissionSettingsAlertView() -> UIAlertController {
-        let alertController = UIAlertController(title: "Access settings", message: "ENABLE camera access from settings", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.default, handler: { (_) in
+        let alertController = UIAlertController(title: NSLocalizedString("go_to_settings", comment: ""),
+                                                message: NSLocalizedString("enable_camera_access_settings", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("settings", comment: ""),
+                                                style: UIAlertActionStyle.default, handler: { (_) in
             let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsUrl {
                 UIApplication.shared.openURL(url)
             }
         }))
         
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""),
+                                                style: UIAlertActionStyle.cancel, handler: nil))
         
         return alertController
     }

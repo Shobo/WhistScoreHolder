@@ -44,8 +44,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Zb-Wy-rGR">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Zb-Wy-rGR">
+                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="text">The Romanian Whist game has the following rules:
 
@@ -73,11 +73,15 @@ the game ends after the last round; the winner is the player with the highest sc
                             <constraint firstItem="K0B-bI-Azg" firstAttribute="top" secondItem="8Zb-Wy-rGR" secondAttribute="bottom" id="zw8-A8-FBW"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Rules" id="tyB-Cr-qq9"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Rules" id="tyB-Cr-qq9">
+                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="R8S-n1-4tT"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dMz-56-7qG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="241" y="-2786"/>
+            <point key="canvasLocation" x="326" y="-2787"/>
         </scene>
         <!--Setup Game View Controller-->
         <scene sceneID="2Kp-9p-wDm">

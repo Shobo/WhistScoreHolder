@@ -103,6 +103,7 @@ class WSHPlayerView: UIView, UITextFieldDelegate, UIScrollViewDelegate {
     }
     
     fileprivate func setupView() {
+        self.nameTextField.placeholder = NSLocalizedString("player_name", comment: "");
         NotificationCenter.default.addObserver(self, selector: #selector(WSHPlayerView.keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         self.backgroundColor = UIColor.colorFromRGB(colorHex)
         self.cameraView.backgroundColor = UIColor.white().withAlphaComponent(0.33)

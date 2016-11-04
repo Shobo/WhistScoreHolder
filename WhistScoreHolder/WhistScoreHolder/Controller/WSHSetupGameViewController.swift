@@ -155,14 +155,15 @@ class WSHSetupGameViewController: UIViewController, UITableViewDataSource, UITab
     
     
     @IBAction func playButtonTapped(_ sender: AnyObject) {
-        let alertController = UIAlertController(title: "Get ready", message:
-            "Game will start", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
-            // TODO: (foc) Dismiss alert after time has passed
+        let alertController = UIAlertController(title: NSLocalizedString("get_ready_title", comment:""),
+                                                message: NSLocalizedString("get_ready_message", comment:""),
+                                                preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment:""),
+                                                style: UIAlertActionStyle.default, handler: { action in
             self.performSegue(withIdentifier: "presentGame", sender: sender)
             WSHGameManager.sharedInstance.startGameWithPlayers(self.players)
         }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: nil))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment:""), style: UIAlertActionStyle.destructive, handler: nil))
         
         present(alertController, animated: true, completion: nil)
     }
