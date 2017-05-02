@@ -49,7 +49,7 @@ class WSHBeginRoundActionViewController: WSHActionViewController,
         playerImageView?.image = player?.presentableImage()
         
         if let roundIf = round {
-            roundOfLabel?.text = "\(NSLocalizedString("round", comment: "")) \(NSLocalizedString("of", comment: ""))\(roundIf.intValue)"
+            roundOfLabel?.text = "\(NSLocalizedString("round", comment: "")) \(NSLocalizedString("of", comment: "")) \(roundIf.intValue)"
         }
         playerScoreLabel?.text = "\(NSLocalizedString("score", comment: "")): \(playerScore)"
     }
