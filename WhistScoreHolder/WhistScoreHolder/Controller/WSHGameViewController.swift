@@ -47,6 +47,7 @@ class WSHGameViewController: UIViewController,
                             WSHGameManagerDelegate,
                             WSHActionViewControllerDelegate, WSHBeginRoundActionDelegate, WSHHandsActionViewControllerDelegate {
     @IBOutlet weak var actionButton: UIBarButtonItem!
+    @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var tableViewObject: UITableView!
     @IBOutlet weak var collectionViewObject: UICollectionView!
     
@@ -164,12 +165,12 @@ class WSHGameViewController: UIViewController,
     fileprivate func presentActionViewController() {
         let nav = UINavigationController(rootViewController: actionViewController!)
         
-        present(nav, animated: true, completion: nil)
+        self.present(nav, animated: true, completion: nil)
     }
     
     fileprivate func resignActionViewController() {
-        actionViewController?.navigationController?.dismiss(animated: true, completion: nil)
-        actionViewController = nil
+        self.actionViewController?.navigationController?.dismiss(animated: true, completion: nil)
+        self.actionViewController = nil
     }
     
     fileprivate func setupBeginRoundActionViewController(round roundType: WSHRoundType, fromPlayer player: WSHPlayer, score: Int) {
@@ -203,11 +204,21 @@ class WSHGameViewController: UIViewController,
         if WSHGameManager.sharedInstance.canUndo() {
             if !self.actionViewController!.isKind(of: WSHHandsActionViewController.self) {
                 self.resignActionViewController()
+            } else {
+                self.resignActionViewController()
             }
+            
             WSHGameManager.sharedInstance.undo()
             collectionViewObject.reloadData()
+            
+            if self.actionViewController!.isKind(of: WSHHandsActionViewController.self) {
+                if WSHGameManager.sharedInstance.gameState == .betting {
+                    self.resignActionViewController()
+                }
+            }
         } else {
             self.actionViewController?.undoButton?.isEnabled = false
+            self.undoButton.isEnabled = false
         }
     }
     
@@ -229,6 +240,8 @@ class WSHGameViewController: UIViewController,
     }
     
     func playerTurnToBet(_ player: WSHPlayer, forRoundType roundType: WSHRoundType, excluding choice: WSHGameBetChoice?) {
+        self.undoButton.isEnabled = true
+        
         var bettingActionViewController: WSHBettingActionViewController
         
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -486,7 +499,11 @@ class WSHGameViewController: UIViewController,
         do {
             try WSHGameManager.sharedInstance.playerDidTakeHand(player)
         } catch let error {
-            presentError(error, fromController: self.navigationController!)
+            if let _ = self.actionViewController {
+                presentError(error, fromController: self.actionViewController!)
+            } else {
+                presentError(error, fromController: self)
+            }
         }
         return currentGame.currentRound?.roundInformation[player]?.hands.intValue ?? 0
     }
@@ -554,13 +571,12 @@ class WSHGameViewController: UIViewController,
             if let excluded = choice {
                 if betChoice == excluded.intValue {
                     button.isEnabled = false
-                    button.alpha = 0.5
+                    button.backgroundColor = UIColor.colorFromRGB(0x8A0707).withAlphaComponent(0.3)
+                    button.setTitleColor(UIColor.gray, for: UIControlState.disabled)
                 }
             }
-            
             buttons.append(button)
         }
-        
         return buttons
     }
     

@@ -78,15 +78,15 @@ class WSHBetButton: UIButton {
     
     fileprivate func refreshFilter() {
         switch self.filter {
-        case .zero:
+        case WSHUIFilterType.zero:
             self.xiew?.backgroundColor = UIColor.clear
             break
             
-        case .white:
+        case WSHUIFilterType.white:
             self.xiew?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
             break
             
-        case .black:
+        case WSHUIFilterType.black:
             self.xiew?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
             break
         }

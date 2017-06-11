@@ -77,6 +77,10 @@ class WSHRound: NSObject {
         }
     }
     
+    override var description: String {
+        return "HANDS: \(self.roundType.intValue) BETS: \(self.bettedHands) TAKEN: \(self.takenHands) ROUND COMPLETED: \(self.isRoundComplete)"
+    }
+    
     init(roundType: WSHRoundType) {
         self.roundType = roundType
     }

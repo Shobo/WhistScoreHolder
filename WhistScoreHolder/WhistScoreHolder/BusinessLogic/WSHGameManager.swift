@@ -43,17 +43,21 @@ class WSHGameManager {
     func undo() {
         if let currentRound = self.currentGame?.currentRound {
             if currentRound.roundInformation.count == 0 { // current round just started -- undo to previous round
-                if self.lastTakingOrder.count == 0 {
-                    return
-                }
                 self.currentGame?.revertToPreviousRound()
-                self.revertLastTaking()
                 
-                guard let round = self.currentGame?.currentRound else  {
-                    return
+                if self.lastTakingOrder.count == 0 {
+                    self.gameState = .shuffling
+                    self.restartRound()
+                    
+                } else {
+                    self.revertLastTaking()
+                    
+                    guard let round = self.currentGame?.currentRound else  {
+                        return
+                    }
+                    self.gameState = .taking
+                    self.delegate?.didFinishBettingInRound(round)
                 }
-                self.delegate?.didFinishBettingInRound(round)
-                self.gameState = .taking
                 
             } else if self.lastTakingOrder.count == 0 { // undo betting
                 self.gameState = .betting
@@ -68,10 +72,8 @@ class WSHGameManager {
     
     func canUndo() -> Bool {
         if let currentRound = self.currentGame?.currentRound {
-            if currentRound.roundInformation.count == 0 { // current round just started -- undo to previous round
-                if self.lastTakingOrder.count == 0 {
-                    return false
-                }
+            if self.currentGame?.rounds.first == currentRound && currentRound.roundInformation.count == 0 { // current round just started -- undo to previous round
+                return false
             }
         }
         return true
@@ -213,36 +215,44 @@ class WSHGameManager {
         }
     }
     
+    fileprivate func restartRound() {
+        guard let round = self.currentGame?.currentRound else {
+            return
+        }
+        round.reset()
+        
+        self.delegate?.willBeginRoundOfType(round.roundType, startingPlayer: round.players.first!)
+    }
+    
     fileprivate func validateBet(_ bet: WSHGameBetChoice, forPlayer player: WSHPlayer) throws {
         if self.gameState != .betting {
-            //throw error; user cannot bet unlease in betting mode
+            throw "user cannot bet unlease in betting mode"
         }
         
         //throw error if player is not in game
         if !self.currentGame!.players.contains(player) {
-            //throw error; player that is not part of the game cannot interact
+            throw "player that is not part of the game cannot interact"
         }
         
         if self.currentGame!.currentRound!.didPlayerAlreadyBetInCurrentRound(player) {
-            // throw error; player cannot bet thwice
+            throw "player cannot bet thwice"
         }
         
         if self.currentGame!.currentRound!.currentBettingPlayer != player {
-            //throw error; not the turn of this player
+            throw "not the turn of this player"
         }
     }
     
     fileprivate func validateHandForPlayer(_ player: WSHPlayer) throws {
         if self.gameState != .taking {
-            //throw error; user cannot take unlease in taking mode
+            throw "user cannot take unlease in taking mode"
         }
-        //throw error if taken count exceeds current round type
-        if self.currentGame!.currentRound!.takenHands + 1 >= self.currentGame!.currentRound!.roundType.intValue {
-            
+        if self.currentGame!.currentRound!.takenHands + 1 > self.currentGame!.currentRound!.roundType.intValue {
+            throw "taken count exceeds current round type"
         }
         //throw error if player is not in game
         if !self.currentGame!.players.contains(player) {
-            //throw error; player that is not part of the game cannot interact
+            throw "player that is not part of the game cannot interact"
         }
     }
     

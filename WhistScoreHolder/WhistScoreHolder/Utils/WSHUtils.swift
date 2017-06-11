@@ -8,12 +8,12 @@
 
 import UIKit
 
-func presentError(_ err: Error, fromController: UINavigationController) {
+func presentError(_ err: Error, fromController: UIViewController) {
     let alertController = UIAlertController(title: NSLocalizedString("error", comment: ""), message:
         "\(err)", preferredStyle: UIAlertControllerStyle.alert)
     
     alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: UIAlertActionStyle.default, handler: { action in
-        fromController.popViewController(animated: true)
+        alertController.dismiss(animated: true, completion: nil)
     }))
     
     fromController.present(alertController, animated: true, completion: nil)

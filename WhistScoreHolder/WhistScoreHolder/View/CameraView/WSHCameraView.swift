@@ -156,28 +156,30 @@ class WSHCameraView: UIView {
                     self.setupDevice(self.frontCameraDevice!)
                 }
             }
-            self.setupIntputTo(self.backCameraDevice!)
-            
-            self.stillImageOutput = AVCaptureStillImageOutput()
-            self.stillImageOutput!.outputSettings = [AVVideoCodecJPEG: AVVideoCodecKey]
-            
-            if (self.captureSession?.canAddOutput(self.stillImageOutput) ?? false) {
-                self.captureSession!.addOutput(self.stillImageOutput)
+            if let _ = self.backCameraDevice {
+                self.setupIntputTo(self.backCameraDevice!)
+                
+                self.stillImageOutput = AVCaptureStillImageOutput()
+                self.stillImageOutput!.outputSettings = [AVVideoCodecJPEG: AVVideoCodecKey]
+                
+                if (self.captureSession?.canAddOutput(self.stillImageOutput) ?? false) {
+                    self.captureSession!.addOutput(self.stillImageOutput)
+                }
+                
+                let deviceMin = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+                
+                self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+                self.previewLayer?.frame = CGRect(x: 0.0, y: 0.0, width: deviceMin, height: deviceMin)
+                self.previewLayer?.position = CGPoint(x: self.bounds.width / 2.0, y: self.bounds.height / 2.0)
+                self.previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+                self.setupPreviewLayerOrientationDeviceDependent()
+                
+                self.previewView.layer.addSublayer(self.previewLayer!)
+                
+                self.videoConnection = self.stillImageOutput!.connection(withMediaType: AVMediaTypeVideo)
+                
+                self.startCamera()
             }
-            
-            let deviceMin = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-            
-            self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-            self.previewLayer?.frame = CGRect(x: 0.0, y: 0.0, width: deviceMin, height: deviceMin)
-            self.previewLayer?.position = CGPoint(x: self.bounds.width / 2.0, y: self.bounds.height / 2.0)
-            self.previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-            self.setupPreviewLayerOrientationDeviceDependent()
-            
-            self.previewView.layer.addSublayer(self.previewLayer!)
-            
-            self.videoConnection = self.stillImageOutput!.connection(withMediaType: AVMediaTypeVideo)
-            
-            self.startCamera()
         }
     }
     

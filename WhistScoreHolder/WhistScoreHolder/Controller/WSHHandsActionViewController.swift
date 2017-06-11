@@ -43,7 +43,7 @@ class WSHHandsActionViewController: WSHActionViewController {
         var buttons = [WSHBetButton]()
         var btn: WSHBetButton
         
-        for pleya in self.round?.players ?? [] {
+        for pleya in WSHGameManager.sharedInstance.currentGame?.players ?? [] {
             btn = self.configuredStandardChoiceButton(pleya)
             
             buttons.append(btn)
